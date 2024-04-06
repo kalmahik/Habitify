@@ -16,6 +16,8 @@
 		8463818A2BBFB952002968E5 /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381892BBFB952002968E5 /* TrackersViewController.swift */; };
 		8463818C2BBFB98E002968E5 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */; };
 		8463818E2BBFBE58002968E5 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463818D2BBFBE58002968E5 /* RootViewController.swift */; };
+		F557C1122BC1B063004052B3 /* EmptyTrackersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1112BC1B063004052B3 /* EmptyTrackersView.swift */; };
+		F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1132BC1B84E004052B3 /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		846381892BBFB952002968E5 /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
 		8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		8463818D2BBFBE58002968E5 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		F557C1112BC1B063004052B3 /* EmptyTrackersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTrackersView.swift; sourceTree = "<group>"; };
+		F557C1132BC1B84E004052B3 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				846381872BBFB847002968E5 /* TabBarViewController.swift */,
 				8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */,
 				8463818D2BBFBE58002968E5 /* RootViewController.swift */,
+				F557C1112BC1B063004052B3 /* EmptyTrackersView.swift */,
+				F557C1132BC1B84E004052B3 /* UIView+Extension.swift */,
 			);
 			path = Habitify;
 			sourceTree = "<group>";
@@ -149,6 +155,8 @@
 				8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */,
 				8463818E2BBFBE58002968E5 /* RootViewController.swift in Sources */,
 				846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */,
+				F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */,
+				F557C1122BC1B063004052B3 /* EmptyTrackersView.swift in Sources */,
 				846381882BBFB847002968E5 /* TabBarViewController.swift in Sources */,
 				846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */,
 				8463818A2BBFB952002968E5 /* TrackersViewController.swift in Sources */,

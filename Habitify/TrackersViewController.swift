@@ -9,25 +9,38 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     
+    // MARK: - Private Properties
+    
+    private let emptyView = EmptyTrackersView()
+    
     // MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
-        configureNavBar()
+        setupView()
+        setupNavBar()
+        setupConstraints()
     }
     
     // MARK: - Configure
 
-    private func configureView() {
+    private func setupView() {
         view.backgroundColor = .mainWhite
+        view.setupView(emptyView)
     }
     
-    private func configureNavBar() {
+    private func setupNavBar() {
         navigationItem.title = "Трекеры"
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         add.tintColor = .mainBlack
         navigationItem.leftBarButtonItem = add
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            emptyView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
     }
     
     @objc private func addTapped() {
