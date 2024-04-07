@@ -26,6 +26,7 @@ final class TrackersViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
+        navigationController?.navigationBar.prefersLargeTitles = true
         view.setupView(emptyView)
     }
     
@@ -43,7 +44,10 @@ final class TrackersViewController: UIViewController {
         ])
     }
     
+    // MARK: - Private Functions
+    
     @objc private func addTapped() {
-        
+        let viewController = TrackerTypeViewController().wrapWithNavigationController()
+        present(viewController, animated: true)
     }
 }

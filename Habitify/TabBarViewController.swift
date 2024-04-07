@@ -13,9 +13,7 @@ final class TabBarViewController: UITabBarController {
     // MARK: - Configure
 
     private func setupViewControllers() {
-        let trackersTab = TrackersViewController()
-        let trackersNavigationController = UINavigationController(rootViewController: trackersTab)
-        trackersNavigationController.navigationBar.prefersLargeTitles = true
+        let trackersTab = TrackersViewController().wrapWithNavigationController()
         let statisticsTab = StatisticsViewController()
 
         trackersTab.tabBarItem = UITabBarItem(
@@ -31,7 +29,7 @@ final class TabBarViewController: UITabBarController {
         )
 
         tabBar.tintColor = .mainBlue
-        viewControllers = [trackersNavigationController, statisticsTab]
+        viewControllers = [trackersTab, statisticsTab]
 
         if #available(iOS 15, *) {
             let tabBarAppearance = UITabBarAppearance()
