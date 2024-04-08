@@ -11,8 +11,6 @@ final class TrackerTypeViewController: UIViewController {
     
     // MARK: - Private Properties
     
-//    private let wrapperView = UIView()
-    
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.vertical
@@ -21,8 +19,9 @@ final class TrackerTypeViewController: UIViewController {
         return stack
     }()
     
-    private let regularButton = Button(title: "Привычка") {
-        print("Привычка")
+    private lazy var regularButton = Button(title: "Привычка") {
+        let viewController = NewHabitViewController().wrapWithNavigationController()
+        self.present(viewController, animated: true)
     }
     
     private let nonRegularButton = Button(title: "Нерегулярное событие") {
@@ -51,11 +50,8 @@ final class TrackerTypeViewController: UIViewController {
         NSLayoutConstraint.activate([
             wrapperView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             wrapperView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            wrapperView.heightAnchor.constraint(equalToConstant: 136), // how to avoit this?
+            wrapperView.heightAnchor.constraint(equalToConstant: 136), // how to avoid this?
             wrapperView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
         ])
-    }
-    
-    @objc private func addTapped() {
     }
 }
