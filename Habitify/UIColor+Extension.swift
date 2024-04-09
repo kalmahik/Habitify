@@ -7,21 +7,30 @@
 
 import UIKit
 
-//extension UIColor {
-//    enum Photos {
-//     static let sea = UIColor(named: "sea")
-//     static let bridge = UIImage(named: "bridge")
-//     static let dandelion = UIImage(named: "dandelion")
-//     static let mountain = UIImage(named: "mountain")
-//     static let killer_whale = UIImage(named: "killer_whale")
-//     static let polar = UIImage(named: "polar")
-//     static let river = UIImage(named: "river")
-//     static let winter = UIImage(named: "winter")
-//     static let forest_river = UIImage(named: "forest_river")
-//    }
-//    
-//    enum Icons {
-//     static let tg_icon = UIImage(named: "tg")
-//     static let in_icon = UIImage(named: "in")
-//    }
-//}
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: 1)
+                    return
+                }
+            }
+        }
+
+        return nil
+    }
+}

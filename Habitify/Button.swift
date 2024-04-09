@@ -27,7 +27,7 @@ final class Button: UIButton {
     }
     
     private func commonInit() {
-        setupSubviews()
+        setupViews()
         setupConstraints()
     }
     
@@ -47,7 +47,7 @@ final class Button: UIButton {
         action()
     }
     
-    private func setupSubviews() {
+    private func setupViews() {
         setupView(button)
     }
     
