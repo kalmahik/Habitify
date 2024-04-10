@@ -26,12 +26,12 @@ final class TrackersViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationController?.navigationBar.prefersLargeTitles = true
         view.setupView(emptyView)
     }
     
     private func setupNavBar() {
         navigationItem.title = "Трекеры"
+        navigationController?.navigationBar.prefersLargeTitles = true
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         add.tintColor = .mainBlack
         navigationItem.leftBarButtonItem = add

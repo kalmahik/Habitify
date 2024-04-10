@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CollectionHeaderView: UICollectionReusableView {
+final class CollectionHeaderView: UICollectionViewCell {
     static let identifier = "CollectionHeaderView"
     private let headerLabel = UILabel()
 
@@ -34,7 +34,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     }
 }
 
-final class CollectionFooterView: UICollectionReusableView {
+final class CollectionFooterView: UICollectionViewCell {
     static let identifier = "CollectionFooterView"
     private let footerLabel = UILabel()
 

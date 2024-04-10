@@ -21,6 +21,8 @@ final class NewHabitViewController: UIViewController {
         
         collectionView.register(EmojiCell.self, forCellWithReuseIdentifier: EmojiCell.identifier)
         collectionView.register(ColorCell.self, forCellWithReuseIdentifier: ColorCell.identifier)
+        collectionView.register(CollectionHeader.self, forCellWithReuseIdentifier: CollectionHeader.identifier)
+        collectionView.register(CollectionFooterView.self, forCellWithReuseIdentifier: CollectionFooterView.identifier)
         
         collectionView.register(
             SectionHeader.self,
@@ -28,28 +30,10 @@ final class NewHabitViewController: UIViewController {
             withReuseIdentifier: SectionHeader.identifier
         )
         
-        collectionView.register(
-            CollectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: CollectionHeaderView.identifier
-        )
-        
-        collectionView.register(
-            CollectionFooterView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: CollectionFooterView.identifier
-        )
-        
-        collectionView.register(CollectionFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CollectionFooterView.identifier)
-        
-        
         collectionView.backgroundColor = UIColor.white
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
-    
-    private let globalHeaderView = CollectionHeaderView()
-    private let globalFooterView = CollectionFooterView()
     
     
     // MARK: - UIViewController
@@ -90,13 +74,14 @@ extension NewHabitViewController: UICollectionViewDelegate {
 extension NewHabitViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return emojiList.count
-        case 1: return colorList.count
+        case 0: return 1
+        case 1: return emojiList.count
+        case 2: return colorList.count
         default: return 0
         }
     }
@@ -107,12 +92,16 @@ extension NewHabitViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHeader.identifier, for: indexPath)
+            guard let headerCell = cell as? CollectionHeader else { return UICollectionViewCell() }
+            return headerCell
+        case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath)
             let emoji = emojiList[indexPath.row]
             guard let emojiCell = cell as? EmojiCell else { return UICollectionViewCell() }
             emojiCell.setupCell(emoji: emoji)
             return emojiCell
-        case 1:
+        case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCell.identifier, for: indexPath)
             let colorString = colorList[indexPath.row]
             let color = UIColor(hex: colorString)
@@ -125,17 +114,14 @@ extension NewHabitViewController: UICollectionViewDataSource {
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.identifier, for: indexPath) as! CollectionHeaderView
-            return headerView
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        if (indexPath.section == 0) {
+            return UICollectionReusableView()
         }
-        
-        if kind == UICollectionView.elementKindSectionFooter {
-            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionFooterView.identifier, for: indexPath) as! CollectionFooterView
-            return footerView
-        }
-        
         let sectionTitle = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: SectionHeader.identifier,
@@ -154,8 +140,13 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let size = getCellWidth()
-        return CGSize(width: size, height: size)
+        let section = indexPath.section
+        switch section {
+            case 0: return CGSize(width: collectionView.frame.width, height: 250)
+            case 1: return CGSize(width: 52, height: 52)
+            case 2: return CGSize(width: 52, height: 52)
+            default: return CGSize(width: 0, height: 0)
+        }
     }
     
     func collectionView(
@@ -187,21 +178,6 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
             verticalFittingPriority: .fittingSizeLevel
         )
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        
-        let indexPath = IndexPath(row: 0, section: section)
-        let headerView = self.collectionView(
-            collectionView,
-            viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
-            at: indexPath
-        )
-        return headerView.systemLayoutSizeFitting(
-            CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
 }
 
 extension NewHabitViewController {
@@ -212,8 +188,6 @@ extension NewHabitViewController {
         view.backgroundColor = .mainWhite
         navigationItem.title = "Новая привычка"
         view.backgroundColor = .white
-        collectionView.setupView(globalFooterView)
-        collectionView.setupView(globalHeaderView)
         view.setupView(collectionView)
     }
     
@@ -223,17 +197,6 @@ extension NewHabitViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            
-            globalHeaderView.topAnchor.constraint(equalTo: view.topAnchor),
-            globalHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            globalHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            globalHeaderView.heightAnchor.constraint(equalToConstant: 150),
-            
-            globalFooterView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            globalFooterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            globalFooterView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            globalFooterView.heightAnchor.constraint(equalToConstant: 150),
         ])
     }
 }

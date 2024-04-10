@@ -14,6 +14,7 @@ final class TabBarViewController: UITabBarController {
 
     private func setupViewControllers() {
         let trackersTab = NewHabitViewController().wrapWithNavigationController()
+//        let trackersTab = UINavigationController(rootViewController: TrackersViewController())
         let statisticsTab = StatisticsViewController()
 
         trackersTab.tabBarItem = UITabBarItem(
