@@ -9,6 +9,12 @@ import UIKit
 
 final class EmptyTrackersView: UIView {
     
+    convenience init(emoji: String, title: String) {
+        self.init()
+        emojiLabel.text = emoji
+        titleLabel.text = title
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -24,22 +30,18 @@ final class EmptyTrackersView: UIView {
         setupConstraints()
     }
     
+// это говно, надо найти нормальный способ достучаться до frame
     private lazy var emojiLabel: UILabel = {
-        let emoji = UILabel()
-        emoji.text = "💫"
-        emoji.textAlignment = .center
-        emoji.font = UIFont.systemFont(ofSize: 80, weight: .regular)
-        emoji.translatesAutoresizingMaskIntoConstraints = false
-        return emoji
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 80, weight: .regular)
+        return label
     }()
     
     private lazy var titleLabel: UILabel = {
-        let title = UILabel()
-        title.text = "Что будем отслеживать?"
-        title.textAlignment = .center
-        title.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        return label
     }()
     
     private func setupSubviews() {
@@ -51,7 +53,7 @@ final class EmptyTrackersView: UIView {
         NSLayoutConstraint.activate([
             emojiLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             emojiLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 0),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }

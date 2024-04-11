@@ -20,6 +20,7 @@ final class CollectionHeader: UICollectionViewCell {
         textField.backgroundColor = .mainLigthGray
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
+        textField.setLeftPadding(16)
         return textField
     }()
     
