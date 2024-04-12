@@ -21,20 +21,21 @@
 		846381982BC5056A002968E5 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381972BC5056A002968E5 /* TrackerCategory.swift */; };
 		8463819A2BC5059B002968E5 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381992BC5059B002968E5 /* TrackerRecord.swift */; };
 		8463819C2BC50D0C002968E5 /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463819B2BC50D0C002968E5 /* ColorCell.swift */; };
-		8463819E2BC52742002968E5 /* CollectionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463819D2BC52742002968E5 /* CollectionHeaderFooterView.swift */; };
+		8463819E2BC52742002968E5 /* CollectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463819D2BC52742002968E5 /* CollectionFooter.swift */; };
 		846381A02BC651F0002968E5 /* CollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463819F2BC651F0002968E5 /* CollectionHeader.swift */; };
 		846381A42BC7AB67002968E5 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381A32BC7AB67002968E5 /* UILabel+Extension.swift */; };
-		846622C92BC7D048002105E2 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846622C82BC7D048002105E2 /* UITextField+Extension.swift */; };
+		846622C92BC7D048002105E2 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846622C82BC7D048002105E2 /* TextField.swift */; };
+		846622CB2BC8EA3D002105E2 /* ChevronButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846622CA2BC8EA3D002105E2 /* ChevronButton.swift */; };
 		F557C1122BC1B063004052B3 /* EmptyTrackersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1112BC1B063004052B3 /* EmptyTrackersView.swift */; };
 		F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1132BC1B84E004052B3 /* UIView+Extension.swift */; };
 		F557C1162BC1F47C004052B3 /* TrackerTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1152BC1F47C004052B3 /* TrackerTypeViewController.swift */; };
 		F557C1182BC1F617004052B3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1172BC1F617004052B3 /* Button.swift */; };
 		F557C11A2BC289DE004052B3 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1192BC289DE004052B3 /* UIViewController+Extension.swift */; };
-		F557C1242BC3AFDA004052B3 /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1232BC3AFDA004052B3 /* NewHabitViewController.swift */; };
+		F557C1242BC3AFDA004052B3 /* TrackerCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1232BC3AFDA004052B3 /* TrackerCreationViewController.swift */; };
 		F565B2E12BC3B5A500A06B16 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */; };
 		F565B2E32BC3C0EC00A06B16 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E22BC3C0EC00A06B16 /* FirstView.swift */; };
 		F565B2E52BC3C67200A06B16 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E42BC3C67200A06B16 /* EmojiCell.swift */; };
-		F565B2E72BC3CA9E00A06B16 /* HabitConfigurationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E62BC3CA9E00A06B16 /* HabitConfigurationConstants.swift */; };
+		F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,20 +55,21 @@
 		846381972BC5056A002968E5 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		846381992BC5059B002968E5 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		8463819B2BC50D0C002968E5 /* ColorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
-		8463819D2BC52742002968E5 /* CollectionHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderFooterView.swift; sourceTree = "<group>"; };
+		8463819D2BC52742002968E5 /* CollectionFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionFooter.swift; sourceTree = "<group>"; };
 		8463819F2BC651F0002968E5 /* CollectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionHeader.swift; sourceTree = "<group>"; };
 		846381A32BC7AB67002968E5 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
-		846622C82BC7D048002105E2 /* UITextField+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITextField+Extension.swift"; path = "Habitify/UITextField+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		846622C82BC7D048002105E2 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Habitify/TextField.swift; sourceTree = SOURCE_ROOT; };
+		846622CA2BC8EA3D002105E2 /* ChevronButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChevronButton.swift; sourceTree = "<group>"; };
 		F557C1112BC1B063004052B3 /* EmptyTrackersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTrackersView.swift; sourceTree = "<group>"; };
 		F557C1132BC1B84E004052B3 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		F557C1152BC1F47C004052B3 /* TrackerTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTypeViewController.swift; sourceTree = "<group>"; };
 		F557C1172BC1F617004052B3 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		F557C1192BC289DE004052B3 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		F557C1232BC3AFDA004052B3 /* NewHabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
+		F557C1232BC3AFDA004052B3 /* TrackerCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCreationViewController.swift; sourceTree = "<group>"; };
 		F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		F565B2E22BC3C0EC00A06B16 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		F565B2E42BC3C67200A06B16 /* EmojiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
-		F565B2E62BC3CA9E00A06B16 /* HabitConfigurationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitConfigurationConstants.swift; sourceTree = "<group>"; };
+		F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +111,6 @@
 				846381812BBFB2F4002968E5 /* Info.plist */,
 				846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */,
 				846381892BBFB952002968E5 /* TrackersViewController.swift */,
-				F565B2E62BC3CA9E00A06B16 /* HabitConfigurationConstants.swift */,
 				F557C1152BC1F47C004052B3 /* TrackerTypeViewController.swift */,
 				846381872BBFB847002968E5 /* TabBarViewController.swift */,
 				8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */,
@@ -117,8 +118,9 @@
 				846381A32BC7AB67002968E5 /* UILabel+Extension.swift */,
 				F557C1112BC1B063004052B3 /* EmptyTrackersView.swift */,
 				F557C1172BC1F617004052B3 /* Button.swift */,
+				846622CA2BC8EA3D002105E2 /* ChevronButton.swift */,
 				F557C1132BC1B84E004052B3 /* UIView+Extension.swift */,
-				846622C82BC7D048002105E2 /* UITextField+Extension.swift */,
+				846622C82BC7D048002105E2 /* TextField.swift */,
 				F557C1192BC289DE004052B3 /* UIViewController+Extension.swift */,
 				F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */,
 				F565B2E22BC3C0EC00A06B16 /* FirstView.swift */,
@@ -129,12 +131,13 @@
 		846381932BC483EA002968E5 /* NewHabitCollection */ = {
 			isa = PBXGroup;
 			children = (
-				F565B2E42BC3C67200A06B16 /* EmojiCell.swift */,
-				8463819B2BC50D0C002968E5 /* ColorCell.swift */,
+				F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */,
+				8463819D2BC52742002968E5 /* CollectionFooter.swift */,
 				8463819F2BC651F0002968E5 /* CollectionHeader.swift */,
+				8463819B2BC50D0C002968E5 /* ColorCell.swift */,
+				F565B2E42BC3C67200A06B16 /* EmojiCell.swift */,
+				F557C1232BC3AFDA004052B3 /* TrackerCreationViewController.swift */,
 				846381912BC4766B002968E5 /* SectionHeader.swift */,
-				F557C1232BC3AFDA004052B3 /* NewHabitViewController.swift */,
-				8463819D2BC52742002968E5 /* CollectionHeaderFooterView.swift */,
 			);
 			path = NewHabitCollection;
 			sourceTree = "<group>";
@@ -226,7 +229,7 @@
 				F565B2E52BC3C67200A06B16 /* EmojiCell.swift in Sources */,
 				8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */,
 				846381A02BC651F0002968E5 /* CollectionHeader.swift in Sources */,
-				8463819E2BC52742002968E5 /* CollectionHeaderFooterView.swift in Sources */,
+				8463819E2BC52742002968E5 /* CollectionFooter.swift in Sources */,
 				8463818E2BBFBE58002968E5 /* RootViewController.swift in Sources */,
 				846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */,
 				F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */,
@@ -238,12 +241,13 @@
 				846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */,
 				846381A42BC7AB67002968E5 /* UILabel+Extension.swift in Sources */,
 				846381982BC5056A002968E5 /* TrackerCategory.swift in Sources */,
-				F557C1242BC3AFDA004052B3 /* NewHabitViewController.swift in Sources */,
+				F557C1242BC3AFDA004052B3 /* TrackerCreationViewController.swift in Sources */,
+				846622CB2BC8EA3D002105E2 /* ChevronButton.swift in Sources */,
 				8463818A2BBFB952002968E5 /* TrackersViewController.swift in Sources */,
 				8463819A2BC5059B002968E5 /* TrackerRecord.swift in Sources */,
 				8463818C2BBFB98E002968E5 /* StatisticsViewController.swift in Sources */,
-				846622C92BC7D048002105E2 /* UITextField+Extension.swift in Sources */,
-				F565B2E72BC3CA9E00A06B16 /* HabitConfigurationConstants.swift in Sources */,
+				846622C92BC7D048002105E2 /* TextField.swift in Sources */,
+				F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */,
 				F557C1182BC1F617004052B3 /* Button.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

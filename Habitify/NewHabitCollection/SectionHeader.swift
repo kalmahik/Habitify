@@ -1,5 +1,5 @@
 //
-//  Footer.swift
+//  SectionHeader.swift
 //  Habitify
 //
 //  Created by kalmahik on 08.04.2024.
@@ -15,7 +15,11 @@ final class SectionHeader: UICollectionReusableView {
     
     // MARK: - Private Properties
 
-    private let titleLabel = UILabel()
+    private lazy var titleLabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        return label
+    }()
     
     // MARK: - Initializers
     
@@ -50,10 +54,10 @@ extension SectionHeader {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
         ])
     }
 }

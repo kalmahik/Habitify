@@ -19,12 +19,12 @@ final class TrackerTypeViewController: UIViewController {
         return stack
     }()
     
-    private lazy var regularButton = Button(title: "Привычка") {
-        let viewController = NewHabitViewController().wrapWithNavigationController()
+    private lazy var regularButton = Button(title: "Привычка", color: .mainBlack) {
+        let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }
     
-    private let nonRegularButton = Button(title: "Нерегулярное событие") {
+    private let nonRegularButton = Button(title: "Нерегулярное событие", color: .mainBlack) {
         print("Нерегулярное событие")
     }
     

@@ -1,5 +1,5 @@
 //
-//  TrackersViewController.swift
+//  TrackerCreationViewController.swift
 //  Habitify
 //
 //  Created by kalmahik on 05.04.2024.
@@ -7,29 +7,25 @@
 
 import UIKit
 
-final class NewHabitViewController: UIViewController {
+final class TrackerCreationViewController: UIViewController {
     
     // MARK: - Private Properties
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.headerReferenceSize = CGSize(width: 300, height: 100)
         var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
+        collectionView.register(CollectionHeader.self, forCellWithReuseIdentifier: CollectionHeader.identifier)
         collectionView.register(EmojiCell.self, forCellWithReuseIdentifier: EmojiCell.identifier)
         collectionView.register(ColorCell.self, forCellWithReuseIdentifier: ColorCell.identifier)
-        collectionView.register(CollectionHeader.self, forCellWithReuseIdentifier: CollectionHeader.identifier)
-        collectionView.register(CollectionFooterView.self, forCellWithReuseIdentifier: CollectionFooterView.identifier)
+        collectionView.register(CollectionFooter.self, forCellWithReuseIdentifier: CollectionFooter.identifier)
         
         collectionView.register(
             SectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: SectionHeader.identifier
         )
-        
+        collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.backgroundColor = UIColor.white
         collectionView.allowsMultipleSelection = false
         return collectionView
@@ -46,18 +42,11 @@ final class NewHabitViewController: UIViewController {
     
     @objc private func addTapped() {
     }
-    
-    func getCellWidth() -> CGFloat {
-        let collectionViewWidth = collectionView.frame.width
-        let numberOfColumns = 6
-        let itemWidth = collectionViewWidth / CGFloat(numberOfColumns)
-        return itemWidth
-    }
 }
 
 // MARK: - UICollectionViewDelegate
 
-extension NewHabitViewController: UICollectionViewDelegate {
+extension TrackerCreationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
         cell?.selectCell()
@@ -71,19 +60,12 @@ extension NewHabitViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDataSource
 
-extension NewHabitViewController: UICollectionViewDataSource {
+extension TrackerCreationViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
-    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int { collectionData.count }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return 1
-        case 1: return emojiList.count
-        case 2: return colorList.count
-        default: return 0
-        }
+        collectionData[section].data.count
     }
     
     func collectionView(
@@ -108,6 +90,10 @@ extension NewHabitViewController: UICollectionViewDataSource {
             guard let colorCell = cell as? ColorCell, let color else { return UICollectionViewCell() }
             colorCell.setupCell(color: color)
             return colorCell
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFooter.identifier, for: indexPath)
+            guard let footerCell = cell as? CollectionFooter else { return UICollectionViewCell() }
+            return footerCell
         default:
             return UICollectionViewCell()
         }
@@ -119,22 +105,24 @@ extension NewHabitViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        if (indexPath.section == 0) {
-            return UICollectionReusableView()
+        switch indexPath.section {
+        case 0: return UICollectionReusableView()
+        case 3: return UICollectionReusableView()
+        default:
+            let sectionTitle = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionHeader.identifier,
+                for: indexPath
+            ) as! SectionHeader
+            sectionTitle.setupSection(title: collectionData[indexPath.section].title)
+            return sectionTitle
         }
-        let sectionTitle = collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: SectionHeader.identifier,
-            for: indexPath
-        ) as! SectionHeader
-        sectionTitle.setupSection(title: "Здесь находится Supplementary view")
-        return sectionTitle
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
+extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -142,12 +130,30 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let section = indexPath.section
         switch section {
-            case 0: return CGSize(width: collectionView.frame.width, height: 250)
+            case 0: return CGSize(width: collectionView.frame.width, height: 250) // ахтунг! убрать 250!
             case 1: return CGSize(width: 52, height: 52)
             case 2: return CGSize(width: 52, height: 52)
+            case 3: return CGSize(width: collectionView.frame.width, height: 60)
             default: return CGSize(width: 0, height: 0)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        // Set insets for each section here
+        switch section {
+        case 0:
+            return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // Insets for section 0
+        case 1:
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18) // Insets for section 0
+        case 2:
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18) // Insets for section 0
+        case 3:
+            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20) // Insets for section 0
+        default:
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // Default insets
+        }
+    }
+
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -180,7 +186,7 @@ extension NewHabitViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension NewHabitViewController {
+extension TrackerCreationViewController {
     
     // MARK: - Configure
     
@@ -194,8 +200,8 @@ extension NewHabitViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }

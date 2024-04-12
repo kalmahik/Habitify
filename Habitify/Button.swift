@@ -10,9 +10,10 @@ import UIKit
 final class Button: UIButton {
     var action: (() -> Void)? //чет какая-то дичь, может можно проще?
     
-    convenience init(title: String, action: @escaping () -> Void) {
+    convenience init(title: String, color: UIColor?, action: @escaping () -> Void) {
         self.init()
         button.setTitle(title, for: .normal)
+        button.backgroundColor = color
         self.action = action
     }
     

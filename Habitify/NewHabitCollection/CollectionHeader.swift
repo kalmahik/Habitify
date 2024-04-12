@@ -15,12 +15,11 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Private Properties
     
     private lazy var trackerNameInput: UITextField = {
-        let textField = UITextField()
+        let textField = TextField()
         textField.placeholder = "Введите название трекера"
         textField.backgroundColor = .mainLigthGray
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
-        textField.setLeftPadding(16)
         return textField
     }()
     
@@ -32,8 +31,21 @@ final class CollectionHeader: UICollectionViewCell {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         button.setTitle("Категория", for: .normal)
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)     
+        button.contentHorizontalAlignment = .leading
         return button
-    }()
+    }()   
+//    
+//    private lazy var arrowCategoryButton: ChevronButton = {
+//        let button = ChevronButton()
+//        button.backgroundColor = .mainLigthGray
+//        button.setTitleColor(.mainBlack, for: .normal)
+//        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+//        return button
+//    }()
+    
     
     private lazy var arrowScheduleButton: UIButton = {
         let button = UIButton()
@@ -104,9 +116,11 @@ extension CollectionHeader {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             trackerNameInput.heightAnchor.constraint(equalToConstant: 75),
-            trackerNameInput.widthAnchor.constraint(equalTo: widthAnchor),
+            trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             wrapperView.heightAnchor.constraint(equalToConstant: 150),
-            wrapperView.widthAnchor.constraint(equalTo: widthAnchor),
+            wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             wrapperView.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 24),
         ])
     }
