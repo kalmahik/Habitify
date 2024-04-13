@@ -62,7 +62,8 @@ extension CollectionFooter {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             wrapperView.heightAnchor.constraint(equalToConstant: 60),
-            wrapperView.widthAnchor.constraint(equalTo: widthAnchor),
+            wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
         ])
     }
 }

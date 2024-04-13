@@ -11,7 +11,7 @@ final class TrackersViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let emptyView = EmptyTrackersView(emoji: "💫", title: "Что будем отслеживать?")
+    private let emptyView = EmptyView(emoji: "💫", title: "Что будем отслеживать?")
     
     // MARK: - UIViewController
 
@@ -26,8 +26,7 @@ final class TrackersViewController: UIViewController {
     // MARK: - Private Functions
     
     @objc private func addTapped() {
-        let viewController = TrackerTypeViewController().wrapWithNavigationController()
-        present(viewController, animated: true)
+//        present(UINavigationController(rootViewController: TrackerTypeViewController), animated: true)
     }
 }
 

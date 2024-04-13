@@ -11,7 +11,7 @@ final class StatisticsViewController: UIViewController {
 
     // MARK: - Private Properties
     
-    private let emptyView = EmptyTrackersView(emoji: "🥲", title: "Анализировать пока нечего")
+    private let emptyView = EmptyView(emoji: "🥲", title: "Анализировать пока нечего")
     
     // MARK: - UIViewController
 

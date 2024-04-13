@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EmptyTrackersView: UIView {
+final class EmptyView: UIView {
     
     convenience init(emoji: String, title: String) {
         self.init()

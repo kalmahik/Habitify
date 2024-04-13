@@ -36,15 +36,7 @@ final class CollectionHeader: UICollectionViewCell {
         button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)     
         button.contentHorizontalAlignment = .leading
         return button
-    }()   
-//    
-//    private lazy var arrowCategoryButton: ChevronButton = {
-//        let button = ChevronButton()
-//        button.backgroundColor = .mainLigthGray
-//        button.setTitleColor(.mainBlack, for: .normal)
-//        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-//        return button
-//    }()
+    }() 
     
     
     private lazy var arrowScheduleButton: UIButton = {
@@ -101,6 +93,8 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Private Methods
     
     @objc private func didTapButton() {
+        let viewController = CategoryScreenViewController().wrapWithNavigationController()
+        parentViewController?.present(viewController, animated: true)
     }
 }
 

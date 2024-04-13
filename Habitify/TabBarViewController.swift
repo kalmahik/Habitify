@@ -13,8 +13,8 @@ final class TabBarViewController: UITabBarController {
     // MARK: - Configure
 
     private func setupViewControllers() {
-        let trackersTab = TrackerCreationViewController().wrapWithNavigationController()
-//        let trackersTab = UINavigationController(rootViewController: TrackersViewController())
+//        let trackersTab = TrackerCreationViewController().wrapWithNavigationController()
+        let trackersTab = UINavigationController(rootViewController: TrackersViewController())
         let statisticsTab = StatisticsViewController().wrapWithNavigationController()
 
         trackersTab.tabBarItem = UITabBarItem(

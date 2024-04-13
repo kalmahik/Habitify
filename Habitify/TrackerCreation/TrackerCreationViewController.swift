@@ -31,7 +31,6 @@ final class TrackerCreationViewController: UIViewController {
         return collectionView
     }()
     
-    
     // MARK: - UIViewController
     
     override func viewDidLoad() {
@@ -41,6 +40,7 @@ final class TrackerCreationViewController: UIViewController {
     }
     
     @objc private func addTapped() {
+        
     }
 }
 
