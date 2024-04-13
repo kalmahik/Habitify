@@ -7,11 +7,12 @@
 
 import UIKit
 
-final class CategoryScreenViewController: UIViewController {
+final class CategoriesScreenViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private lazy var regularButton = Button(title: "Добавить категорию", color: .mainBlack) {
+    private lazy var addCategoryButton = Button(title: "Добавить категорию", color: .mainBlack) {
+        self.present(CategoryCreationViewController().wrapWithNavigationController(), animated: true)
     }
     
     private lazy var emptyView = EmptyView(emoji: "💫", title: "Привычки и события можно объединить по смыслу")
@@ -30,7 +31,7 @@ final class CategoryScreenViewController: UIViewController {
         view.backgroundColor = .mainWhite
         navigationItem.title = "Категория"
         view.setupView(emptyView)
-        view.setupView(regularButton)
+        view.setupView(addCategoryButton)
     }
     
     private func setupConstraints() {
@@ -38,9 +39,9 @@ final class CategoryScreenViewController: UIViewController {
             emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),
             emptyView.heightAnchor.constraint(equalTo: view.heightAnchor),
             
-            regularButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            regularButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            regularButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            addCategoryButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            addCategoryButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            addCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
         ])
     }
     

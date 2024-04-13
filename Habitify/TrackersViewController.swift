@@ -26,7 +26,7 @@ final class TrackersViewController: UIViewController {
     // MARK: - Private Functions
     
     @objc private func addTapped() {
-//        present(UINavigationController(rootViewController: TrackerTypeViewController), animated: true)
+        present(TrackerTypeModalViewController().wrapWithNavigationController(), animated: true)
     }
 }
 

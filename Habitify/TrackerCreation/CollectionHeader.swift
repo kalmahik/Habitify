@@ -93,7 +93,7 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Private Methods
     
     @objc private func didTapButton() {
-        let viewController = CategoryScreenViewController().wrapWithNavigationController()
+        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
         parentViewController?.present(viewController, animated: true)
     }
 }

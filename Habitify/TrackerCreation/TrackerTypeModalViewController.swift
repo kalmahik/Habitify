@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TrackerTypeViewController: UIViewController {
+final class TrackerTypeModalViewController: UIViewController {
     
     // MARK: - Private Properties
     
