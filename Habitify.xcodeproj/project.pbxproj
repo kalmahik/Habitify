@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D402BCC50F7001B0A9C /* TrackerCell.swift */; };
+		843F2D432BCC522D001B0A9C /* TrackerCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */; };
+		843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */; };
 		846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381702BBFB2F2002968E5 /* AppDelegate.swift */; };
 		846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381722BBFB2F2002968E5 /* SceneDelegate.swift */; };
 		8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */; };
@@ -39,6 +42,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		843F2D402BCC50F7001B0A9C /* TrackerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCell.swift; sourceTree = "<group>"; };
+		843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionData.swift; sourceTree = "<group>"; };
+		843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerSectionHeader.swift; sourceTree = "<group>"; };
 		8463816D2BBFB2F2002968E5 /* Habitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Habitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846381702BBFB2F2002968E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		846381722BBFB2F2002968E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +89,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		843F2D3F2BCC4B9F001B0A9C /* Trackers */ = {
+			isa = PBXGroup;
+			children = (
+				846381892BBFB952002968E5 /* TrackersViewController.swift */,
+				843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */,
+				843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */,
+				843F2D402BCC50F7001B0A9C /* TrackerCell.swift */,
+			);
+			path = Trackers;
+			sourceTree = "<group>";
+		};
 		846381642BBFB2F2002968E5 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +119,7 @@
 		8463816F2BBFB2F2002968E5 /* Habitify */ = {
 			isa = PBXGroup;
 			children = (
+				843F2D3F2BCC4B9F001B0A9C /* Trackers */,
 				84A4219C2BCB15DF007F3276 /* CategoryCreation */,
 				84A421992BCAF516007F3276 /* Extensions */,
 				F5E4A9D72BC9880400350368 /* Components */,
@@ -114,7 +132,6 @@
 				8463817E2BBFB2F4002968E5 /* LaunchScreen.storyboard */,
 				846381812BBFB2F4002968E5 /* Info.plist */,
 				846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */,
-				846381892BBFB952002968E5 /* TrackersViewController.swift */,
 				846381872BBFB847002968E5 /* TabBarViewController.swift */,
 				8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */,
 				8463818D2BBFBE58002968E5 /* RootViewController.swift */,
@@ -259,6 +276,7 @@
 				846381962BC50551002968E5 /* Tracker.swift in Sources */,
 				F565B2E52BC3C67200A06B16 /* EmojiCell.swift in Sources */,
 				84A4219B2BCB15B5007F3276 /* CategoryCreationViewController.swift in Sources */,
+				843F2D432BCC522D001B0A9C /* TrackerCollectionData.swift in Sources */,
 				8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */,
 				846381A02BC651F0002968E5 /* CollectionHeader.swift in Sources */,
 				8463819E2BC52742002968E5 /* CollectionFooter.swift in Sources */,
@@ -278,6 +296,8 @@
 				8463818A2BBFB952002968E5 /* TrackersViewController.swift in Sources */,
 				8463819A2BC5059B002968E5 /* TrackerRecord.swift in Sources */,
 				8463818C2BBFB98E002968E5 /* StatisticsViewController.swift in Sources */,
+				843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */,
+				843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */,
 				846622C92BC7D048002105E2 /* TextField.swift in Sources */,
 				F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */,
 				F557C1182BC1F617004052B3 /* Button.swift in Sources */,
