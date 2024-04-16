@@ -48,7 +48,6 @@ final class SectionHeader: UICollectionReusableView {
 
 extension SectionHeader {
     private func setupViews() {
-        layer.borderWidth = 1
         setupView(titleLabel)
     }
     

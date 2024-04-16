@@ -17,7 +17,6 @@ final class CollectionFooter: UICollectionViewCell {
         stack.axis = NSLayoutConstraint.Axis.horizontal
         stack.distribution = UIStackView.Distribution.fillEqually
         stack.spacing = 8
-        stack.layer.borderWidth = 1
         return stack
     }()
     
@@ -56,7 +55,6 @@ extension CollectionFooter {
         contentView.setupView(wrapperView)
         wrapperView.addArrangedSubview(cancelButton)
         wrapperView.addArrangedSubview(creationButton)
-        layer.borderWidth = 1
     }
     
     private func setupConstraints() {

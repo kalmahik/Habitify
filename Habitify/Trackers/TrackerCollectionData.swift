@@ -19,9 +19,11 @@ let trackerList = [
     Tracker(id: UUID(), type: .regular, name: "Свидания в апреле", color: "#FD4C49FF", emoji: "🍔", schedule:"schedule"),
 ]
 
-let trackerCollectionData: [TrackerSection] = [
-    TrackerSection(title: "123", data: trackerList),
-    TrackerSection(title: "456", data: trackerList),
-    TrackerSection(title: "789", data: trackerList),
-    TrackerSection(title: "101", data: trackerList),
+let trackerCollectionData: [TrackerCategory] = [
+    TrackerCategory(title: "123", trackers: trackerList),
+    TrackerCategory(title: "456", trackers: trackerList),
+    TrackerCategory(title: "789", trackers: trackerList),
+    TrackerCategory(title: "101", trackers: trackerList),
 ]
+
+var categories: [TrackerCategory] = []

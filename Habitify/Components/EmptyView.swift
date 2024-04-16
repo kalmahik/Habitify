@@ -53,7 +53,7 @@ final class EmptyView: UIView {
         NSLayoutConstraint.activate([
             emojiLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             emojiLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 0),
+            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 8),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }

@@ -17,6 +17,17 @@ final class CategoriesScreenViewController: UIViewController {
     
     private lazy var emptyView = EmptyView(emoji: "💫", title: "Привычки и события можно объединить по смыслу")
     
+    private lazy var tableView: UITableView = {
+        let tableView  = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.identifier)
+//        tableView.separatorColor = .ypBlack
+//        tableView.backgroundColor = .ypBlack
+//        tableView.backgroundView = emptyView
+        return tableView
+    }()
+    
     // MARK: - UIViewController
 
     override func viewDidLoad() {
@@ -24,27 +35,67 @@ final class CategoriesScreenViewController: UIViewController {
         setupView()
         setupConstraints()
     }
-    
+}
+
+// MARK: - UITableViewDelegate
+
+extension CategoriesScreenViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension CategoriesScreenViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        trackerCollectionData.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
+        guard let categoryCell = cell as? CategoryCell else { return UITableViewCell() }
+        let category = trackerCollectionData[indexPath.row]
+//        let dateLabel = photo.createdAt?.dateString ?? ""
+//        imageListCell.selectionStyle = .none
+//        imageListCell.backgroundColor = .ypBlack
+//        categoryCell.delegate = self
+        categoryCell.setupCell(category: category)
+        return categoryCell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 75 }
+}
+
+// MARK: - applyConstraints && addSubViews
+
+extension CategoriesScreenViewController {
     // MARK: - Configure
 
     private func setupView() {
         view.backgroundColor = .mainWhite
         navigationItem.title = "Категория"
-        view.setupView(emptyView)
+        view.setupView(tableView)
+//        view.setupView(emptyView)
         view.setupView(addCategoryButton)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            emptyView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+//            emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),
+//            emptyView.heightAnchor.constraint(equalTo: view.heightAnchor),
             
             addCategoryButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addCategoryButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             addCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
         ])
     }
-    
-    
-
 }

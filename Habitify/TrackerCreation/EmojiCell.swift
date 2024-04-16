@@ -30,7 +30,7 @@ final class EmojiCell: UICollectionViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     // MARK: - Public Methods
@@ -48,7 +48,6 @@ final class EmojiCell: UICollectionViewCell {
 
 extension EmojiCell {
     private func setupViews() {
-        contentView.layer.borderWidth = 1
         contentView.setupView(emojiLabel)
     }
     

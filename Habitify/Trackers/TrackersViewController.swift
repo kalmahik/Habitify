@@ -75,7 +75,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         } else {
             self.collectionView.restore()
         }
-        return trackerCollectionData[section].data.count
+        return trackerCollectionData[section].trackers.count
     }
     
     func collectionView(

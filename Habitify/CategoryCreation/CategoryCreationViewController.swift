@@ -21,7 +21,8 @@ final class CategoryCreationViewController: UIViewController {
     }()
     
     private lazy var doneButton = Button(title: "Готово", color: .mainBlack) {
-        self.present(CategoryCreationViewController().wrapWithNavigationController(), animated: true)
+        guard let name = self.categoryNameInput.text else { return }
+        self.createNewCategory(with: name)
     }
     
     // MARK: - UIViewController
@@ -34,6 +35,10 @@ final class CategoryCreationViewController: UIViewController {
     }
     
     // MARK: - Private Functions
+    
+    private func createNewCategory(with name: String) {
+        categories.append(TrackerCategory(title: name, trackers: []))
+    }
 
 }
 

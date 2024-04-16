@@ -104,7 +104,6 @@ extension CollectionHeader {
         contentView.setupView(wrapperView)
         wrapperView.addArrangedSubview(arrowCategoryButton)
         wrapperView.addArrangedSubview(arrowScheduleButton)
-        layer.borderWidth = 1
     }
     
     private func setupConstraints() {

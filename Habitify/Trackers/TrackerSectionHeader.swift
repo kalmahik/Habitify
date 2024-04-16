@@ -48,7 +48,6 @@ final class TrackerSectionHeader: UICollectionReusableView {
 
 extension TrackerSectionHeader {
     private func setupViews() {
-        layer.borderWidth = 1
         setupView(titleLabel)
     }
     

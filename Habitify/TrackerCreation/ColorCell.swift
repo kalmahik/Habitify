@@ -16,7 +16,6 @@ final class ColorCell: UICollectionViewCell {
     
     private lazy var colorView: UIView = {
         let view = UIView()
-        view.layer.borderWidth = 1
         return view
     }()
     
@@ -59,7 +58,6 @@ final class ColorCell: UICollectionViewCell {
 extension ColorCell {
     private func setupViews() {
         contentView.setupView(colorView)
-        layer.borderWidth = 1
     }
     
     private func setupConstraints() {

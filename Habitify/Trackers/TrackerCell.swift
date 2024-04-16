@@ -22,7 +22,6 @@ final class TrackerCell: UICollectionViewCell {
     
     private lazy var quantityManagementView: UIView = {
         let view = UIView()
-        view.layer.borderWidth = 1
         return view
     }()
     
@@ -31,7 +30,6 @@ final class TrackerCell: UICollectionViewCell {
         view.backgroundColor = UIColor.init(hex: "#FFFFFF4D")
         view.layer.cornerRadius = 12
         view.layer.masksToBounds = true
-        view.layer.borderWidth = 1
         return view
     }()
     
@@ -39,7 +37,6 @@ final class TrackerCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .center
-        label.layer.borderWidth = 1
         return label
     }()
     
@@ -48,14 +45,12 @@ final class TrackerCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         label.numberOfLines = 2
-        label.layer.borderWidth = 1
         return label
     }()
     
     private lazy var quantityLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
-        label.layer.borderWidth = 1
         return label
     }()
     
@@ -67,7 +62,6 @@ final class TrackerCell: UICollectionViewCell {
             target: self,
             action: #selector(didTapPlusButton)
         )
-        button.layer.borderWidth = 1
         button.tintColor = .red
         return button
     }()
@@ -81,7 +75,7 @@ final class TrackerCell: UICollectionViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     // MARK: - Public Methods
@@ -107,7 +101,6 @@ final class TrackerCell: UICollectionViewCell {
 
 extension TrackerCell {
     private func setupViews() {
-        contentView.layer.borderWidth = 1
         contentView.setupView(cellBackgroundView)
         contentView.setupView(quantityManagementView)
         cellBackgroundView.setupView(emojiWrapper)
