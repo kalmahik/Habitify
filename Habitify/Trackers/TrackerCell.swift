@@ -31,15 +31,15 @@ final class TrackerCell: UICollectionViewCell {
         view.backgroundColor = UIColor.init(hex: "#FFFFFF4D")
         view.layer.cornerRadius = 12
         view.layer.masksToBounds = true
-//        view.layer.borderWidth = 1
+        view.layer.borderWidth = 1
         return view
     }()
     
     private lazy var emoji: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .center
-//        label.layer.borderWidth = 1
+        label.layer.borderWidth = 1
         return label
     }()
     
@@ -59,15 +59,7 @@ final class TrackerCell: UICollectionViewCell {
         return label
     }()
     
-//    private lazy var plusButton: UIButton = {
-//        let button  = UIButton(type: .custom)
-//        button.setImage(UIImage(named: "plus.circle.fill"), for: .normal)
-//        button.tintColor = .ypRed
-//        return button
-//    }()
-    
     private lazy var plusButton: UIButton = {
-        
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .regular, scale: .large)
         let plusImage = UIImage(systemName: "plus.circle.fill", withConfiguration: imageConfig)
         let button = UIButton.systemButton(

@@ -10,6 +10,7 @@
 		843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D402BCC50F7001B0A9C /* TrackerCell.swift */; };
 		843F2D432BCC522D001B0A9C /* TrackerCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */; };
 		843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */; };
+		843F2D472BCE3D46001B0A9C /* IICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */; };
 		846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381702BBFB2F2002968E5 /* AppDelegate.swift */; };
 		846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381722BBFB2F2002968E5 /* SceneDelegate.swift */; };
 		8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */; };
@@ -45,6 +46,7 @@
 		843F2D402BCC50F7001B0A9C /* TrackerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCell.swift; sourceTree = "<group>"; };
 		843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionData.swift; sourceTree = "<group>"; };
 		843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerSectionHeader.swift; sourceTree = "<group>"; };
+		843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		8463816D2BBFB2F2002968E5 /* Habitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Habitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846381702BBFB2F2002968E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		846381722BBFB2F2002968E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				F557C1132BC1B84E004052B3 /* UIView+Extension.swift */,
 				F557C1192BC289DE004052B3 /* UIViewController+Extension.swift */,
 				F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */,
+				843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				846381A42BC7AB67002968E5 /* UILabel+Extension.swift in Sources */,
 				846381982BC5056A002968E5 /* TrackerCategory.swift in Sources */,
 				F557C1242BC3AFDA004052B3 /* TrackerCreationViewController.swift in Sources */,
+				843F2D472BCE3D46001B0A9C /* IICollectionView+Extension.swift in Sources */,
 				F5E4A9D92BC9888300350368 /* CategoriesScreen.swift in Sources */,
 				8463818A2BBFB952002968E5 /* TrackersViewController.swift in Sources */,
 				8463819A2BC5059B002968E5 /* TrackerRecord.swift in Sources */,

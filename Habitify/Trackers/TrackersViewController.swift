@@ -11,10 +11,8 @@ final class TrackersViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let emptyView = EmptyView(emoji: "💫", title: "Что будем отслеживать?")
+//    private let emptyView = EmptyView(emoji: "💫", title: "Что будем отслеживать?")
     
-//    private lazy var searchBar:UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 20))
-
     private lazy var searchBar = UISearchBar(frame: .zero)
     
     private lazy var collectionView: UICollectionView = {
@@ -69,10 +67,15 @@ extension TrackersViewController: UICollectionViewDelegate {
 
 extension TrackersViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int { collectionData.count }
+    func numberOfSections(in collectionView: UICollectionView) -> Int { trackerCollectionData.count }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        trackerCollectionData[section].data.count
+        if (trackerCollectionData.isEmpty) {
+            self.collectionView.setEmptyMessage("Nothing to show :(")
+        } else {
+            self.collectionView.restore()
+        }
+        return trackerCollectionData[section].data.count
     }
     
     func collectionView(
@@ -108,16 +111,12 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        let section = indexPath.section
-        return CGSize(width: 167, height: 148)
-    }
+    ) -> CGSize { CGSize(width: 167, height: 148) }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         // Set insets for each section here
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
-
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -150,7 +149,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
 // MARK: - Date Picker
 
 extension TrackersViewController {
@@ -171,6 +169,8 @@ extension TrackersViewController {
     }
 }
 
+// MARK: - Configure
+
 extension TrackersViewController {
 
     private func setupNavBar() {
@@ -179,23 +179,22 @@ extension TrackersViewController {
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         add.tintColor = .mainBlack
         navigationItem.leftBarButtonItem = add
-        
         searchBar.placeholder = "Your placeholder"
-        
         navigationItem.titleView = searchBar
     }
     
     private func setupViews() {
         view.backgroundColor = .mainWhite
-        view.setupView(emptyView)
+//        view.setupView(emptyView)
         view.setupView(searchBar)
         view.setupView(collectionView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-//            emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),
-//            emptyView.heightAnchor.constraint(equalTo: view.heightAnchor),
+//            emptyView.widthAnchor.constraint(equalTo: collectionView.widthAnchor),
+//            emptyView.heightAnchor.constraint(equalTo: collectionView.heightAnchor),
+                                                            
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             searchBar.heightAnchor.constraint(equalToConstant: 36),
             
