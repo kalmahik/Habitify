@@ -13,6 +13,7 @@
 		843F2D472BCE3D46001B0A9C /* IICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */; };
 		843F2D492BCE51B0001B0A9C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D482BCE51B0001B0A9C /* CategoryCell.swift */; };
 		843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */; };
+		843F2D4F2BCFB0F1001B0A9C /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */; };
 		846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381702BBFB2F2002968E5 /* AppDelegate.swift */; };
 		846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381722BBFB2F2002968E5 /* SceneDelegate.swift */; };
 		8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */; };
@@ -51,6 +52,7 @@
 		843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		843F2D482BCE51B0001B0A9C /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
+		843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Tap.swift"; path = "Habitify/UIView+Tap.swift"; sourceTree = SOURCE_ROOT; };
 		8463816D2BBFB2F2002968E5 /* Habitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Habitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846381702BBFB2F2002968E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		846381722BBFB2F2002968E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				846381A32BC7AB67002968E5 /* UILabel+Extension.swift */,
 				F557C1132BC1B84E004052B3 /* UIView+Extension.swift */,
+				843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */,
 				F557C1192BC289DE004052B3 /* UIViewController+Extension.swift */,
 				F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */,
 				843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */,
@@ -310,6 +313,7 @@
 				8463818C2BBFB98E002968E5 /* StatisticsViewController.swift in Sources */,
 				843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */,
 				843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */,
+				843F2D4F2BCFB0F1001B0A9C /* UIView+Tap.swift in Sources */,
 				846622C92BC7D048002105E2 /* TextField.swift in Sources */,
 				F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */,
 				F557C1182BC1F617004052B3 /* Button.swift in Sources */,

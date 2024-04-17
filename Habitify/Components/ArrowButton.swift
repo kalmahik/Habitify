@@ -9,8 +9,8 @@ import UIKit
 
 
 final class ArrowButton: UIView {
-    // как сделать поля опциональными
-    var action: () -> Void = {} //чет какая-то дичь, может можно проще?
+
+    var action: () -> Void = {}
 
     convenience init(title: String, action: @escaping () -> Void) {
         self.init()
@@ -43,19 +43,12 @@ final class ArrowButton: UIView {
         image.tintColor = .mainGray
         return image
     }()
-    
-    // попахивает говном
-    @objc private func didTapButton() {
-        action()
-    }
-    
+
     private func setupViews() {
         setupView(titleLabel)
         setupView(image)
+        addTapGesture(action)
         backgroundColor = .mainLigthGray
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapButton))
-        self.isUserInteractionEnabled = true
-        self.addGestureRecognizer(tapRecognizer)
     }
     
     private func setupConstraints() {
