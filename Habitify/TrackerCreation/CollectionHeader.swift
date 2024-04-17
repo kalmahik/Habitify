@@ -22,32 +22,16 @@ final class CollectionHeader: UICollectionViewCell {
         textField.layer.masksToBounds = true
         return textField
     }()
+
+    private lazy var categoryButton = ArrowButton(title: "Категория") {
+        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
+        self.parentViewController?.present(viewController, animated: true)
+    }
     
-    private lazy var arrowCategoryButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .mainLigthGray
-        button.setTitleColor(.mainBlack, for: .normal)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        button.setTitle("Категория", for: .normal)
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-        button.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        button.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        button.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)     
-        button.contentHorizontalAlignment = .leading
-        return button
-    }() 
-    
-    
-    private lazy var arrowScheduleButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .mainLigthGray
-        button.setTitleColor(.mainBlack, for: .normal)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        button.setTitle("Расписание", for: .normal)
-        return button
-    }()
+    private lazy var scheduleButton = ArrowButton(title: "Расписание") {
+        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
+        self.parentViewController?.present(viewController, animated: true)
+    }
     
     private let titleView: UIStackView =  {
         let stack: UIStackView = UIStackView()
@@ -56,14 +40,18 @@ final class CollectionHeader: UICollectionViewCell {
         return stack
     }()
     
-    private let wrapperView: UIStackView =  {
-        let stack: UIStackView = UIStackView()
-        stack.axis = NSLayoutConstraint.Axis.vertical
-        stack.distribution = UIStackView.Distribution.fillEqually
-        stack.spacing = 0
-        stack.layer.cornerRadius = 16
-        stack.layer.masksToBounds = true
-        return stack
+    private let wrapperView: UIView =  {
+        let view = UIView()
+        view.layer.cornerRadius = 16
+        view.layer.masksToBounds = true
+        view.backgroundColor = .mainLigthGray
+        return view
+    }()
+    
+    private let line: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mainBlack
+        return view
     }()
     
     // MARK: - Initializers
@@ -81,7 +69,7 @@ final class CollectionHeader: UICollectionViewCell {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     private func commonInit() {
         setupViews()
         setupConstraints()
@@ -91,30 +79,43 @@ final class CollectionHeader: UICollectionViewCell {
 
     
     // MARK: - Private Methods
-    
-    @objc private func didTapButton() {
-        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
-        parentViewController?.present(viewController, animated: true)
-    }
 }
 
 extension CollectionHeader {
     private func setupViews() {
         contentView.setupView(trackerNameInput)        
         contentView.setupView(wrapperView)
-        wrapperView.addArrangedSubview(arrowCategoryButton)
-        wrapperView.addArrangedSubview(arrowScheduleButton)
+        wrapperView.setupView(categoryButton)
+        wrapperView.setupView(line)
+        wrapperView.setupView(scheduleButton)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             trackerNameInput.heightAnchor.constraint(equalToConstant: 75),
+            trackerNameInput.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
             wrapperView.heightAnchor.constraint(equalToConstant: 150),
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             wrapperView.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 24),
+            
+            categoryButton.topAnchor.constraint(equalTo: wrapperView.topAnchor),
+            categoryButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
+            categoryButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
+            categoryButton.heightAnchor.constraint(equalToConstant: 75),
+            
+            line.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
+            line.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
+            line.heightAnchor.constraint(equalToConstant: 1),
+            line.topAnchor.constraint(equalTo: categoryButton.bottomAnchor),
+            
+            scheduleButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
+            scheduleButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
+            scheduleButton.heightAnchor.constraint(equalToConstant: 75),
+            scheduleButton.topAnchor.constraint(equalTo: line.bottomAnchor),
         ])
     }
 }

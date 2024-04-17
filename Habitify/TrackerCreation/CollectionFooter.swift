@@ -20,12 +20,10 @@ final class CollectionFooter: UICollectionViewCell {
         return stack
     }()
     
-    private lazy var cancelButton = Button(title: "Отменить", color: .mainRed) {
-
+    private lazy var cancelButton = Button(title: "Отменить", color: .mainRed, style: .flat) {
     }
     
-    private lazy var creationButton = Button(title: "Создать", color: .mainLigthGray) {
-
+    private lazy var creationButton = Button(title: "Создать", color: .mainBlack, style: .normal) {
     }
 
     // MARK: - Initializers

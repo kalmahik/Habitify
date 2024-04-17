@@ -7,14 +7,29 @@
 
 import UIKit
 
+enum ButtonStyle {
+    case normal
+    case flat
+}
+
 final class Button: UIButton {
-    var action: (() -> Void)? //чет какая-то дичь, может можно проще?
+    // как сделать поля опциональными
+    var action: () -> Void = {} //чет какая-то дичь, может можно проще?
+    var color: UIColor = .mainBlack
+    var style: ButtonStyle = .normal
     
-    convenience init(title: String, color: UIColor?, action: @escaping () -> Void) {
+    convenience init(
+        title: String,
+        color: UIColor,
+        style: ButtonStyle,
+        action: @escaping () -> Void
+    ) {
         self.init()
         button.setTitle(title, for: .normal)
         button.backgroundColor = color
         self.action = action
+        self.color = color
+        self.style = style
     }
     
     override init(frame: CGRect) {
@@ -34,17 +49,17 @@ final class Button: UIButton {
     
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .mainBlack
-        button.setTitleColor(.mainWhite, for: .normal)
+        button.backgroundColor = style == .flat ? .mainWhite : color
+        button.setTitleColor(style == .flat ? color : .mainWhite, for: .normal)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1
+        button.layer.borderColor = color.cgColor
         return button
     }()
     
     // попахивает говном
     @objc private func didTapButton() {
-        guard let action else { return }
         action()
     }
     

@@ -11,7 +11,7 @@ final class CategoriesScreenViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private lazy var addCategoryButton = Button(title: "Добавить категорию", color: .mainBlack) {
+    private lazy var addCategoryButton = Button(title: "Добавить категорию", color: .mainBlack, style: .normal) {
         self.present(CategoryCreationViewController().wrapWithNavigationController(), animated: true)
     }
     

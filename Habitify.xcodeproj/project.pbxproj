@@ -12,6 +12,7 @@
 		843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */; };
 		843F2D472BCE3D46001B0A9C /* IICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */; };
 		843F2D492BCE51B0001B0A9C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D482BCE51B0001B0A9C /* CategoryCell.swift */; };
+		843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */; };
 		846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381702BBFB2F2002968E5 /* AppDelegate.swift */; };
 		846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381722BBFB2F2002968E5 /* SceneDelegate.swift */; };
 		8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */; };
@@ -49,6 +50,7 @@
 		843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerSectionHeader.swift; sourceTree = "<group>"; };
 		843F2D462BCE3D46001B0A9C /* IICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		843F2D482BCE51B0001B0A9C /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
 		8463816D2BBFB2F2002968E5 /* Habitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Habitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846381702BBFB2F2002968E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		846381722BBFB2F2002968E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				F557C1172BC1F617004052B3 /* Button.swift */,
+				843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */,
 				846622C82BC7D048002105E2 /* TextField.swift */,
 				F557C1112BC1B063004052B3 /* EmptyView.swift */,
 			);
@@ -293,6 +296,7 @@
 				F557C1122BC1B063004052B3 /* EmptyView.swift in Sources */,
 				F557C1162BC1F47C004052B3 /* TrackerTypeModalViewController.swift in Sources */,
 				8463819C2BC50D0C002968E5 /* ColorCell.swift in Sources */,
+				843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */,
 				F565B2E12BC3B5A500A06B16 /* UIColor+Extension.swift in Sources */,
 				846381882BBFB847002968E5 /* TabBarViewController.swift in Sources */,
 				846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */,

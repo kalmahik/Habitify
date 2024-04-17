@@ -20,7 +20,7 @@ final class CategoryCreationViewController: UIViewController {
         return textField
     }()
     
-    private lazy var doneButton = Button(title: "Готово", color: .mainBlack) {
+    private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
         guard let name = self.categoryNameInput.text else { return }
         self.createNewCategory(with: name)
     }

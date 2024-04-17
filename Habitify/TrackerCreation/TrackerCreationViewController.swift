@@ -130,7 +130,7 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let section = indexPath.section
         switch section {
-            case 0: return CGSize(width: collectionView.frame.width, height: 250) // ахтунг! убрать 250!
+            case 0: return CGSize(width: collectionView.frame.width, height: 273) // ахтунг! убрать 273!
             case 1: return CGSize(width: 52, height: 52)
             case 2: return CGSize(width: 52, height: 52)
             case 3: return CGSize(width: collectionView.frame.width, height: 60)
@@ -148,7 +148,7 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         case 2:
             return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18) // Insets for section 0
         case 3:
-            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20) // Insets for section 0
+            return UIEdgeInsets(top: 40, left: 20, bottom: 0, right: 20) // Insets for section 0
         default:
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // Default insets
         }
