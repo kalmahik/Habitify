@@ -25,6 +25,10 @@ final class CategoriesScreenViewController: UIViewController {
 //        tableView.separatorColor = .ypBlack
 //        tableView.backgroundColor = .ypBlack
 //        tableView.backgroundView = emptyView
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.scrollIndicatorInsets = tableView.contentInset
         return tableView
     }()
     
@@ -89,10 +93,7 @@ extension CategoriesScreenViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-//            emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),
-//            emptyView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            
+
             addCategoryButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addCategoryButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             addCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),

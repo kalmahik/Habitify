@@ -24,8 +24,9 @@ final class TrackerTypeModalViewController: UIViewController {
         self.present(viewController, animated: true)
     }
     
-    private let nonRegularButton = Button(title: "Нерегулярное событие", color: .mainBlack, style: .normal) {
-        print("Нерегулярное событие")
+    private  lazy var nonRegularButton = Button(title: "Нерегулярное событие", color: .mainBlack, style: .normal) {
+        let viewController = ScheduleScreenViewController().wrapWithNavigationController()
+        self.present(viewController, animated: true)
     }
     
     // MARK: - UIViewController

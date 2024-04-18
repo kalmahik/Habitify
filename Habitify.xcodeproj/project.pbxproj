@@ -14,6 +14,9 @@
 		843F2D492BCE51B0001B0A9C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D482BCE51B0001B0A9C /* CategoryCell.swift */; };
 		843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */; };
 		843F2D4F2BCFB0F1001B0A9C /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */; };
+		843F2D532BD0E6D7001B0A9C /* ScheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */; };
+		843F2D552BD0E776001B0A9C /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D542BD0E776001B0A9C /* ScheduleCell.swift */; };
+		843F2D582BD0F4A0001B0A9C /* DayOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D572BD0F4A0001B0A9C /* DayOfWeek.swift */; };
 		846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381702BBFB2F2002968E5 /* AppDelegate.swift */; };
 		846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381722BBFB2F2002968E5 /* SceneDelegate.swift */; };
 		8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */; };
@@ -53,6 +56,9 @@
 		843F2D482BCE51B0001B0A9C /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
 		843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Tap.swift"; path = "Habitify/UIView+Tap.swift"; sourceTree = SOURCE_ROOT; };
+		843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleScreen.swift; sourceTree = "<group>"; };
+		843F2D542BD0E776001B0A9C /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
+		843F2D572BD0F4A0001B0A9C /* DayOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfWeek.swift; sourceTree = "<group>"; };
 		8463816D2BBFB2F2002968E5 /* Habitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Habitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846381702BBFB2F2002968E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		846381722BBFB2F2002968E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +114,15 @@
 			path = Trackers;
 			sourceTree = "<group>";
 		};
+		843F2D562BD0E818001B0A9C /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */,
+				843F2D542BD0E776001B0A9C /* ScheduleCell.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
 		846381642BBFB2F2002968E5 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +146,7 @@
 				84A4219C2BCB15DF007F3276 /* CategoryCreation */,
 				84A421992BCAF516007F3276 /* Extensions */,
 				F5E4A9D72BC9880400350368 /* Components */,
+				843F2D562BD0E818001B0A9C /* Schedule */,
 				F5E4A9D62BC987EA00350368 /* Category */,
 				846381942BC5053F002968E5 /* Models */,
 				846381932BC483EA002968E5 /* TrackerCreation */,
@@ -168,6 +184,7 @@
 				846381952BC50551002968E5 /* Tracker.swift */,
 				846381972BC5056A002968E5 /* TrackerCategory.swift */,
 				846381992BC5059B002968E5 /* TrackerRecord.swift */,
+				843F2D572BD0F4A0001B0A9C /* DayOfWeek.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -305,6 +322,8 @@
 				846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */,
 				846381A42BC7AB67002968E5 /* UILabel+Extension.swift in Sources */,
 				846381982BC5056A002968E5 /* TrackerCategory.swift in Sources */,
+				843F2D582BD0F4A0001B0A9C /* DayOfWeek.swift in Sources */,
+				843F2D552BD0E776001B0A9C /* ScheduleCell.swift in Sources */,
 				F557C1242BC3AFDA004052B3 /* TrackerCreationViewController.swift in Sources */,
 				843F2D472BCE3D46001B0A9C /* IICollectionView+Extension.swift in Sources */,
 				F5E4A9D92BC9888300350368 /* CategoriesScreen.swift in Sources */,
@@ -314,6 +333,7 @@
 				843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */,
 				843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */,
 				843F2D4F2BCFB0F1001B0A9C /* UIView+Tap.swift in Sources */,
+				843F2D532BD0E6D7001B0A9C /* ScheduleScreen.swift in Sources */,
 				846622C92BC7D048002105E2 /* TextField.swift in Sources */,
 				F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */,
 				F557C1182BC1F617004052B3 /* Button.swift in Sources */,

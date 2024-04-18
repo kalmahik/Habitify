@@ -29,7 +29,7 @@ final class CollectionHeader: UICollectionViewCell {
     }
     
     private lazy var scheduleButton = ArrowButton(title: "Расписание") {
-        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
+        let viewController = ScheduleScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
     
