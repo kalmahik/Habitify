@@ -29,10 +29,10 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - Public Methods
     
-    func setupCell(category: TrackerCategory) {
+    func setupCell(schedule: DayOfWeekItem) {
         setupViews()
         setupConstraints()
-        titleLabel.text = category.title
+        titleLabel.text = schedule.dayOfWeek.fullName
     }
     
     func selectCell() {

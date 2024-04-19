@@ -22,9 +22,7 @@ final class ScheduleScreenViewController: UIViewController {
         tableView.register(ScheduleCell.self, forCellReuseIdentifier: ScheduleCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
-//        tableView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-//        tableView.scrollIndicatorInsets = tableView.contentInset
-        tableView.contentInset = UIEdgeInsets(top: 70, left: 10, bottom: 50, right: 10)
+        tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         return tableView
     }()
     
@@ -52,18 +50,25 @@ extension ScheduleScreenViewController: UITableViewDelegate {
 
 extension ScheduleScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        trackerCollectionData.count
+        scheduleCollectionData.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifier, for: indexPath)
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
-        let weekDay = trackerCollectionData[indexPath.row]
-
-        scheduleCell.setupCell(category: weekDay)
+        let weekDay = scheduleCollectionData[indexPath.row]
+        scheduleCell.setupCell(schedule: weekDay)
+        scheduleCell.clipsToBounds = true
+        scheduleCell.layer.cornerRadius = 16
         scheduleCell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        if indexPath.row == trackerCollectionData.count - 1 {
+        // то что ниже похоже на говно, попытаться отрефакторить
+        if indexPath.row == 0 {
+            scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else if indexPath.row == scheduleCollectionData.count - 1 {
             scheduleCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+            scheduleCell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+            scheduleCell.layer.maskedCorners = []
         }
         return scheduleCell
     }
@@ -85,14 +90,10 @@ extension ScheduleScreenViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-        
-    
-                        
             
             doneButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             doneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
