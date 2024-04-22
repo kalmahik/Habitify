@@ -39,7 +39,9 @@ final class ScheduleScreenViewController: UIViewController {
 
 extension ScheduleScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        scheduleCollectionData[indexPath.row].isEnabled = !scheduleCollectionData[indexPath.row].isEnabled
+        tableView.reloadRows(at: [indexPath], with: .fade)
+//        tableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

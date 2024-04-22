@@ -83,7 +83,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
-        let tracker = trackerList[indexPath.row]
+        let tracker = trackerCollectionData[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
         trackerCell.setupCell(tracker: tracker)
         return trackerCell

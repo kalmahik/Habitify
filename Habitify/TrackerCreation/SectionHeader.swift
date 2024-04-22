@@ -23,16 +23,6 @@ final class SectionHeader: UICollectionReusableView {
     
     // MARK: - Initializers
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
     private func commonInit() {
         setupViews()
         setupConstraints()
@@ -43,6 +33,7 @@ final class SectionHeader: UICollectionReusableView {
     // а точно нам нужен этот метод? есть же инит, может его заюзать?
     func setupSection(title: String) {
         titleLabel.text = title
+        commonInit()
     }
 }
 

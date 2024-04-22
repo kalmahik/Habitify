@@ -18,28 +18,23 @@ final class Button: UIButton {
     var color: UIColor = .mainBlack
     var style: ButtonStyle = .normal
     
-    convenience init(
+    init(
         title: String,
         color: UIColor,
         style: ButtonStyle,
         action: @escaping () -> Void
     ) {
-        self.init()
+        super.init(frame: .zero)
         button.setTitle(title, for: .normal)
         button.backgroundColor = color
         self.action = action
         self.color = color
         self.style = style
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func commonInit() {

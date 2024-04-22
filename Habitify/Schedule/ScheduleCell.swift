@@ -12,6 +12,8 @@ final class ScheduleCell: UITableViewCell {
     
     static let identifier = "ScheduleCell"
     
+    // MARK: - Public Properties
+    
     // MARK: - Private Properties
     
     private lazy var titleLabel: UILabel = {
@@ -22,6 +24,7 @@ final class ScheduleCell: UITableViewCell {
     private lazy var toggle: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .mainBlue
+        toggle.addTarget(self, action: #selector(didSwitchTapped), for: .allEvents)
         return toggle
     }()
     
@@ -33,13 +36,13 @@ final class ScheduleCell: UITableViewCell {
         setupViews()
         setupConstraints()
         titleLabel.text = schedule.dayOfWeek.fullName
-    }
-    
-    func selectCell() {
-        titleLabel.backgroundColor = .gray
+        toggle.isOn = schedule.isEnabled
     }
     
     // MARK: - Private Methods
+    
+    @objc func didSwitchTapped(switch: UISwitch) {
+    }
 }
 
 extension ScheduleCell {
@@ -47,14 +50,6 @@ extension ScheduleCell {
         contentView.setupView(titleLabel)
         contentView.setupView(toggle)
         contentView.backgroundColor = .mainLigthGray
-        let isoDate = "2024-04-21T17:44:00+0000"
-        let dateFormatter = ISO8601DateFormatter()
-        let date = dateFormatter.date(from:isoDate)!
-        
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: date)
-        let dayOfWeek = calendar.component(.weekday, from: today)
-        print(dayOfWeek)
     }
     
     private func setupConstraints() {

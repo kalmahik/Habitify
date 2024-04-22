@@ -10,6 +10,8 @@ import UIKit
 final class CollectionFooter: UICollectionViewCell {
     static let identifier = "CollectionFooter"
     
+    weak var delegate: CollectionFooterDelegate?
+    
     private let footerLabel = UILabel()
     
     private let wrapperView: UIStackView =  {
@@ -24,25 +26,12 @@ final class CollectionFooter: UICollectionViewCell {
     }
     
     private lazy var creationButton = Button(title: "Создать", color: .mainBlack, style: .normal) {
+        self.delegate?.didTapCreate()
     }
 
-    // MARK: - Initializers
+    // MARK: - Initializers    
     
-    convenience init() {
-        self.init()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    private func commonInit() {
+    func setupCell() {
         setupViews()
         setupConstraints()
     }

@@ -39,8 +39,21 @@ final class TrackerCreationViewController: UIViewController {
         setupConstraints()
     }
     
-    @objc private func addTapped() {
-        
+    @objc private func didCreateTapped() {
+        newTracker = Tracker(
+            id: UUID(),
+            type: .regular,
+            name: "123",
+            color: "#FF881EFF",
+            emoji: "😅",
+            schedule: "SCEDULE"
+        )
+        let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "123"} ?? 0
+        print("----1",  trackerCollectionData[categoryIndex].trackers.count)
+        trackerCollectionData[categoryIndex].trackers.append(newTracker!)
+        collectionView.reloadData()
+        print("----3",  trackerCollectionData[categoryIndex].trackers.count)
+        dismiss(animated: true)
     }
 }
 
@@ -76,6 +89,7 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHeader.identifier, for: indexPath)
             guard let headerCell = cell as? CollectionHeader else { return UICollectionViewCell() }
+            headerCell.setupCell()
             return headerCell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath)
@@ -93,6 +107,8 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFooter.identifier, for: indexPath)
             guard let footerCell = cell as? CollectionFooter else { return UICollectionViewCell() }
+            footerCell.delegate = self
+            footerCell.setupCell()
             return footerCell
         default:
             return UICollectionViewCell()
@@ -185,6 +201,15 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         )
     }
 }
+
+// MARK: - CollectionFooterDelegate
+
+extension TrackerCreationViewController: CollectionFooterDelegate {
+    func didTapCreate() {
+        didCreateTapped()
+    }
+}
+
 
 extension TrackerCreationViewController {
     

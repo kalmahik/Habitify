@@ -9,10 +9,10 @@ import Foundation
 
 struct DayOfWeekItem {
     let dayOfWeek: DayOfWeek
-    let isEnabled: Bool
+    var isEnabled: Bool
 }
 
-let scheduleCollectionData = [
+var scheduleCollectionData = [
     DayOfWeekItem(dayOfWeek: .monday, isEnabled: false),
     DayOfWeekItem(dayOfWeek: .tuesday, isEnabled: false),
     DayOfWeekItem(dayOfWeek: .wednesday, isEnabled: false),
@@ -21,3 +21,5 @@ let scheduleCollectionData = [
     DayOfWeekItem(dayOfWeek: .saturday, isEnabled: false),
     DayOfWeekItem(dayOfWeek: .sunday, isEnabled: false),
 ]
+
+var selectedScheduleOptions: [DayOfWeek] = []

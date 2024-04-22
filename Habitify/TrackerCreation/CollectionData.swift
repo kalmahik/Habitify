@@ -30,3 +30,5 @@ let collectionData = [
     Section(title: "Цвет", data: colorList),
     Section(title: "", data: [""]), //hack for the footer
 ]
+
+var newTracker: Tracker?

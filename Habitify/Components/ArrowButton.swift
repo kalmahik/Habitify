@@ -8,24 +8,20 @@
 import UIKit
 
 
-final class ArrowButton: UIView {
+final class ArrowButton: UIControl {
 
-    var action: () -> Void = {}
+    var action: () -> Void
 
-    convenience init(title: String, action: @escaping () -> Void) {
-        self.init()
-        titleLabel.text = title
+    init(title: String, action: @escaping () -> Void = {}) {
         self.action = action
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
+        titleLabel.text = title
+        addTarget(self, action: #selector(tapOnSelf), for: .touchUpInside)
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func commonInit() {
@@ -43,6 +39,10 @@ final class ArrowButton: UIView {
         image.tintColor = .mainGray
         return image
     }()
+    
+    @objc private func tapOnSelf() {
+        action()
+    }
 
     private func setupViews() {
         setupView(titleLabel)
