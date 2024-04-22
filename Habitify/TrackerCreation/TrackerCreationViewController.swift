@@ -18,7 +18,6 @@ final class TrackerCreationViewController: UIViewController {
         collectionView.register(EmojiCell.self, forCellWithReuseIdentifier: EmojiCell.identifier)
         collectionView.register(ColorCell.self, forCellWithReuseIdentifier: ColorCell.identifier)
         collectionView.register(CollectionFooter.self, forCellWithReuseIdentifier: CollectionFooter.identifier)
-        
         collectionView.register(
             SectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -49,10 +48,10 @@ final class TrackerCreationViewController: UIViewController {
             schedule: "SCEDULE"
         )
         let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "123"} ?? 0
-        print("----1",  trackerCollectionData[categoryIndex].trackers.count)
-        trackerCollectionData[categoryIndex].trackers.append(newTracker!)
-        collectionView.reloadData()
-        print("----3",  trackerCollectionData[categoryIndex].trackers.count)
+        DispatchQueue.main.async {
+            trackerCollectionData[categoryIndex].trackers.append(newTracker!)
+            self.collectionView.reloadData()
+        }
         dismiss(animated: true)
     }
 }
