@@ -50,7 +50,7 @@ final class ArrowButton: UIControl {
     }()
     
     private lazy var image: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName:  "chevron.forward"))
+        let image = UIImageView(image: UIImage(named: "chevronRight"))
         image.tintColor = .mainGray
         return image
     }()
@@ -74,12 +74,6 @@ final class ArrowButton: UIControl {
             wrapper.trailingAnchor.constraint(equalTo: image.leadingAnchor, constant: -16),
             wrapper.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-//            titleLabel.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
-//            titleLabel.trailingAnchor.constraint(equalTo:  wrapper.trailingAnchor),
-//            
-//            subtitleLabel.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
-//            subtitleLabel.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor),
-
             image.widthAnchor.constraint(equalToConstant: 24),
             image.heightAnchor.constraint(equalToConstant: 24),
             image.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
