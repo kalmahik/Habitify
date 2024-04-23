@@ -20,15 +20,16 @@ final class CollectionHeader: UICollectionViewCell {
         textField.backgroundColor = .mainLigthGray
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
+        textField.delegate = self
         return textField
     }()
 
-    private lazy var categoryButton = ArrowButton(title: "Категория") {
+    private lazy var categoryButton = ArrowButton(title: "Категория", subtitle: "Главное") {
         let viewController = CategoriesScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
     
-    private lazy var scheduleButton = ArrowButton(title: "Расписание") {
+    private lazy var scheduleButton = ArrowButton(title: "Расписание", subtitle: newTracker.schedule) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
@@ -50,7 +51,7 @@ final class CollectionHeader: UICollectionViewCell {
     
     private let line: UIView = {
         let view = UIView()
-        view.backgroundColor = .mainBlack
+        view.backgroundColor = .mainGray
         return view
     }()
     
@@ -64,6 +65,14 @@ final class CollectionHeader: UICollectionViewCell {
     }
     
     // MARK: - Private Methods
+}
+
+extension CollectionHeader:UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == trackerNameInput {
+            newTracker.name = textField.text ?? ""
+        }
+    }
 }
 
 extension CollectionHeader {

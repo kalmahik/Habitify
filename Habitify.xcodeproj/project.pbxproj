@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840E73042BD7882900C22AE0 /* TrackerPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E73032BD7882900C22AE0 /* TrackerPreparation.swift */; };
 		843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D402BCC50F7001B0A9C /* TrackerCell.swift */; };
 		843F2D432BCC522D001B0A9C /* TrackerCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */; };
 		843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840E73032BD7882900C22AE0 /* TrackerPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerPreparation.swift; sourceTree = "<group>"; };
 		843F2D402BCC50F7001B0A9C /* TrackerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCell.swift; sourceTree = "<group>"; };
 		843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionData.swift; sourceTree = "<group>"; };
 		843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerSectionHeader.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				846381972BC5056A002968E5 /* TrackerCategory.swift */,
 				846381992BC5059B002968E5 /* TrackerRecord.swift */,
 				843F2D572BD0F4A0001B0A9C /* DayOfWeek.swift */,
+				840E73032BD7882900C22AE0 /* TrackerPreparation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				843F2D472BCE3D46001B0A9C /* IICollectionView+Extension.swift in Sources */,
 				F5E4A9D92BC9888300350368 /* CategoriesScreen.swift in Sources */,
 				8463818A2BBFB952002968E5 /* TrackersViewController.swift in Sources */,
+				840E73042BD7882900C22AE0 /* TrackerPreparation.swift in Sources */,
 				8463819A2BC5059B002968E5 /* TrackerRecord.swift in Sources */,
 				8463818C2BBFB98E002968E5 /* StatisticsViewController.swift in Sources */,
 				843F2D5C2BD238B5001B0A9C /* ScheduleCollectionData.swift in Sources */,

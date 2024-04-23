@@ -12,10 +12,11 @@ final class ArrowButton: UIControl {
 
     var action: () -> Void
 
-    init(title: String, action: @escaping () -> Void = {}) {
+    init(title: String, subtitle: String? = "", action: @escaping () -> Void = {}) {
         self.action = action
         super.init(frame: .zero)
         titleLabel.text = title
+        subtitleLabel.text = subtitle
         addTarget(self, action: #selector(tapOnSelf), for: .touchUpInside)
         commonInit()
     }
@@ -34,6 +35,20 @@ final class ArrowButton: UIControl {
         return label
     }()
     
+    private lazy var subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .mainGray
+        return label
+    }()
+    
+    private lazy var wrapper: UIStackView =  {
+        let stack: UIStackView = UIStackView()
+        stack.axis = NSLayoutConstraint.Axis.vertical
+        stack.distribution = UIStackView.Distribution.equalCentering
+        stack.spacing = 2
+        return stack
+    }()
+    
     private lazy var image: UIImageView = {
         let image = UIImageView(image: UIImage(systemName:  "chevron.forward"))
         image.tintColor = .mainGray
@@ -45,7 +60,9 @@ final class ArrowButton: UIControl {
     }
 
     private func setupViews() {
-        setupView(titleLabel)
+        wrapper.addArrangedSubview(titleLabel)
+        wrapper.addArrangedSubview(subtitleLabel)
+        setupView(wrapper)
         setupView(image)
         addTapGesture(action)
         backgroundColor = .mainLigthGray
@@ -53,9 +70,15 @@ final class ArrowButton: UIControl {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: image.leadingAnchor, constant: -16),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            wrapper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            wrapper.trailingAnchor.constraint(equalTo: image.leadingAnchor, constant: -16),
+            wrapper.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+//            titleLabel.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
+//            titleLabel.trailingAnchor.constraint(equalTo:  wrapper.trailingAnchor),
+//            
+//            subtitleLabel.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
+//            subtitleLabel.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor),
 
             image.widthAnchor.constraint(equalToConstant: 24),
             image.heightAnchor.constraint(equalToConstant: 24),

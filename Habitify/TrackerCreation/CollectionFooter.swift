@@ -23,13 +23,14 @@ final class CollectionFooter: UICollectionViewCell {
     }()
     
     private lazy var cancelButton = Button(title: "Отменить", color: .mainRed, style: .flat) {
+        self.parentViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     private lazy var creationButton = Button(title: "Создать", color: .mainBlack, style: .normal) {
         self.delegate?.didTapCreate()
     }
 
-    // MARK: - Initializers    
+    // MARK: - Initializers
     
     func setupCell() {
         setupViews()

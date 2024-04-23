@@ -11,6 +11,9 @@ final class TrackersViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    static let didChangeNotification = Notification.Name(rawValue: "listWasUpdated")
+    private var observer: NSObjectProtocol?
+
 //    private let emptyView = EmptyView(emoji: "💫", title: "Что будем отслеживать?")
     
     private lazy var searchBar = UISearchBar(frame: .zero)
@@ -40,12 +43,24 @@ final class TrackersViewController: UIViewController {
         setupDatePicker()
         setupViews()
         setupConstraints()
+        addObserver()
     }
     
     // MARK: - Private Functions
     
     @objc private func addTapped() {
         present(TrackerTypeModalViewController().wrapWithNavigationController(), animated: true)
+    }
+    
+    private func addObserver() {
+        observer = NotificationCenter.default
+            .addObserver(
+                forName: TrackersViewController.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
     }
 }
 

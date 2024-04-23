@@ -39,20 +39,10 @@ final class TrackerCreationViewController: UIViewController {
     }
     
     @objc private func didCreateTapped() {
-        newTracker = Tracker(
-            id: UUID(),
-            type: .regular,
-            name: "123",
-            color: "#FF881EFF",
-            emoji: "😅",
-            schedule: "SCEDULE"
-        )
         let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "123"} ?? 0
-        DispatchQueue.main.async {
-            trackerCollectionData[categoryIndex].trackers.append(newTracker!)
-            self.collectionView.reloadData()
-        }
-        dismiss(animated: true)
+        trackerCollectionData[categoryIndex].trackers.append(Tracker(newTracker))
+        NotificationCenter.default.post(name: TrackersViewController.didChangeNotification, object: self)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 }
 

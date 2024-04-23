@@ -33,4 +33,16 @@ enum DayOfWeek: Int {
             case .saturday: return "Суббота"
         }
     }
+    
+    static func scheduleToString(schedule: [DayOfWeekItem]) -> String {
+        return schedule
+            .filter { $0.isEnabled }
+            .map{ $0.dayOfWeek.shortName }
+            .joined(separator: ", ")
+    }
+}
+
+struct DayOfWeekItem {
+    let dayOfWeek: DayOfWeek
+    var isEnabled: Bool
 }

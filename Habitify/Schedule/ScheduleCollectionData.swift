@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct DayOfWeekItem {
-    let dayOfWeek: DayOfWeek
-    var isEnabled: Bool
-}
-
 var scheduleCollectionData = [
     DayOfWeekItem(dayOfWeek: .monday, isEnabled: false),
     DayOfWeekItem(dayOfWeek: .tuesday, isEnabled: false),

@@ -31,4 +31,11 @@ let collectionData = [
     Section(title: "", data: [""]), //hack for the footer
 ]
 
-var newTracker: Tracker?
+var newTracker = TrackerPreparation(
+    id: UUID(),
+    type: .regular,
+    name: "",
+    color: "",
+    emoji: "",
+    schedule: ""
+)
