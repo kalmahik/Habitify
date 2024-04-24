@@ -12,12 +12,37 @@ enum ButtonStyle {
     case flat
 }
 
+enum ButtonState {
+    case normal
+    case disabled
+}
+
 final class Button: UIButton {
     // как сделать поля опциональными
     var action: () -> Void = {} //чет какая-то дичь, может можно проще?
-    var color: UIColor = .mainBlack
-    var style: ButtonStyle = .normal
     
+    var color: UIColor = .mainBlack {
+        didSet {
+            backgroundColor = color
+        }
+    }
+    
+    var disabledColor: UIColor = .mainGray
+    
+    override var isEnabled: Bool {
+        didSet {
+            if isEnabled {
+                backgroundColor = color
+            }
+            else {
+                backgroundColor = disabledColor
+                layer.borderColor = UIColor.mainGray.cgColor
+            }
+        }
+    }
+    
+    var style: ButtonStyle = .normal
+
     init(
         title: String,
         color: UIColor,
@@ -25,8 +50,8 @@ final class Button: UIButton {
         action: @escaping () -> Void
     ) {
         super.init(frame: .zero)
-        button.setTitle(title, for: .normal)
-        button.backgroundColor = color
+        setTitle(title, for: .normal)
+        backgroundColor = color
         self.action = action
         self.color = color
         self.style = style
@@ -42,30 +67,23 @@ final class Button: UIButton {
         setupConstraints()
     }
     
-    private lazy var button: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = style == .flat ? .mainWhite : color
-        button.setTitleColor(style == .flat ? color : .mainWhite, for: .normal)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = color.cgColor
-        return button
-    }()
-    
     // попахивает говном
     @objc private func didTapButton() {
         action()
     }
     
     private func setupViews() {
-        setupView(button)
+        backgroundColor = style == .flat ? .mainWhite : color
+        setTitleColor(style == .flat ? color : .mainWhite, for: .normal)
+        addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        layer.cornerRadius = 16
+        layer.borderWidth = 1
+        layer.borderColor = isEnabled ? color.cgColor : UIColor.mainGray.cgColor
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalTo: widthAnchor),
-            button.heightAnchor.constraint(equalToConstant: 60)
+            heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 }

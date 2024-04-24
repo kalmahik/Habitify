@@ -71,6 +71,16 @@ extension CollectionHeader:UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == trackerNameInput {
             newTracker.name = textField.text ?? ""
+            NotificationCenter.default.post(
+                name: TrackerCreationViewController.footerDidChangeNotification, object: self)
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if textField == trackerNameInput {
+            newTracker.name = textField.text ?? ""
+            NotificationCenter.default.post(
+                name: TrackerCreationViewController.footerDidChangeNotification, object: self)
         }
     }
 }

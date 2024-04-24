@@ -35,6 +35,7 @@ final class CollectionFooter: UICollectionViewCell {
     func setupCell() {
         setupViews()
         setupConstraints()
+        creationButton.isEnabled = !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
 

@@ -8,8 +8,11 @@
 import UIKit
 
 final class TrackerCreationViewController: UIViewController {
+    static let footerDidChangeNotification = Notification.Name(rawValue: "dooterDidChangeNotification")
     
     // MARK: - Private Properties
+    
+    private var observer: NSObjectProtocol?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,13 +39,25 @@ final class TrackerCreationViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+        addObserver()
     }
     
     @objc private func didCreateTapped() {
-        let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "123"} ?? 0
+        let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? 0
         trackerCollectionData[categoryIndex].trackers.append(Tracker(newTracker))
         NotificationCenter.default.post(name: TrackersViewController.didChangeNotification, object: self)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+    }
+    
+    private func addObserver() {
+        observer = NotificationCenter.default
+            .addObserver(
+                forName: TrackerCreationViewController.footerDidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
     }
 }
 
@@ -135,11 +150,11 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let section = indexPath.section
         switch section {
-            case 0: return CGSize(width: collectionView.frame.width, height: 273) // ахтунг! убрать 273!
-            case 1: return CGSize(width: 52, height: 52)
-            case 2: return CGSize(width: 52, height: 52)
-            case 3: return CGSize(width: collectionView.frame.width, height: 60)
-            default: return CGSize(width: 0, height: 0)
+        case 0: return CGSize(width: collectionView.frame.width, height: 273) // ахтунг! убрать 273!
+        case 1: return CGSize(width: 52, height: 52)
+        case 2: return CGSize(width: 52, height: 52)
+        case 3: return CGSize(width: collectionView.frame.width, height: 60)
+        default: return CGSize(width: 0, height: 0)
         }
     }
     
@@ -158,7 +173,7 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // Default insets
         }
     }
-
+    
     
     func collectionView(
         _ collectionView: UICollectionView,

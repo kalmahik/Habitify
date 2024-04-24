@@ -35,7 +35,7 @@ var newTracker = TrackerPreparation(
     id: UUID(),
     type: .regular,
     name: "",
-    color: "",
-    emoji: "",
+    color: "#832CF1FF",
+    emoji: "🙂",
     schedule: ""
 )
