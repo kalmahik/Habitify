@@ -9,20 +9,17 @@ import UIKit
 
 final class EmptyView: UIView {
     
-    convenience init(emoji: String, title: String) {
-        self.init()
-        emojiLabel.text = emoji
+    var emoji = ""
+    
+    init(emoji: String, title: String) {
+        super.init(frame: .zero)
+        self.emoji = emoji
         titleLabel.text = title
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func commonInit() {
@@ -30,12 +27,7 @@ final class EmptyView: UIView {
         setupConstraints()
     }
     
-// это говно, надо найти нормальный способ достучаться до frame
-    private lazy var emojiLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 80, weight: .regular)
-        return label
-    }()
+    private lazy var emojiImage = UIImageView(image: emoji.makeImage()?.noir)
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -45,15 +37,16 @@ final class EmptyView: UIView {
     }()
     
     private func setupSubviews() {
-        setupView(emojiLabel)
+        setupView(emojiImage)
         setupView(titleLabel)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            emojiLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emojiLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 8),
+            emojiImage.centerXAnchor.constraint(equalTo: centerXAnchor),
+            emojiImage.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: emojiImage.bottomAnchor, constant: 8),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }

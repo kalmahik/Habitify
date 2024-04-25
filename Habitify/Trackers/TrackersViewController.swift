@@ -13,8 +13,7 @@ final class TrackersViewController: UIViewController {
     
     static let didChangeNotification = Notification.Name(rawValue: "listWasUpdated")
     private var observer: NSObjectProtocol?
-
-//    private let emptyView = EmptyView(emoji: "💫", title: "Что будем отслеживать?")
+    
     
     private lazy var searchBar = UISearchBar(frame: .zero)
     
@@ -34,9 +33,9 @@ final class TrackersViewController: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
-
+    
     // MARK: - UIViewController
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -67,30 +66,32 @@ final class TrackersViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 
 extension TrackersViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-//        cell?.selectCell()
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-//        cell?.selectCell()
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
+    //        cell?.selectCell()
+    //    }
+    //
+    //    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    //        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
+    //        cell?.selectCell()
+    //    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension TrackersViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int { trackerCollectionData.count }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if (trackerCollectionData.isEmpty) {
+            collectionView.setEmptyMessage("💫", "Что будем отслеживать?")
+        } else {
+            collectionView.restore()
+        }
+        return trackerCollectionData.count
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if (trackerCollectionData.isEmpty) {
-            self.collectionView.setEmptyMessage("Nothing to show :(")
-        } else {
-            self.collectionView.restore()
-        }
-        return trackerCollectionData[section].trackers.count
+        trackerCollectionData[section].trackers.count
     }
     
     func collectionView(
@@ -187,7 +188,7 @@ extension TrackersViewController {
 // MARK: - Configure
 
 extension TrackersViewController {
-
+    
     private func setupNavBar() {
         navigationItem.title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -200,16 +201,12 @@ extension TrackersViewController {
     
     private func setupViews() {
         view.backgroundColor = .mainWhite
-//        view.setupView(emptyView)
         view.setupView(searchBar)
         view.setupView(collectionView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-//            emptyView.widthAnchor.constraint(equalTo: collectionView.widthAnchor),
-//            emptyView.heightAnchor.constraint(equalTo: collectionView.heightAnchor),
-                                                            
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             searchBar.heightAnchor.constraint(equalToConstant: 36),
             

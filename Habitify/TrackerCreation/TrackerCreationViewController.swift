@@ -43,7 +43,7 @@ final class TrackerCreationViewController: UIViewController {
     }
     
     @objc private func didCreateTapped() {
-        let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? 0
+        let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? -1
         trackerCollectionData[categoryIndex].trackers.append(Tracker(newTracker))
         NotificationCenter.default.post(name: TrackersViewController.didChangeNotification, object: self)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
