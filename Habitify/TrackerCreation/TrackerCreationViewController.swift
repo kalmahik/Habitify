@@ -12,6 +12,8 @@ final class TrackerCreationViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private var trackerCreationManager = TrackerCreationManager.shared
+
     private var observer: NSObjectProtocol?
     
     private lazy var collectionView: UICollectionView = {
@@ -44,7 +46,14 @@ final class TrackerCreationViewController: UIViewController {
     
     @objc private func didCreateTapped() {
         let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? -1
-        trackerCollectionData[categoryIndex].trackers.append(Tracker(newTracker))
+        let newTracker = Tracker(trackerCreationManager.newTracker)
+        if categoryIndex == -1 {
+            trackerCollectionData.append(TrackerCategory(
+                title: "Главнное",
+                trackers: [newTracker]))
+        } else {
+            trackerCollectionData[categoryIndex].trackers.append(newTracker)
+        }
         NotificationCenter.default.post(name: TrackersViewController.didChangeNotification, object: self)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
@@ -56,6 +65,8 @@ final class TrackerCreationViewController: UIViewController {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
+//                print(self?.trackerCreationManager.isValid, self?.trackerCreationManager.newTracker.name)
+//                self?.collectionView.reloadItems(at: [IndexPath(row: 0, section: 3)])
                 self?.collectionView.reloadData()
             }
     }

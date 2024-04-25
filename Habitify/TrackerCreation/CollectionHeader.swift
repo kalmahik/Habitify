@@ -12,15 +12,20 @@ final class CollectionHeader: UICollectionViewCell {
     
     static let identifier = "CollectionHeader"
     
+    // MARK: - Public Properties
+    
     // MARK: - Private Properties
+    
+    private var trackerCreationManager = TrackerCreationManager.shared
     
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
         textField.placeholder = "Введите название трекера"
-        textField.backgroundColor = .mainLigthGray
+        textField.backgroundColor = .mainBackgroud
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.delegate = self
+        textField.returnKeyType = UIReturnKeyType.done
         return textField
     }()
 
@@ -29,7 +34,10 @@ final class CollectionHeader: UICollectionViewCell {
         self.parentViewController?.present(viewController, animated: true)
     }
     
-    private lazy var scheduleButton = ArrowButton(title: "Расписание", subtitle: newTracker.schedule) {
+    private lazy var scheduleButton = ArrowButton(
+        title: "Расписание",
+        subtitle: trackerCreationManager.newTracker.schedule
+    ) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
@@ -45,7 +53,6 @@ final class CollectionHeader: UICollectionViewCell {
         let view = UIView()
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
-        view.backgroundColor = .mainLigthGray
         return view
     }()
     
@@ -67,21 +74,23 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Private Methods
 }
 
-extension CollectionHeader:UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == trackerNameInput {
-            newTracker.name = textField.text ?? ""
-            NotificationCenter.default.post(
-                name: TrackerCreationViewController.footerDidChangeNotification, object: self)
-        }
-    }
+extension CollectionHeader: UITextFieldDelegate {
+//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+//        if textField == trackerNameInput {
+//            trackerCreationManager.newTracker.name = textField.text ?? ""
+//            NotificationCenter.default.post(
+//                name: TrackerCreationViewController.footerDidChangeNotification, object: self
+//            )
+//        }
+//    }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        if textField == trackerNameInput {
-            newTracker.name = textField.text ?? ""
-            NotificationCenter.default.post(
-                name: TrackerCreationViewController.footerDidChangeNotification, object: self)
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.trackerCreationManager.changeName(name: textField.text)
+        NotificationCenter.default.post(
+            name: TrackerCreationViewController.footerDidChangeNotification, object: self
+        )
+        textField.endEditing(true)
+        return false
     }
 }
 

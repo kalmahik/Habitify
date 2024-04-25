@@ -15,3 +15,38 @@ struct TrackerPreparation {
     var emoji: String
     var schedule: String
 }
+
+struct TrackerCreationManager {
+    static let shared = TrackerCreationManager()
+    
+    var newTracker: TrackerPreparation
+    
+    var isValid: Bool {
+        //        !newTracker.name.trimmingCharacters(
+        //            in: .whitespacesAndNewlines
+        //        ).isEmpty
+        true
+    }
+    
+    private init() {
+        print("INIT")
+        self.newTracker = defaultTracker
+    }
+    
+    private let defaultTracker = TrackerPreparation(
+        id: UUID(),
+        type: .regular,
+        name: "",
+        color: "#832CF1FF",
+        emoji: "🙂",
+        schedule: ""
+    )
+    
+    mutating func resetCreation() {
+        newTracker = defaultTracker
+    }
+    
+    mutating func changeName(name: String?) {
+        newTracker.name = name ?? ""
+    }
+}

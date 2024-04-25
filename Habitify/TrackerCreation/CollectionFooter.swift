@@ -14,6 +14,8 @@ final class CollectionFooter: UICollectionViewCell {
     
     private let footerLabel = UILabel()
     
+    private let trackerCreationManager = TrackerCreationManager.shared
+    
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.horizontal
@@ -35,7 +37,7 @@ final class CollectionFooter: UICollectionViewCell {
     func setupCell() {
         setupViews()
         setupConstraints()
-        creationButton.isEnabled = !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        creationButton.isEnabled = trackerCreationManager.isValid
     }
 }
 

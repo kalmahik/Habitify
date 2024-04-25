@@ -49,7 +49,7 @@ extension ScheduleCell {
     private func setupViews() {
         contentView.setupView(titleLabel)
         contentView.setupView(toggle)
-        contentView.backgroundColor = .mainLigthGray
+        contentView.backgroundColor = .mainBackgroud
     }
     
     private func setupConstraints() {

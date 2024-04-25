@@ -30,12 +30,3 @@ let collectionData = [
     Section(title: "Цвет", data: colorList),
     Section(title: "", data: [""]), //hack for the footer
 ]
-
-var newTracker = TrackerPreparation(
-    id: UUID(),
-    type: .regular,
-    name: "",
-    color: "#832CF1FF",
-    emoji: "🙂",
-    schedule: ""
-)

@@ -11,8 +11,10 @@ final class ScheduleScreenViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private var trackerCreationManager = TrackerCreationManager.shared
+    
     private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
-        newTracker.schedule = DayOfWeek.scheduleToString(schedule: scheduleCollectionData)
+        self.trackerCreationManager.newTracker.schedule = DayOfWeek.scheduleToString(schedule: scheduleCollectionData)
         self.dismiss(animated: true)
     }
     
