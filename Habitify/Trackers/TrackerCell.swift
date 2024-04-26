@@ -55,14 +55,11 @@ final class TrackerCell: UICollectionViewCell {
     }()
     
     private lazy var plusButton: UIButton = {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .regular, scale: .large)
-        let plusImage = UIImage(systemName: "plus.circle.fill", withConfiguration: imageConfig)
         let button = UIButton.systemButton(
-            with: plusImage ?? UIImage(),
+            with: UIImage(named: "plus") ?? UIImage(),
             target: self,
             action: #selector(didTapPlusButton)
         )
-        button.tintColor = .red
         return button
     }()
     

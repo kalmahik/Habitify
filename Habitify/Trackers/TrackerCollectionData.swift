@@ -15,10 +15,10 @@ private var trackerList = [
 ]
 
 var trackerCollectionData: [TrackerCategory] = [
-//    TrackerCategory(title: "123", trackers: trackerList),
-//    TrackerCategory(title: "456", trackers: trackerList),
-//    TrackerCategory(title: "789", trackers: trackerList),
-//    TrackerCategory(title: "101", trackers: trackerList),
+    TrackerCategory(title: "123", trackers: trackerList),
+    TrackerCategory(title: "456", trackers: trackerList),
+    TrackerCategory(title: "789", trackers: trackerList),
+    TrackerCategory(title: "101", trackers: trackerList),
 ]
 
 var categories: [TrackerCategory] = []

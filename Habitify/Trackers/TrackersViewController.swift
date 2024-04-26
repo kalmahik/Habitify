@@ -13,8 +13,6 @@ final class TrackersViewController: UIViewController {
     
     static let didChangeNotification = Notification.Name(rawValue: "listWasUpdated")
     private var observer: NSObjectProtocol?
-    
-    
     private lazy var searchBar = UISearchBar(frame: .zero)
     
     private lazy var collectionView: UICollectionView = {
@@ -195,8 +193,9 @@ extension TrackersViewController {
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         add.tintColor = .mainBlack
         navigationItem.leftBarButtonItem = add
-        searchBar.placeholder = "Your placeholder"
-        navigationItem.titleView = searchBar
+        navigationItem.searchController = UISearchController(searchResultsController: nil)
+
+
     }
     
     private func setupViews() {
@@ -207,9 +206,6 @@ extension TrackersViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            searchBar.heightAnchor.constraint(equalToConstant: 36),
-            
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),

@@ -46,11 +46,14 @@ final class TrackerCreationViewController: UIViewController {
     
     @objc private func didCreateTapped() {
         let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? -1
+        print(trackerCreationManager.newTracker.name)
         let newTracker = Tracker(trackerCreationManager.newTracker)
+        print(newTracker.name)
         if categoryIndex == -1 {
             trackerCollectionData.append(TrackerCategory(
                 title: "Главнное",
-                trackers: [newTracker]))
+                trackers: [newTracker]
+            ))
         } else {
             trackerCollectionData[categoryIndex].trackers.append(newTracker)
         }
@@ -224,7 +227,6 @@ extension TrackerCreationViewController: CollectionFooterDelegate {
         didCreateTapped()
     }
 }
-
 
 extension TrackerCreationViewController {
     
