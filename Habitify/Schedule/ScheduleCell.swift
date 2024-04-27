@@ -12,6 +12,8 @@ final class ScheduleCell: UITableViewCell {
     
     static let identifier = "ScheduleCell"
     
+    weak var delegate: ScheduleCellDelegate?
+    
     // MARK: - Public Properties
     
     // MARK: - Private Properties
@@ -42,6 +44,7 @@ final class ScheduleCell: UITableViewCell {
     // MARK: - Private Methods
     
     @objc func didSwitchTapped(switch: UISwitch) {
+        delegate?.didTapSwitch(self)
     }
 }
 

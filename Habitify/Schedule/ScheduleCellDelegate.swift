@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ScheduleCellDelegate: AnyObject {
-    func didTapCreate()
+    func didTapSwitch(_ cell: ScheduleCell)
 }

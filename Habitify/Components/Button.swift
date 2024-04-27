@@ -1,5 +1,5 @@
 //
-//  EmptyTrackersView.swift
+//  Button.swift
 //  Habitify
 //
 //  Created by Murad Azimov on 06.04.2024.
@@ -18,8 +18,7 @@ enum ButtonState {
 }
 
 final class Button: UIButton {
-    // как сделать поля опциональными
-    var action: () -> Void = {} //чет какая-то дичь, может можно проще?
+    var action: () -> Void
     
     var color: UIColor = .mainBlack {
         didSet {
@@ -47,27 +46,22 @@ final class Button: UIButton {
         title: String,
         color: UIColor,
         style: ButtonStyle,
-        action: @escaping () -> Void
+        action: @escaping () -> Void = {}
     ) {
-        super.init(frame: .zero)
-        setTitle(title, for: .normal)
-        backgroundColor = color
         self.action = action
         self.color = color
         self.style = style
-        commonInit()
+        super.init(frame: .zero)
+        setTitle(title, for: .normal)
+        backgroundColor = color
+        setupViews()
+        setupConstraints() 
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func commonInit() {
-        setupViews()
-        setupConstraints()
-    }
-    
-    // попахивает говном
     @objc private func didTapButton() {
         action()
     }

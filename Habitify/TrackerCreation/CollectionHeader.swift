@@ -11,12 +11,13 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Constants
     
     static let identifier = "CollectionHeader"
-    
-    // MARK: - Public Properties
-    
+        
     // MARK: - Private Properties
     
     private var trackerCreationManager = TrackerCreationManager.shared
+    
+    // почему я не могу использовать тут let
+    private lazy var schedule = trackerCreationManager.newTracker.schedule
     
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
@@ -34,10 +35,7 @@ final class CollectionHeader: UICollectionViewCell {
         self.parentViewController?.present(viewController, animated: true)
     }
     
-    private lazy var scheduleButton = ArrowButton(
-        title: "Расписание",
-        subtitle: trackerCreationManager.newTracker.schedule
-    ) {
+    private lazy var scheduleButton = ArrowButton(title: "Расписание", subtitle: schedule) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
@@ -61,17 +59,24 @@ final class CollectionHeader: UICollectionViewCell {
         view.backgroundColor = .mainGray
         return view
     }()
-    
-    // MARK: - Initializers
-    
+            
     // MARK: - Public Methods
     
     func setupCell() {
+        reloadButton()
+        // это ок что эти методы тут? или они должны быть в ините?
         setupViews()
         setupConstraints()
     }
     
     // MARK: - Private Methods
+    
+    private func reloadButton() {
+//        scheduleButton.setNeedsLayout()
+//        scheduleButton.removeFromSuperview()
+//        wrapperView.setupView(scheduleButton)
+    }
+
 }
 
 extension CollectionHeader: UITextFieldDelegate {
@@ -101,6 +106,9 @@ extension CollectionHeader {
         wrapperView.setupView(categoryButton)
         wrapperView.setupView(line)
         wrapperView.setupView(scheduleButton)
+        
+        wrapperView.setNeedsLayout()
+        wrapperView.layoutIfNeeded()
     }
     
     private func setupConstraints() {

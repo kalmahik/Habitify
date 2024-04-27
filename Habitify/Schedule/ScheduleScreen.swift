@@ -15,6 +15,7 @@ final class ScheduleScreenViewController: UIViewController {
     
     private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
         self.trackerCreationManager.newTracker.schedule = DayOfWeek.scheduleToString(schedule: scheduleCollectionData)
+        NotificationCenter.default.post(name: TrackerCreationViewController.footerDidChangeNotification, object: self)
         self.dismiss(animated: true)
     }
     
@@ -26,6 +27,7 @@ final class ScheduleScreenViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         return tableView
     }()
     
@@ -36,17 +38,19 @@ final class ScheduleScreenViewController: UIViewController {
         setupView()
         setupConstraints()
     }
+    
+    private func rowWasTapped(_ indexPath: IndexPath) {
+        let cell = scheduleCollectionData[indexPath.row]
+        scheduleCollectionData[indexPath.row].isEnabled = !cell.isEnabled
+        tableView.reloadRows(at: [indexPath], with: .fade)
+    }
 }
 
 // MARK: - UITableViewDelegate
 
 extension ScheduleScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        scheduleCollectionData[indexPath.row].isEnabled = !scheduleCollectionData[indexPath.row].isEnabled
-        tableView.reloadRows(at: [indexPath], with: .fade)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        rowWasTapped(indexPath)
     }
 }
 
@@ -60,16 +64,18 @@ extension ScheduleScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifier, for: indexPath)
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
-        let weekDay = scheduleCollectionData[indexPath.row]
+        
+        var weekDay = scheduleCollectionData[indexPath.row]
         scheduleCell.setupCell(schedule: weekDay)
+        
         scheduleCell.clipsToBounds = true
         scheduleCell.layer.cornerRadius = 16
-        scheduleCell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        scheduleCell.delegate = self
+        
         // то что ниже похоже на говно, попытаться отрефакторить
         if indexPath.row == 0 {
             scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else if indexPath.row == scheduleCollectionData.count - 1 {
-            scheduleCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
             scheduleCell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             scheduleCell.layer.maskedCorners = []
@@ -78,6 +84,13 @@ extension ScheduleScreenViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 75 }
+}
+
+extension ScheduleScreenViewController: ScheduleCellDelegate {
+    func didTapSwitch(_ cell: ScheduleCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        rowWasTapped(indexPath)
+    }
 }
 
 // MARK: - applyConstraints && addSubViews

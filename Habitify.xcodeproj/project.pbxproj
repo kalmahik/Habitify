@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		840E73042BD7882900C22AE0 /* TrackerPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E73032BD7882900C22AE0 /* TrackerPreparation.swift */; };
 		840E73062BD9A98600C22AE0 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E73052BD9A98600C22AE0 /* String+Extension.swift */; };
+		840E73082BDC0C4300C22AE0 /* ScheduleCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E73072BDC0C4300C22AE0 /* ScheduleCellDelegate.swift */; };
+		840E730A2BDC1E6600C22AE0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E73092BDC1E6600C22AE0 /* Constants.swift */; };
 		843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D402BCC50F7001B0A9C /* TrackerCell.swift */; };
 		843F2D432BCC522D001B0A9C /* TrackerCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */; };
 		843F2D452BCCFF7C001B0A9C /* TrackerSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */; };
@@ -55,6 +57,8 @@
 /* Begin PBXFileReference section */
 		840E73032BD7882900C22AE0 /* TrackerPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerPreparation.swift; sourceTree = "<group>"; };
 		840E73052BD9A98600C22AE0 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		840E73072BDC0C4300C22AE0 /* ScheduleCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCellDelegate.swift; sourceTree = "<group>"; };
+		840E73092BDC1E6600C22AE0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		843F2D402BCC50F7001B0A9C /* TrackerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCell.swift; sourceTree = "<group>"; };
 		843F2D422BCC522D001B0A9C /* TrackerCollectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionData.swift; sourceTree = "<group>"; };
 		843F2D442BCCFF7C001B0A9C /* TrackerSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerSectionHeader.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */,
 				843F2D5B2BD238B5001B0A9C /* ScheduleCollectionData.swift */,
 				843F2D542BD0E776001B0A9C /* ScheduleCell.swift */,
+				840E73072BDC0C4300C22AE0 /* ScheduleCellDelegate.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 				846381812BBFB2F4002968E5 /* Info.plist */,
 				846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */,
 				846381872BBFB847002968E5 /* TabBarViewController.swift */,
+				840E73092BDC1E6600C22AE0 /* Constants.swift */,
 				8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */,
 				8463818D2BBFBE58002968E5 /* RootViewController.swift */,
 			);
@@ -320,6 +326,7 @@
 				843F2D432BCC522D001B0A9C /* TrackerCollectionData.swift in Sources */,
 				8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */,
 				846381A02BC651F0002968E5 /* CollectionHeader.swift in Sources */,
+				840E730A2BDC1E6600C22AE0 /* Constants.swift in Sources */,
 				8463819E2BC52742002968E5 /* CollectionFooter.swift in Sources */,
 				8463818E2BBFBE58002968E5 /* RootViewController.swift in Sources */,
 				846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */,
@@ -327,6 +334,7 @@
 				F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */,
 				F557C1122BC1B063004052B3 /* EmptyView.swift in Sources */,
 				F557C1162BC1F47C004052B3 /* TrackerTypeModalViewController.swift in Sources */,
+				840E73082BDC0C4300C22AE0 /* ScheduleCellDelegate.swift in Sources */,
 				8463819C2BC50D0C002968E5 /* ColorCell.swift in Sources */,
 				843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */,
 				F565B2E12BC3B5A500A06B16 /* UIColor+Extension.swift in Sources */,

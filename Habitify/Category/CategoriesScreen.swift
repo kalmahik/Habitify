@@ -25,7 +25,7 @@ final class CategoriesScreenViewController: UIViewController {
 //        tableView.separatorColor = .ypBlack
 //        tableView.backgroundColor = .ypBlack
 //        tableView.backgroundView = emptyView
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.contentInset = Insets.horizontalInset
         tableView.dataSource = self
         tableView.delegate = self
         tableView.scrollIndicatorInsets = tableView.contentInset

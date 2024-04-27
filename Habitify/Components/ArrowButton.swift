@@ -18,16 +18,12 @@ final class ArrowButton: UIControl {
         titleLabel.text = title
         subtitleLabel.text = subtitle
         addTarget(self, action: #selector(tapOnSelf), for: .touchUpInside)
-        commonInit()
+        setupViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func commonInit() {
-        setupViews()
-        setupConstraints()
     }
     
     private lazy var titleLabel: UILabel = {

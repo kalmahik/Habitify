@@ -125,11 +125,15 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
-    ) -> CGSize { CGSize(width: 167, height: 148) }
+    ) -> CGSize {
+        let collectionWidth = collectionView.frame.width
+        let cellWidth = (collectionWidth - 16 - 16 - 8) / 2
+        return CGSize(width: cellWidth, height: 148)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         // Set insets for each section here
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        return Insets.horizontalInset
     }
     
     func collectionView(

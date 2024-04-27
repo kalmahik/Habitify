@@ -20,6 +20,7 @@ final class TrackerTypeModalViewController: UIViewController {
     }()
     
     private lazy var regularButton = Button(title: "Привычка", color: .mainBlack, style: .normal) {
+        TrackerCreationManager.shared.resetCreation()
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }

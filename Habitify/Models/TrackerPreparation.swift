@@ -16,20 +16,17 @@ struct TrackerPreparation {
     var schedule: String
 }
 
-struct TrackerCreationManager {
+class TrackerCreationManager {
     static let shared = TrackerCreationManager()
     
     var newTracker: TrackerPreparation
     
     var isValid: Bool {
-        //        !newTracker.name.trimmingCharacters(
-        //            in: .whitespacesAndNewlines
-        //        ).isEmpty
-        true
+        !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !newTracker.schedule.isEmpty
     }
     
     private init() {
-        print("INIT")
         self.newTracker = defaultTracker
     }
     
@@ -42,11 +39,11 @@ struct TrackerCreationManager {
         schedule: ""
     )
     
-    mutating func resetCreation() {
+    func resetCreation() {
         newTracker = defaultTracker
     }
     
-    mutating func changeName(name: String?) {
+    func changeName(name: String?) {
         newTracker.name = name ?? ""
     }
 }
