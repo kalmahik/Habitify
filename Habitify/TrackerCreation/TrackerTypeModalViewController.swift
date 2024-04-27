@@ -11,6 +11,8 @@ final class TrackerTypeModalViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private let trackerManager = TrackerManager.shared
+    
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.vertical
@@ -20,13 +22,17 @@ final class TrackerTypeModalViewController: UIViewController {
     }()
     
     private lazy var regularButton = Button(title: "Привычка", color: .mainBlack, style: .normal) {
-        TrackerCreationManager.shared.resetCreation()
+        self.trackerManager.resetCurrentTracker()
+        print(self.trackerManager.newTracker.schedule)
+        self.trackerManager.changeType(trackerType: .regular)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }
     
     private  lazy var nonRegularButton = Button(title: "Нерегулярное событие", color: .mainBlack, style: .normal) {
-        let viewController = ScheduleScreenViewController().wrapWithNavigationController()
+        self.trackerManager.resetCurrentTracker()
+        self.trackerManager.changeType(trackerType: .single)
+        let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }
     

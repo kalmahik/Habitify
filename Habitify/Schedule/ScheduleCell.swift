@@ -34,7 +34,7 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - Public Methods
     
-    func setupCell(schedule: DayOfWeekItem) {
+    func setupCell(schedule: DayOfWeekSwitch) {
         setupViews()
         setupConstraints()
         titleLabel.text = schedule.dayOfWeek.fullName

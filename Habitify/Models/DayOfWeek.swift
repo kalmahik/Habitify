@@ -12,29 +12,29 @@ enum DayOfWeek: String, CaseIterable {
     
     var shortName: String {
         switch self {
-            case .monday: return "Пн"
-            case .tuesday: return "Вт"
-            case .wednesday: return "Ср"
-            case .thursday: return "Чт"
-            case .friday: return "Пт"
-            case .saturday: return "Сб"
-            case .sunday: return "Вс"
+            case .monday:     return "Пн"
+            case .tuesday:    return "Вт"
+            case .wednesday:  return "Ср"
+            case .thursday:   return "Чт"
+            case .friday:     return "Пт"
+            case .saturday:   return "Сб"
+            case .sunday:     return "Вс"
         }
     }
     
     var fullName: String {
         switch self {
-            case .monday: return "Понедельник"
-            case .tuesday: return "Вторник"
+            case .monday:    return "Понедельник"
+            case .tuesday:   return "Вторник"
             case .wednesday: return "Среда"
-            case .thursday: return "Четверг"
-            case .friday: return "Пятница"
-            case .saturday: return "Суббота"
-            case .sunday: return "Воскресенье"  
+            case .thursday:  return "Четверг"
+            case .friday:    return "Пятница"
+            case .saturday:  return "Суббота"
+            case .sunday:    return "Воскресенье"
         }
     }
     
-    static func scheduleToString(schedule: [DayOfWeekItem]) -> String {
+    static func scheduleToString(schedule: [DayOfWeekSwitch]) -> String {
         if schedule.filter({ $0.isEnabled }).count == 7 {
             return "Каждый день"
         }
@@ -52,20 +52,20 @@ enum DayOfWeek: String, CaseIterable {
             .joined(separator: ", ")
     }
     
-    static func stringToSchedule(scheduleString: String) -> [DayOfWeekItem] {
+    static func stringToSchedule(scheduleString: String) -> [DayOfWeekSwitch] {
         if scheduleString == "Каждый день" {
-            return DayOfWeek.allCases.map { DayOfWeekItem(dayOfWeek: $0, isEnabled: true) }
+            return DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
         }
         if scheduleString == "Будние дни" {
-            return DayOfWeek.allCases[0...4].map { DayOfWeekItem(dayOfWeek: $0, isEnabled: true) }
+            return DayOfWeek.allCases[0...4].map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
         }
         return scheduleString
             .components(separatedBy: ", ")
-            .map { DayOfWeekItem(dayOfWeek: DayOfWeek(rawValue: String($0)) ?? .monday, isEnabled: true)}
+            .map { DayOfWeekSwitch(dayOfWeek: DayOfWeek(rawValue: String($0)) ?? .monday, isEnabled: true)}
     }
 }
 
-struct DayOfWeekItem {
+struct DayOfWeekSwitch {
     let dayOfWeek: DayOfWeek
     var isEnabled: Bool
 }

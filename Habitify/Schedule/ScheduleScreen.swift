@@ -11,10 +11,10 @@ final class ScheduleScreenViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private var trackerCreationManager = TrackerCreationManager.shared
+    private var trackerManager = TrackerManager.shared
     
     private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
-        self.trackerCreationManager.changeSchedule(schedule: scheduleCollectionData)
+        self.trackerManager.changeSchedule(schedule: self.trackerManager.weekDayList)
         self.dismiss(animated: true)
     }
     
@@ -39,8 +39,8 @@ final class ScheduleScreenViewController: UIViewController {
     }
     
     private func rowWasTapped(_ indexPath: IndexPath) {
-        let cell = scheduleCollectionData[indexPath.row]
-        scheduleCollectionData[indexPath.row].isEnabled = !cell.isEnabled
+        let cell = trackerManager.weekDayList[indexPath.row]
+        trackerManager.weekDayList[indexPath.row].isEnabled = !cell.isEnabled
         tableView.reloadRows(at: [indexPath], with: .fade)
     }
 }
@@ -57,14 +57,14 @@ extension ScheduleScreenViewController: UITableViewDelegate {
 
 extension ScheduleScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        scheduleCollectionData.count
+        trackerManager.weekDayList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifier, for: indexPath)
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
         
-        let weekDay = scheduleCollectionData[indexPath.row]
+        let weekDay = trackerManager.weekDayList[indexPath.row]
         scheduleCell.setupCell(schedule: weekDay)
         
         scheduleCell.clipsToBounds = true
@@ -74,7 +74,7 @@ extension ScheduleScreenViewController: UITableViewDataSource {
         // то что ниже похоже на говно, попытаться отрефакторить
         if indexPath.row == 0 {
             scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else if indexPath.row == scheduleCollectionData.count - 1 {
+        } else if indexPath.row == trackerManager.weekDayList.count - 1 {
             scheduleCell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             scheduleCell.layer.maskedCorners = []

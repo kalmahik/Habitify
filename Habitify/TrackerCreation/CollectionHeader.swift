@@ -14,10 +14,10 @@ final class CollectionHeader: UICollectionViewCell {
         
     // MARK: - Private Properties
     
-    private var trackerCreationManager = TrackerCreationManager.shared
+    private var trackerManager = TrackerManager.shared
     
     // почему нельзя сделать так:
-//    private let schedule = TrackerCreationManager.shared.newTracker.schedule
+//    private let schedule = trackerManager.shared.newTracker.schedule
     
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
@@ -37,7 +37,7 @@ final class CollectionHeader: UICollectionViewCell {
     
     private lazy var scheduleButton = ArrowButton(
         title: "Расписание",
-        subtitle: trackerCreationManager.newTracker.schedule
+        subtitle: trackerManager.newTracker.schedule
     ) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
@@ -69,7 +69,7 @@ final class CollectionHeader: UICollectionViewCell {
         // это ок что эти методы тут? или они должны быть в ините?
         setupViews()
         setupConstraints()
-        scheduleButton.updateSubtitle(subtitle: trackerCreationManager.newTracker.schedule)
+        scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
 
     }
     
@@ -78,7 +78,7 @@ final class CollectionHeader: UICollectionViewCell {
 
 extension CollectionHeader: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.trackerCreationManager.changeName(name: textField.text)
+        self.trackerManager.changeName(name: textField.text)
         textField.endEditing(true)
         return false
     }
@@ -89,9 +89,10 @@ extension CollectionHeader {
         contentView.setupView(trackerNameInput)        
         contentView.setupView(wrapperView)
         wrapperView.setupView(categoryButton)
-        wrapperView.setupView(line)
-        wrapperView.setupView(scheduleButton)
-        
+        if trackerManager.isRegular {
+            wrapperView.setupView(line)
+            wrapperView.setupView(scheduleButton)
+        }
         wrapperView.setNeedsLayout()
         wrapperView.layoutIfNeeded()
     }
@@ -103,7 +104,8 @@ extension CollectionHeader {
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            wrapperView.heightAnchor.constraint(equalToConstant: 150),
+            // как сделать нормально?
+            wrapperView.heightAnchor.constraint(equalToConstant: trackerManager.isRegular ?  150 : 75),
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             wrapperView.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 24),
@@ -112,16 +114,20 @@ extension CollectionHeader {
             categoryButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
             categoryButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
             categoryButton.heightAnchor.constraint(equalToConstant: 75),
-            
-            line.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
-            line.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
-            line.heightAnchor.constraint(equalToConstant: 1),
-            line.topAnchor.constraint(equalTo: categoryButton.bottomAnchor),
-            
-            scheduleButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
-            scheduleButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
-            scheduleButton.heightAnchor.constraint(equalToConstant: 75),
-            scheduleButton.topAnchor.constraint(equalTo: line.bottomAnchor),
         ])
+        // переиспользование попахивает говном, но как лучше?
+        if trackerManager.isRegular {
+            NSLayoutConstraint.activate([
+                line.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
+                line.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
+                line.heightAnchor.constraint(equalToConstant: 1),
+                line.topAnchor.constraint(equalTo: categoryButton.bottomAnchor),
+                
+                scheduleButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
+                scheduleButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
+                scheduleButton.heightAnchor.constraint(equalToConstant: 75),
+                scheduleButton.topAnchor.constraint(equalTo: line.bottomAnchor),
+            ])
+        }
     }
 }

@@ -11,8 +11,8 @@ final class TrackerCreationViewController: UIViewController {
     static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
     
     // MARK: - Private Properties
-    
-    private var trackerCreationManager = TrackerCreationManager.shared
+        
+    private var trackerManager = TrackerManager.shared
 
     private var observer: NSObjectProtocol?
     
@@ -46,7 +46,7 @@ final class TrackerCreationViewController: UIViewController {
     
     @objc private func didCreateTapped() {
         let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? -1
-        let newTracker = Tracker(trackerCreationManager.newTracker)
+        let newTracker = Tracker(trackerManager.newTracker)
         if categoryIndex == -1 {
             trackerCollectionData.append(TrackerCategory(
                 title: "Главнное",
@@ -160,8 +160,10 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let section = indexPath.section
+        
         switch section {
-        case 0: return CGSize(width: collectionView.frame.width, height: 273) // ахтунг! убрать 273!
+            // ну что за говно! убрать!
+        case 0: return CGSize(width: collectionView.frame.width, height: trackerManager.isRegular ? 275 : 200)
         case 1: return CGSize(width: 52, height: 52)
         case 2: return CGSize(width: 52, height: 52)
         case 3: return CGSize(width: collectionView.frame.width, height: 60)
@@ -231,7 +233,7 @@ extension TrackerCreationViewController {
     
     func setupViews() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = "Новая привычка"
+        navigationItem.title = trackerManager.isRegular ? "Новая привычка" : "Новое нерегулярное событие"
         view.backgroundColor = .white
         view.setupView(collectionView)
     }
