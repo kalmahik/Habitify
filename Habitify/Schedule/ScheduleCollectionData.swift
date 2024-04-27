@@ -18,5 +18,3 @@ import Foundation
 //]
 
 var scheduleCollectionData: [DayOfWeekItem] = DayOfWeek.allCases.map { DayOfWeekItem(dayOfWeek: $0, isEnabled: false) }
-
-//var selectedScheduleOptions: [DayOfWeek] = []

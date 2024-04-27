@@ -16,8 +16,8 @@ final class CollectionHeader: UICollectionViewCell {
     
     private var trackerCreationManager = TrackerCreationManager.shared
     
-    // почему я не могу использовать тут let
-    private lazy var schedule = trackerCreationManager.newTracker.schedule
+    // почему нельзя сделать так:
+//    private let schedule = TrackerCreationManager.shared.newTracker.schedule
     
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
@@ -35,7 +35,10 @@ final class CollectionHeader: UICollectionViewCell {
         self.parentViewController?.present(viewController, animated: true)
     }
     
-    private lazy var scheduleButton = ArrowButton(title: "Расписание", subtitle: schedule) {
+    private lazy var scheduleButton = ArrowButton(
+        title: "Расписание",
+        subtitle: trackerCreationManager.newTracker.schedule
+    ) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
@@ -63,37 +66,19 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Public Methods
     
     func setupCell() {
-        reloadButton()
         // это ок что эти методы тут? или они должны быть в ините?
         setupViews()
         setupConstraints()
+        scheduleButton.updateSubtitle(subtitle: trackerCreationManager.newTracker.schedule)
+
     }
     
     // MARK: - Private Methods
-    
-    private func reloadButton() {
-//        scheduleButton.setNeedsLayout()
-//        scheduleButton.removeFromSuperview()
-//        wrapperView.setupView(scheduleButton)
-    }
-
 }
 
 extension CollectionHeader: UITextFieldDelegate {
-//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-//        if textField == trackerNameInput {
-//            trackerCreationManager.newTracker.name = textField.text ?? ""
-//            NotificationCenter.default.post(
-//                name: TrackerCreationViewController.footerDidChangeNotification, object: self
-//            )
-//        }
-//    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.trackerCreationManager.changeName(name: textField.text)
-        NotificationCenter.default.post(
-            name: TrackerCreationViewController.footerDidChangeNotification, object: self
-        )
         textField.endEditing(true)
         return false
     }

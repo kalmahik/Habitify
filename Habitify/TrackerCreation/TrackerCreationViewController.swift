@@ -8,7 +8,7 @@
 import UIKit
 
 final class TrackerCreationViewController: UIViewController {
-    static let footerDidChangeNotification = Notification.Name(rawValue: "dooterDidChangeNotification")
+    static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
     
     // MARK: - Private Properties
     
@@ -46,9 +46,7 @@ final class TrackerCreationViewController: UIViewController {
     
     @objc private func didCreateTapped() {
         let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? -1
-        print(trackerCreationManager.newTracker.name)
         let newTracker = Tracker(trackerCreationManager.newTracker)
-        print(newTracker.name)
         if categoryIndex == -1 {
             trackerCollectionData.append(TrackerCategory(
                 title: "Главнное",
@@ -64,12 +62,11 @@ final class TrackerCreationViewController: UIViewController {
     private func addObserver() {
         observer = NotificationCenter.default
             .addObserver(
-                forName: TrackerCreationViewController.footerDidChangeNotification,
+                forName: TrackerCreationViewController.reloadCollection,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-//                print(self?.trackerCreationManager.isValid, self?.trackerCreationManager.newTracker.name)
-//                self?.collectionView.reloadItems(at: [IndexPath(row: 0, section: 3)])
+                // в целом коллекция не большая и фиксированная, можно обновить целиком
                 self?.collectionView.reloadData()
             }
     }

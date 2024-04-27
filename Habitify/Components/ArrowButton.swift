@@ -21,9 +21,13 @@ final class ArrowButton: UIControl {
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updateSubtitle(subtitle: String? = "") {
+        subtitleLabel.text = subtitle
     }
     
     private lazy var titleLabel: UILabel = {

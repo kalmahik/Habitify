@@ -19,7 +19,7 @@ struct TrackerPreparation {
 class TrackerCreationManager {
     static let shared = TrackerCreationManager()
     
-    var newTracker: TrackerPreparation
+    private(set) var newTracker: TrackerPreparation
     
     var isValid: Bool {
         !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
@@ -45,5 +45,16 @@ class TrackerCreationManager {
     
     func changeName(name: String?) {
         newTracker.name = name ?? ""
+        NotificationCenter.default.post(
+            name: TrackerCreationViewController.reloadCollection, object: self
+        )
+    }
+    
+    func changeSchedule(schedule: [DayOfWeekItem]) {
+        let schedule = DayOfWeek.scheduleToString(schedule: scheduleCollectionData)
+        newTracker.schedule = schedule
+        NotificationCenter.default.post(
+            name: TrackerCreationViewController.reloadCollection, object: self
+        )
     }
 }

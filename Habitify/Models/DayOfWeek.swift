@@ -12,13 +12,13 @@ enum DayOfWeek: String, CaseIterable {
     
     var shortName: String {
         switch self {
-            case .monday: return "ПН"
-            case .tuesday: return "ВТ"
-            case .wednesday: return "СР"
-            case .thursday: return "ЧТ"
-            case .friday: return "ПТ"
-            case .saturday: return "СБ"
-            case .sunday: return "ВС"
+            case .monday: return "Пн"
+            case .tuesday: return "Вт"
+            case .wednesday: return "Ср"
+            case .thursday: return "Чт"
+            case .friday: return "Пт"
+            case .saturday: return "Сб"
+            case .sunday: return "Вс"
         }
     }
     
@@ -38,7 +38,12 @@ enum DayOfWeek: String, CaseIterable {
         if schedule.filter({ $0.isEnabled }).count == 7 {
             return "Каждый день"
         }
-        if schedule.filter({ $0.isEnabled }).count == 5 {
+        let hasNotWeekend = schedule
+            .filter { $0.isEnabled }
+            .map { $0.dayOfWeek }
+            .filter { $0 == DayOfWeek.saturday || $0 == DayOfWeek.sunday }
+            .isEmpty
+        if schedule.filter({ $0.isEnabled }).count == 5 && hasNotWeekend {
             return "Будние дни"
         }
         return schedule

@@ -14,8 +14,7 @@ final class ScheduleScreenViewController: UIViewController {
     private var trackerCreationManager = TrackerCreationManager.shared
     
     private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
-        self.trackerCreationManager.newTracker.schedule = DayOfWeek.scheduleToString(schedule: scheduleCollectionData)
-        NotificationCenter.default.post(name: TrackerCreationViewController.footerDidChangeNotification, object: self)
+        self.trackerCreationManager.changeSchedule(schedule: scheduleCollectionData)
         self.dismiss(animated: true)
     }
     
@@ -65,7 +64,7 @@ extension ScheduleScreenViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifier, for: indexPath)
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
         
-        var weekDay = scheduleCollectionData[indexPath.row]
+        let weekDay = scheduleCollectionData[indexPath.row]
         scheduleCell.setupCell(schedule: weekDay)
         
         scheduleCell.clipsToBounds = true
