@@ -1,5 +1,5 @@
 //
-//  UIView+Extension.swift
+//  UIViewController+Extension.swift
 //  Habitify
 //
 //  Created by Murad Azimov on 06.04.2024.

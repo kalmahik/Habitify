@@ -11,7 +11,7 @@ final class StatisticsViewController: UIViewController {
 
     // MARK: - Private Properties
     
-    private let emptyView = EmptyView(emoji: "🥲", title: "Анализировать пока нечего")
+    private let emptyView = EmptyView(emoji: "🥲", title: LocalizedStrings.statisticsEmpty)
     
     // MARK: - UIViewController
 
@@ -21,17 +21,14 @@ final class StatisticsViewController: UIViewController {
         setupViews()
         setupConstraints()
     }
-    
-    // MARK: - Private Functions
-
 }
 
-// MARK: - Configure View
+// MARK: - Configure
 
 extension StatisticsViewController {
 
     private func setupNavBar() {
-        navigationItem.title = "Статистика"
+        navigationItem.title = LocalizedStrings.statisticsTab
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

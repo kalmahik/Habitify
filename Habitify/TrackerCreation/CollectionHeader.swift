@@ -19,9 +19,11 @@ final class CollectionHeader: UICollectionViewCell {
     // почему нельзя сделать так:
 //    private let schedule = trackerManager.shared.newTracker.schedule
     
+    // MARK: - UIViews
+    
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
-        textField.placeholder = "Введите название трекера"
+        textField.placeholder = LocalizedStrings.trackerNamePlaceholder
         textField.backgroundColor = .mainBackgroud
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
@@ -30,13 +32,13 @@ final class CollectionHeader: UICollectionViewCell {
         return textField
     }()
 
-    private lazy var categoryButton = ArrowButton(title: "Категория", subtitle: "Главное") {
+    private lazy var categoryButton = ArrowButton(title: LocalizedStrings.categoryButton, subtitle: "Главное") {
         let viewController = CategoriesScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
     
     private lazy var scheduleButton = ArrowButton(
-        title: "Расписание",
+        title: LocalizedStrings.schduleButton,
         subtitle: trackerManager.newTracker.schedule
     ) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
@@ -69,12 +71,12 @@ final class CollectionHeader: UICollectionViewCell {
         // это ок что эти методы тут? или они должны быть в ините?
         setupViews()
         setupConstraints()
+        // такое ощущение, что это костыль, есть ли другой вариант обновить тайтл, без специальной функции?
         scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
-
     }
-    
-    // MARK: - Private Methods
 }
+
+// MARK: - UITextFieldDelegate
 
 extension CollectionHeader: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -83,6 +85,8 @@ extension CollectionHeader: UITextFieldDelegate {
         return false
     }
 }
+
+// MARK: - Configure
 
 extension CollectionHeader {
     private func setupViews() {

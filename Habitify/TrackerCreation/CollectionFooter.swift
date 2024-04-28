@@ -24,11 +24,11 @@ final class CollectionFooter: UICollectionViewCell {
         return stack
     }()
     
-    private lazy var cancelButton = Button(title: "Отменить", color: .mainRed, style: .flat) {
+    private lazy var cancelButton = Button(title: LocalizedStrings.cancelButton, color: .mainRed, style: .flat) {
         self.parentViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
-    private lazy var creationButton = Button(title: "Создать", color: .mainBlack, style: .normal) {
+    private lazy var creationButton = Button(title: LocalizedStrings.creationButton, color: .mainBlack, style: .normal) {
         self.delegate?.didTapCreate()
     }
 

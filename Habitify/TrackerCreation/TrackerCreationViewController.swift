@@ -195,7 +195,6 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -235,13 +234,14 @@ extension TrackerCreationViewController: CollectionFooterDelegate {
     }
 }
 
+// MARK: - Configure
+
 extension TrackerCreationViewController {
-    
-    // MARK: - Configure
-    
+        
     func setupViews() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = trackerManager.isRegular ? "Новая привычка" : "Новое нерегулярное событие"
+        navigationItem.title = trackerManager.isRegular ?
+        LocalizedStrings.trackerRegularType : LocalizedStrings.trackerRegularType
         view.backgroundColor = .white
         view.setupView(collectionView)
     }

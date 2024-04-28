@@ -76,7 +76,6 @@
 		8463817A2BBFB2F2002968E5 /* Habitify.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Habitify.xcdatamodel; sourceTree = "<group>"; };
 		8463817C2BBFB2F4002968E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8463817F2BBFB2F4002968E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		846381812BBFB2F4002968E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846381872BBFB847002968E5 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		846381892BBFB952002968E5 /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
 		8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -155,25 +154,22 @@
 		8463816F2BBFB2F2002968E5 /* Habitify */ = {
 			isa = PBXGroup;
 			children = (
-				843F2D3F2BCC4B9F001B0A9C /* Trackers */,
-				84A4219C2BCB15DF007F3276 /* CategoryCreation */,
-				84A421992BCAF516007F3276 /* Extensions */,
-				F5E4A9D72BC9880400350368 /* Components */,
-				843F2D562BD0E818001B0A9C /* Schedule */,
-				F5E4A9D62BC987EA00350368 /* Category */,
-				846381942BC5053F002968E5 /* Models */,
-				846381932BC483EA002968E5 /* TrackerCreation */,
 				846381702BBFB2F2002968E5 /* AppDelegate.swift */,
-				846381722BBFB2F2002968E5 /* SceneDelegate.swift */,
-				840E730B2BDD124600C22AE0 /* TrackerManager.swift */,
-				8463817C2BBFB2F4002968E5 /* Assets.xcassets */,
-				8463817E2BBFB2F4002968E5 /* LaunchScreen.storyboard */,
-				846381812BBFB2F4002968E5 /* Info.plist */,
-				846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */,
-				846381872BBFB847002968E5 /* TabBarViewController.swift */,
+				F5E4A9D62BC987EA00350368 /* Category */,
+				84A4219C2BCB15DF007F3276 /* CategoryCreation */,
+				F5E4A9D72BC9880400350368 /* Components */,
 				840E73092BDC1E6600C22AE0 /* Constants.swift */,
-				8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */,
+				84A421992BCAF516007F3276 /* Extensions */,
+				846381942BC5053F002968E5 /* Models */,
+				F54E4A602BDE95E40098EF6B /* Resources */,
 				8463818D2BBFBE58002968E5 /* RootViewController.swift */,
+				846381722BBFB2F2002968E5 /* SceneDelegate.swift */,
+				843F2D562BD0E818001B0A9C /* Schedule */,
+				F54E4A612BDE96090098EF6B /* Statistics */,
+				846381872BBFB847002968E5 /* TabBarViewController.swift */,
+				846381932BC483EA002968E5 /* TrackerCreation */,
+				840E730B2BDD124600C22AE0 /* TrackerManager.swift */,
+				843F2D3F2BCC4B9F001B0A9C /* Trackers */,
 			);
 			path = Habitify;
 			sourceTree = "<group>";
@@ -183,13 +179,13 @@
 			children = (
 				F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */,
 				8463819D2BC52742002968E5 /* CollectionFooter.swift */,
+				843F2D5D2BD63231001B0A9C /* CollectionFooterDelegate.swift */,
 				8463819F2BC651F0002968E5 /* CollectionHeader.swift */,
 				8463819B2BC50D0C002968E5 /* ColorCell.swift */,
 				F565B2E42BC3C67200A06B16 /* EmojiCell.swift */,
+				846381912BC4766B002968E5 /* SectionHeader.swift */,
 				F557C1232BC3AFDA004052B3 /* TrackerCreationViewController.swift */,
 				F557C1152BC1F47C004052B3 /* TrackerTypeModalViewController.swift */,
-				846381912BC4766B002968E5 /* SectionHeader.swift */,
-				843F2D5D2BD63231001B0A9C /* CollectionFooterDelegate.swift */,
 			);
 			path = TrackerCreation;
 			sourceTree = "<group>";
@@ -226,6 +222,24 @@
 				84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */,
 			);
 			path = CategoryCreation;
+			sourceTree = "<group>";
+		};
+		F54E4A602BDE95E40098EF6B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8463817C2BBFB2F4002968E5 /* Assets.xcassets */,
+				8463817E2BBFB2F4002968E5 /* LaunchScreen.storyboard */,
+				846381792BBFB2F2002968E5 /* Habitify.xcdatamodeld */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F54E4A612BDE96090098EF6B /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				8463818B2BBFB98E002968E5 /* StatisticsViewController.swift */,
+			);
+			path = Statistics;
 			sourceTree = "<group>";
 		};
 		F5E4A9D62BC987EA00350368 /* Category */ = {

@@ -107,4 +107,8 @@ class TrackerManager {
             }
         }
     }
+    
+    func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {
+        trackers[indexPath.section].trackers[indexPath.row]
+    }
 }

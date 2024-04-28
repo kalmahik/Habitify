@@ -1,5 +1,5 @@
 //
-//  UIView.swift
+//  UIView+Tap.swift
 //  Habitify
 //
 //  Created by Murad Azimov on 10.04.2024.
@@ -9,7 +9,7 @@ import UIKit
 
 extension UIView {
     
-    func addTapGesture(_ action : @escaping ()->Void ){ 
+    func addTapGesture(_ action : @escaping ()-> Void ){
         let tap = MyTapGestureRecognizer(target: self , action: #selector(self.handleTap(_:)))
         tap.action = action
         self.addGestureRecognizer(tap)
@@ -23,5 +23,5 @@ extension UIView {
 }
 
 class MyTapGestureRecognizer: UITapGestureRecognizer {
-    var action : (()->Void)? = nil
+    var action : (() -> Void)? = nil
 }

@@ -19,41 +19,21 @@ final class ColorCell: UICollectionViewCell {
         return view
     }()
     
-    // MARK: - Initializers
-    
-    convenience init() {
-        self.init()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        setupViews()
-        setupConstraints()
-    }
-    
     // MARK: - Public Methods
     
     func setupCell(color: UIColor) {
         colorView.backgroundColor = color
         colorView.layer.cornerRadius = 8
+        setupViews()
+        setupConstraints()
     }
     
     func selectCell() {
         backgroundColor = .gray
     }
-    
-    // MARK: - Private Methods
-
 }
+
+// MARK: - Configure
 
 extension ColorCell {
     private func setupViews() {

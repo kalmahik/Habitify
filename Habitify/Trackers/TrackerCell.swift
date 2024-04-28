@@ -31,7 +31,7 @@ final class TrackerCell: UICollectionViewCell {
     
     private lazy var emojiWrapper: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.init(hex: "#FFFFFF4D")
+        view.backgroundColor = .mainWhite30
         view.layer.cornerRadius = 12
         view.layer.masksToBounds = true
         return view
@@ -91,7 +91,6 @@ final class TrackerCell: UICollectionViewCell {
     }
     
     func selectCell() {
-//        emojiLabel.backgroundColor = .gray
     }
     
     // MARK: - Private Methods
@@ -100,6 +99,8 @@ final class TrackerCell: UICollectionViewCell {
         delegate?.didTapPlusButton(self)
     }
 }
+
+// MARK: - Configure
 
 extension TrackerCell {
     private func setupViews() {

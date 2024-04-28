@@ -15,23 +15,7 @@ final class TrackersViewController: UIViewController {
     private var observer: NSObjectProtocol?
     private let trackerManager = TrackerManager.shared
     private lazy var searchBar = UISearchBar(frame: .zero)
-
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        collectionView.register(TrackerCell.self, forCellWithReuseIdentifier: TrackerCell.identifier)
-
-        collectionView.register(
-            TrackerSectionHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: TrackerSectionHeader.identifier
-        )
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.white
-        collectionView.allowsMultipleSelection = false
-        return collectionView
-    }()
+    private lazy var collectionWidth = collectionView.frame.width
 
     // MARK: - UIViewController
 
@@ -46,6 +30,25 @@ final class TrackersViewController: UIViewController {
         let selectedDayOfWeek = Calendar.current.weekdaySymbols
         print(selectedDayOfWeek)
     }
+    
+    // MARK: - UIViews
+
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        collectionView.register(TrackerCell.self, forCellWithReuseIdentifier: TrackerCell.identifier)
+        collectionView.register(
+            TrackerSectionHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TrackerSectionHeader.identifier
+        )
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.white
+        collectionView.allowsMultipleSelection = false
+        return collectionView
+    }()
+
 
     // MARK: - Private Functions
 
@@ -54,14 +57,14 @@ final class TrackersViewController: UIViewController {
     }
 
     private func addObserver() {
-        observer = NotificationCenter.default
-            .addObserver(
-                forName: TrackersViewController.reloadCollection,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                self?.collectionView.reloadData() // пока оставим так, а уже потом будем релоадить нужные ячейки
-            }
+        observer = NotificationCenter.default.addObserver(
+            forName: TrackersViewController.reloadCollection,
+            object: nil,
+            queue: .main
+        ) {
+            // пока оставим так, а уже потом будем релоадить нужные ячейки
+            [weak self] _ in self?.collectionView.reloadData()
+        }
     }
 }
 
@@ -85,7 +88,7 @@ extension TrackersViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if (trackerManager.trackers.isEmpty) {
-            collectionView.setEmptyMessage("💫", "Что будем отслеживать?")
+            collectionView.setEmptyMessage("💫", LocalizedStrings.trackersEmpty)
         } else {
             collectionView.restore()
         }
@@ -96,10 +99,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         trackerManager.trackers[section].trackers.count
     }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
         let tracker = trackerManager.trackers[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
@@ -132,14 +132,15 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let collectionWidth = collectionView.frame.width
-        let cellWidth = (collectionWidth - 16 - 16 - 8) / 2
-        return CGSize(width: cellWidth, height: 148)
+        let cellWidth = (collectionWidth - Insets.horizontalInset.left - Insets.horizontalInset.right - Config.trackerSpaceBetweenCells) / 2
+        return CGSize(width: cellWidth, height: Config.trackerCellHeight)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return Insets.horizontalInset
-    }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets { Insets.horizontalInset }
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -158,6 +159,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
+        // ну это вообще рокет саенс, столько действий, чтобы просто вернуть высоту хедера секции
         let indexPath = IndexPath(row: 0, section: section)
         let headerView = self.collectionView(
             collectionView,
@@ -165,17 +167,19 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             at: indexPath
         )
         return headerView.systemLayoutSizeFitting(
-            CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
+            CGSize(width: collectionWidth, height: UIView.layoutFittingExpandedSize.height),
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
     }
 }
 
+// MARK: - TrackerCellDelegate
+
 extension TrackersViewController: TrackerCellDelegate {
     func didTapPlusButton(_ cell: TrackerCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
-        let tracker = trackerManager.trackers[indexPath.section].trackers[indexPath.row]
+        let tracker = trackerManager.getTrackerByIndexPath(at: indexPath)
         trackerManager.makeRecord(trackerUUID: tracker.id)
     }
 }
@@ -183,18 +187,10 @@ extension TrackersViewController: TrackerCellDelegate {
 // MARK: - Date Picker
 
 extension TrackersViewController {
-
-    func setupDatePicker() {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
-    }
-
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         let selectedDate = sender.date
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = LocalizedStrings.dateFormat
         let formattedDate = dateFormatter.string(from: selectedDate)
         trackerManager.changeSelectedDay(selectedDay: selectedDate)
         print("Выбранная дата: \(formattedDate)")
@@ -206,14 +202,19 @@ extension TrackersViewController {
 extension TrackersViewController {
 
     private func setupNavBar() {
-        navigationItem.title = "Трекеры"
+        navigationItem.title = LocalizedStrings.trackersTitle
         navigationController?.navigationBar.prefersLargeTitles = true
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         add.tintColor = .mainBlack
         navigationItem.leftBarButtonItem = add
         navigationItem.searchController = UISearchController(searchResultsController: nil)
-
-
+    }
+    
+    private func setupDatePicker() {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
 
     private func setupViews() {

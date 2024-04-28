@@ -21,30 +21,20 @@ final class EmojiCell: UICollectionViewCell {
         return label
     }()
     
-    // MARK: - Initializers
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        setupConstraints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     // MARK: - Public Methods
     
     func setupCell(emoji: String) {
         emojiLabel.text = emoji
+        setupViews()
+        setupConstraints()
     }
     
     func selectCell() {
         emojiLabel.backgroundColor = .gray
     }
-    
-    // MARK: - Private Methods
 }
+
+// MARK: - Configure
 
 extension EmojiCell {
     private func setupViews() {

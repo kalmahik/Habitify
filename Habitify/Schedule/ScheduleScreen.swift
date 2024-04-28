@@ -13,7 +13,7 @@ final class ScheduleScreenViewController: UIViewController {
     
     private let trackerManager = TrackerManager.shared
     
-    private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
+    private lazy var doneButton = Button(title: LocalizedStrings.doneButton, color: .mainBlack, style: .normal) {
         self.trackerManager.changeSchedule(schedule: self.trackerManager.weekDayList)
         self.dismiss(animated: true)
     }
@@ -98,7 +98,7 @@ extension ScheduleScreenViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = "Расписание"
+        navigationItem.title = LocalizedStrings.scheduleTitle
         view.setupView(tableView)
         view.setupView(doneButton)
     }

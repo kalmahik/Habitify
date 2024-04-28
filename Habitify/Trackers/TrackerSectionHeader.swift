@@ -13,7 +13,7 @@ final class TrackerSectionHeader: UICollectionReusableView {
     
     static let identifier = "TrackerSectionHeader"
     
-    // MARK: - Private Properties
+    // MARK: - UIViews
 
     private lazy var titleLabel = {
         let label = UILabel()
@@ -21,21 +21,17 @@ final class TrackerSectionHeader: UICollectionReusableView {
         return label
     }()
     
-    // MARK: - Initializers
-    
-    private func commonInit() {
-        setupViews()
-        setupConstraints()
-    }
-    
     // MARK: - Public Methods
     
     // а точно нам нужен этот метод? есть же инит, может его заюзать?
     func setupSection(title: String) {
         titleLabel.text = title
-        commonInit()
+        setupViews()
+        setupConstraints()
     }
 }
+
+// MARK: - Configure
 
 extension TrackerSectionHeader {
     private func setupViews() {

@@ -12,11 +12,11 @@ final class ScheduleCell: UITableViewCell {
     
     static let identifier = "ScheduleCell"
     
-    weak var delegate: ScheduleCellDelegate?
-    
     // MARK: - Public Properties
     
-    // MARK: - Private Properties
+    weak var delegate: ScheduleCellDelegate?
+    
+    // MARK: - UIViews
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -30,8 +30,6 @@ final class ScheduleCell: UITableViewCell {
         return toggle
     }()
     
-    // MARK: - Initializers
-
     // MARK: - Public Methods
     
     func setupCell(schedule: DayOfWeekSwitch) {
@@ -47,6 +45,8 @@ final class ScheduleCell: UITableViewCell {
         delegate?.didTapSwitch(self)
     }
 }
+
+// MARK: - Configure
 
 extension ScheduleCell {
     private func setupViews() {

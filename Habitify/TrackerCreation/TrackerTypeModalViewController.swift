@@ -1,5 +1,5 @@
 //
-//  TrackersViewController.swift
+//  TrackerTypeModalViewController.swift
 //  Habitify
 //
 //  Created by kalmahik on 05.04.2024.
@@ -21,15 +21,22 @@ final class TrackerTypeModalViewController: UIViewController {
         return stack
     }()
     
-    private lazy var regularButton = Button(title: "Привычка", color: .mainBlack, style: .normal) {
+    private lazy var regularButton = Button(
+        title: LocalizedStrings.trackerRegularTypeButton,
+        color: .mainBlack,
+        style: .normal
+    ) {
         self.trackerManager.resetCurrentTracker()
-        print(self.trackerManager.newTracker.schedule)
         self.trackerManager.changeType(trackerType: .regular)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }
     
-    private  lazy var nonRegularButton = Button(title: "Нерегулярное событие", color: .mainBlack, style: .normal) {
+    private  lazy var nonRegularButton = Button(
+        title: LocalizedStrings.trackerSingleTypeButton,
+        color: .mainBlack,
+        style: .normal
+    ) {
         self.trackerManager.resetCurrentTracker()
         self.trackerManager.changeType(trackerType: .single)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
@@ -48,7 +55,7 @@ final class TrackerTypeModalViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = "Создание трекера"
+        navigationItem.title = LocalizedStrings.trackerType
         view.setupView(wrapperView)
         wrapperView.addArrangedSubview(regularButton)
         wrapperView.addArrangedSubview(nonRegularButton)
@@ -58,7 +65,6 @@ final class TrackerTypeModalViewController: UIViewController {
         NSLayoutConstraint.activate([
             wrapperView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             wrapperView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            wrapperView.heightAnchor.constraint(equalToConstant: 136), // how to avoid this?
             wrapperView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
         ])
     }
