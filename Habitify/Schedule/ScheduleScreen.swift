@@ -11,7 +11,7 @@ final class ScheduleScreenViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private var trackerManager = TrackerManager.shared
+    private let trackerManager = TrackerManager.shared
     
     private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
         self.trackerManager.changeSchedule(schedule: self.trackerManager.weekDayList)
@@ -39,8 +39,7 @@ final class ScheduleScreenViewController: UIViewController {
     }
     
     private func rowWasTapped(_ indexPath: IndexPath) {
-        let cell = trackerManager.weekDayList[indexPath.row]
-        trackerManager.weekDayList[indexPath.row].isEnabled = !cell.isEnabled
+        trackerManager.changeSelectedSchedules(indexPath: indexPath)
         tableView.reloadRows(at: [indexPath], with: .fade)
     }
 }

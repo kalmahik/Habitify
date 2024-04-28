@@ -11,6 +11,8 @@ final class CategoriesScreenViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private let trackerManager = TrackerManager.shared
+    
     private lazy var addCategoryButton = Button(title: "Добавить категорию", color: .mainBlack, style: .normal) {
         self.present(CategoryCreationViewController().wrapWithNavigationController(), animated: true)
     }
@@ -22,9 +24,6 @@ final class CategoriesScreenViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.showsVerticalScrollIndicator = false
         tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.identifier)
-//        tableView.separatorColor = .ypBlack
-//        tableView.backgroundColor = .ypBlack
-//        tableView.backgroundView = emptyView
         tableView.contentInset = Insets.horizontalInset
         tableView.dataSource = self
         tableView.delegate = self
@@ -56,13 +55,13 @@ extension CategoriesScreenViewController: UITableViewDelegate {
 
 extension CategoriesScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        trackerCollectionData.count
+        trackerManager.trackers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         guard let categoryCell = cell as? CategoryCell else { return UITableViewCell() }
-        let category = trackerCollectionData[indexPath.row]
+        let category = trackerManager.trackers[indexPath.row]
 //        let dateLabel = photo.createdAt?.dateString ?? ""
 //        imageListCell.selectionStyle = .none
 //        imageListCell.backgroundColor = .ypBlack

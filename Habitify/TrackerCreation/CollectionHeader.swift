@@ -14,7 +14,7 @@ final class CollectionHeader: UICollectionViewCell {
         
     // MARK: - Private Properties
     
-    private var trackerManager = TrackerManager.shared
+    private let trackerManager = TrackerManager.shared
     
     // почему нельзя сделать так:
 //    private let schedule = trackerManager.shared.newTracker.schedule

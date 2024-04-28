@@ -12,7 +12,7 @@ final class TrackerCreationViewController: UIViewController {
     
     // MARK: - Private Properties
         
-    private var trackerManager = TrackerManager.shared
+    private let trackerManager = TrackerManager.shared
 
     private var observer: NSObjectProtocol?
     
@@ -45,17 +45,7 @@ final class TrackerCreationViewController: UIViewController {
     }
     
     @objc private func didCreateTapped() {
-        let categoryIndex = trackerCollectionData.firstIndex{ $0.title == "Главнное" } ?? -1
-        let newTracker = Tracker(trackerManager.newTracker)
-        if categoryIndex == -1 {
-            trackerCollectionData.append(TrackerCategory(
-                title: "Главнное",
-                trackers: [newTracker]
-            ))
-        } else {
-            trackerCollectionData[categoryIndex].trackers.append(newTracker)
-        }
-        NotificationCenter.default.post(name: TrackersViewController.didChangeNotification, object: self)
+        trackerManager.createTracker()
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     

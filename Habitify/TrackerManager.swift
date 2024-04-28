@@ -10,7 +10,13 @@ import Foundation
 class TrackerManager {
     static let shared = TrackerManager()
     
-    var weekDayList: [DayOfWeekSwitch]
+    private(set) var selectedDay: Date = Date()
+    
+    private(set) var weekDayList: [DayOfWeekSwitch]
+    
+    private(set) var trackerRecord: [UUID: [Date]] = [:]
+    
+    private(set) var trackers: [TrackerCategory] = []
     
     private(set) var newTracker: TrackerPreparation
     
@@ -34,7 +40,6 @@ class TrackerManager {
     }
     
     private let defaultTracker = TrackerPreparation(
-        id: UUID(),
         type: .regular,
         name: "",
         color: "#832CF1FF",
@@ -47,22 +52,52 @@ class TrackerManager {
         weekDayList = defaultDayList
     }
     
+    func changeSelectedDay(selectedDay: Date) {
+        self.selectedDay = selectedDay
+    }
+    
+    func changeSelectedSchedules(indexPath: IndexPath) {
+        let weekDay = weekDayList[indexPath.row]
+        weekDayList[indexPath.row].isEnabled = !weekDay.isEnabled
+    }
+    
     func changeType(trackerType: TrackerType) {
         self.newTracker.type = trackerType
     }
     
     func changeName(name: String?) {
         newTracker.name = name ?? ""
-        NotificationCenter.default.post(
-            name: TrackerCreationViewController.reloadCollection, object: self
-        )
+        NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
     }
     
     func changeSchedule(schedule: [DayOfWeekSwitch]) {
         let schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
         newTracker.schedule = schedule
-        NotificationCenter.default.post(
-            name: TrackerCreationViewController.reloadCollection, object: self
-        )
+        NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
+    }
+    
+    func makeRecord(trackerUUID: UUID) {
+        if trackerRecord[trackerUUID] != nil {
+            if let dayExist = trackerRecord[trackerUUID]?.firstIndex(where: {
+                Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day)
+            }) {
+                trackerRecord[trackerUUID]?.remove(at: dayExist)
+            } else {
+                trackerRecord[trackerUUID]?.append(selectedDay)
+            }
+        } else {
+            trackerRecord[trackerUUID] = [selectedDay]
+        }
+        NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
+    }
+    
+    func createTracker() {
+        let categoryIndex = trackers.firstIndex{ $0.title == "Главнное" } ?? -1
+        if categoryIndex == -1 {
+            trackers.append(TrackerCategory(title: "Главнное", trackers: [Tracker(newTracker)]))
+        } else {
+            trackers[categoryIndex].trackers.append(Tracker(newTracker))
+        }
+        NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
 }

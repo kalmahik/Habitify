@@ -8,18 +8,19 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    
+
     // MARK: - Private Properties
-    
-    static let didChangeNotification = Notification.Name(rawValue: "listWasUpdated")
+
+    static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
     private var observer: NSObjectProtocol?
+    private let trackerManager = TrackerManager.shared
     private lazy var searchBar = UISearchBar(frame: .zero)
-    
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         collectionView.register(TrackerCell.self, forCellWithReuseIdentifier: TrackerCell.identifier)
-        
+
         collectionView.register(
             TrackerSectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -31,9 +32,9 @@ final class TrackersViewController: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
-    
+
     // MARK: - UIViewController
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -42,21 +43,21 @@ final class TrackersViewController: UIViewController {
         setupConstraints()
         addObserver()
     }
-    
+
     // MARK: - Private Functions
-    
+
     @objc private func addTapped() {
         present(TrackerTypeModalViewController().wrapWithNavigationController(), animated: true)
     }
-    
+
     private func addObserver() {
         observer = NotificationCenter.default
             .addObserver(
-                forName: TrackersViewController.didChangeNotification,
+                forName: TrackersViewController.reloadCollection,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.collectionView.reloadData()
+                self?.collectionView.reloadData() // пока оставим так, а уже потом будем релоадить нужные ячейки
             }
     }
 }
@@ -78,31 +79,33 @@ extension TrackersViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension TrackersViewController: UICollectionViewDataSource {
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if (trackerCollectionData.isEmpty) {
+        if (trackerManager.trackers.isEmpty) {
             collectionView.setEmptyMessage("💫", "Что будем отслеживать?")
         } else {
             collectionView.restore()
         }
-        return trackerCollectionData.count
+        return trackerManager.trackers.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        trackerCollectionData[section].trackers.count
+        trackerManager.trackers[section].trackers.count
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
-        let tracker = trackerCollectionData[indexPath.section].trackers[indexPath.row]
+        let tracker = trackerManager.trackers[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
-        trackerCell.setupCell(tracker: tracker)
+        let trackerCount = trackerManager.trackerRecord[tracker.id]?.count ?? 0
+        trackerCell.setupCell(tracker: tracker, count: trackerCount)
+        trackerCell.delegate = self
         return trackerCell
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -113,7 +116,7 @@ extension TrackersViewController: UICollectionViewDataSource {
             withReuseIdentifier: TrackerSectionHeader.identifier,
             for: indexPath
         ) as! TrackerSectionHeader
-        sectionTitle.setupSection(title: trackerCollectionData[indexPath.section].title)
+        sectionTitle.setupSection(title: trackerManager.trackers[indexPath.section].title)
         return sectionTitle
     }
 }
@@ -130,24 +133,23 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         let cellWidth = (collectionWidth - 16 - 16 - 8) / 2
         return CGSize(width: cellWidth, height: 148)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        // Set insets for each section here
         return Insets.horizontalInset
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat { return 0 }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat { return 0 }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -167,22 +169,31 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension TrackersViewController: TrackerCellDelegate {
+    func didTapPlusButton(_ cell: TrackerCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let tracker = trackerManager.trackers[indexPath.section].trackers[indexPath.row]
+        trackerManager.makeRecord(trackerUUID: tracker.id)
+    }
+}
+
 // MARK: - Date Picker
 
 extension TrackersViewController {
-    
+
     func setupDatePicker() {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
-    
+
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         let selectedDate = sender.date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let formattedDate = dateFormatter.string(from: selectedDate)
+        trackerManager.changeSelectedDay(selectedDay: selectedDate)
         print("Выбранная дата: \(formattedDate)")
     }
 }
@@ -190,7 +201,7 @@ extension TrackersViewController {
 // MARK: - Configure
 
 extension TrackersViewController {
-    
+
     private func setupNavBar() {
         navigationItem.title = "Трекеры"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -201,13 +212,13 @@ extension TrackersViewController {
 
 
     }
-    
+
     private func setupViews() {
         view.backgroundColor = .mainWhite
         view.setupView(searchBar)
         view.setupView(collectionView)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

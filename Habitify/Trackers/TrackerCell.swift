@@ -12,6 +12,10 @@ final class TrackerCell: UICollectionViewCell {
     
     static let identifier = "TrackerCell"
     
+    // MARK: - Public Properties
+
+    weak var delegate: TrackerCellDelegate?
+    
     // MARK: - Private Properties
     
     private lazy var cellBackgroundView: UIView = {
@@ -77,13 +81,13 @@ final class TrackerCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func setupCell(tracker: Tracker) {
+    func setupCell(tracker: Tracker, count: Int) {
         let color = UIColor(hex: tracker.color)
         cellBackgroundView.backgroundColor = color
         plusButton.tintColor = color
         emoji.text = tracker.emoji
         titleLabel.text = tracker.name
-        quantityLabel.text = tracker.schedule
+        quantityLabel.text = String(count)
     }
     
     func selectCell() {
@@ -93,6 +97,7 @@ final class TrackerCell: UICollectionViewCell {
     // MARK: - Private Methods
     
     @objc private func didTapPlusButton() {
+        delegate?.didTapPlusButton(self)
     }
 }
 

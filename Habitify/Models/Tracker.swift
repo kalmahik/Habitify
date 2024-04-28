@@ -30,7 +30,7 @@ struct Tracker {
     }
     
     init(_ newTracker: TrackerPreparation) {
-        self.id = newTracker.id
+        self.id = UUID()
         self.type = newTracker.type
         self.name = newTracker.name
         self.color = newTracker.color

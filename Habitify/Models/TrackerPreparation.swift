@@ -7,8 +7,9 @@
 
 import Foundation
 
+
+// the same like tracker but all fields are var
 struct TrackerPreparation {
-    var id: UUID
     var type: TrackerType
     var name: String
     var color: String

@@ -37,7 +37,6 @@ final class CategoryCreationViewController: UIViewController {
     // MARK: - Private Functions
     
     private func createNewCategory(with name: String) {
-        categories.append(TrackerCategory(title: name, trackers: []))
     }
 
 }
