@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension UIImage {
     var noir: UIImage? {
         let context = CIContext(options: nil)

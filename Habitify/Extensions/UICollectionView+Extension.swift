@@ -10,7 +10,7 @@ import UIKit
 extension UICollectionView {
     func setEmptyMessage(_ emoji: String, _ title: String) {
         let emptyView = EmptyView(emoji: emoji, title: title)
-        self.backgroundView = emptyView;
+        self.backgroundView = emptyView
     }
 
     func restore() {

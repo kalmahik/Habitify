@@ -12,17 +12,17 @@ enum CollectionSection: Int {
 }
 
 final class TrackerCreationViewController: UIViewController {
-    
+
     // MARK: - Constants
-    
+
     static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
-    
+
     // MARK: - Private Properties
-    
+
     private let trackerManager = TrackerManager.shared
     private var observer: NSObjectProtocol?
     private lazy var collectionWidth = collectionView.frame.width
-    
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
@@ -41,23 +41,23 @@ final class TrackerCreationViewController: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
-    
+
     // MARK: - UIViewController
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
         addObserver()
     }
-    
+
     // MARK: - Private Methods
-    
+
     @objc private func didCreateTapped() {
         trackerManager.createTracker()
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
-    
+
     private func addObserver() {
         observer = NotificationCenter.default
             .addObserver(
@@ -85,7 +85,7 @@ extension TrackerCreationViewController: UICollectionViewDelegate {
         default: return
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
         cell?.selectCell()
@@ -95,13 +95,13 @@ extension TrackerCreationViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension TrackerCreationViewController: UICollectionViewDataSource {
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int { collectionData.count }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         collectionData[section].data.count
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -134,9 +134,9 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
-        
+
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -175,7 +175,7 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         default: return CGSize(width: 0, height: 0)
         }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -194,19 +194,19 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
             return Insets.emptyInset
         }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat { return 0 }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat { return 0 }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -237,7 +237,7 @@ extension TrackerCreationViewController: CollectionFooterDelegate {
 // MARK: - Configure
 
 extension TrackerCreationViewController {
-        
+
     func setupViews() {
         view.backgroundColor = .mainWhite
         navigationItem.title = trackerManager.isRegular ?
@@ -245,14 +245,13 @@ extension TrackerCreationViewController {
         view.backgroundColor = .white
         view.setupView(collectionView)
     }
-    
+
     func setupConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
-

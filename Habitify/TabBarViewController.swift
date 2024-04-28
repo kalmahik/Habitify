@@ -9,7 +9,7 @@ final class TabBarViewController: UITabBarController {
         self.delegate = self
         setupViewControllers()
     }
-    
+
     // MARK: - Configure
 
     private func setupViewControllers() {

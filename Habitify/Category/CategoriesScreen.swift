@@ -8,17 +8,17 @@
 import UIKit
 
 final class CategoriesScreenViewController: UIViewController {
-    
+
     // MARK: - Private Properties
-    
+
     private let trackerManager = TrackerManager.shared
-    
+
     private lazy var addCategoryButton = Button(title: "Добавить категорию", color: .mainBlack, style: .normal) {
         self.present(CategoryCreationViewController().wrapWithNavigationController(), animated: true)
     }
-    
+
     private lazy var emptyView = EmptyView(emoji: "💫", title: "Привычки и события можно объединить по смыслу")
-    
+
     private lazy var tableView: UITableView = {
         let tableView  = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +30,7 @@ final class CategoriesScreenViewController: UIViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
         return tableView
     }()
-    
+
     // MARK: - UIViewController
 
     override func viewDidLoad() {
@@ -44,7 +44,7 @@ final class CategoriesScreenViewController: UIViewController {
 
 extension CategoriesScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -85,7 +85,7 @@ extension CategoriesScreenViewController {
 //        view.setupView(emptyView)
         view.setupView(addCategoryButton)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -95,7 +95,7 @@ extension CategoriesScreenViewController {
 
             addCategoryButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addCategoryButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            addCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            addCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 }

@@ -10,9 +10,9 @@ import UIKit
 final class StatisticsViewController: UIViewController {
 
     // MARK: - Private Properties
-    
+
     private let emptyView = EmptyView(emoji: "🥲", title: LocalizedStrings.statisticsEmpty)
-    
+
     // MARK: - UIViewController
 
     override func viewDidLoad() {
@@ -31,12 +31,12 @@ extension StatisticsViewController {
         navigationItem.title = LocalizedStrings.statisticsTab
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
+
     private func setupViews() {
         view.backgroundColor = .mainWhite
         view.setupView(emptyView)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             emptyView.widthAnchor.constraint(equalTo: view.widthAnchor),

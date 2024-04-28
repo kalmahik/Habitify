@@ -9,13 +9,13 @@ import UIKit
 
 final class CollectionFooter: UICollectionViewCell {
     static let identifier = "CollectionFooter"
-    
+
     weak var delegate: CollectionFooterDelegate?
-    
+
     private let footerLabel = UILabel()
-    
+
     private let trackerManager = TrackerManager.shared
-    
+
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.horizontal
@@ -23,17 +23,17 @@ final class CollectionFooter: UICollectionViewCell {
         stack.spacing = 8
         return stack
     }()
-    
+
     private lazy var cancelButton = Button(title: LocalizedStrings.cancelButton, color: .mainRed, style: .flat) {
         self.parentViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
-    
+
     private lazy var creationButton = Button(title: LocalizedStrings.creationButton, color: .mainBlack, style: .normal) {
         self.delegate?.didTapCreate()
     }
 
     // MARK: - Initializers
-    
+
     func setupCell() {
         setupViews()
         setupConstraints()
@@ -47,13 +47,12 @@ extension CollectionFooter {
         wrapperView.addArrangedSubview(cancelButton)
         wrapperView.addArrangedSubview(creationButton)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             wrapperView.heightAnchor.constraint(equalToConstant: 60),
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
 }
-

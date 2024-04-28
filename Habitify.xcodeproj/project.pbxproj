@@ -41,6 +41,7 @@
 		846381A42BC7AB67002968E5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381A32BC7AB67002968E5 /* UIImage+Extension.swift */; };
 		846622C92BC7D048002105E2 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846622C82BC7D048002105E2 /* TextField.swift */; };
 		84A4219B2BCB15B5007F3276 /* CategoryCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */; };
+		F53246EB2BDEE73100D2736C /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F53246EA2BDEE73100D2736C /* .swiftlint.yml */; };
 		F54E4A5F2BDD85C80098EF6B /* TrackerCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54E4A5E2BDD85C80098EF6B /* TrackerCellDelegate.swift */; };
 		F557C1122BC1B063004052B3 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1112BC1B063004052B3 /* EmptyView.swift */; };
 		F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F557C1132BC1B84E004052B3 /* UIView+Extension.swift */; };
@@ -90,6 +91,7 @@
 		846381A32BC7AB67002968E5 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		846622C82BC7D048002105E2 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Habitify/Components/TextField.swift; sourceTree = SOURCE_ROOT; };
 		84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCreationViewController.swift; sourceTree = "<group>"; };
+		F53246EA2BDEE73100D2736C /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = Habitify/.swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		F54E4A5E2BDD85C80098EF6B /* TrackerCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCellDelegate.swift; sourceTree = "<group>"; };
 		F557C1112BC1B063004052B3 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		F557C1132BC1B84E004052B3 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		8463816F2BBFB2F2002968E5 /* Habitify */ = {
 			isa = PBXGroup;
 			children = (
+				F53246EA2BDEE73100D2736C /* .swiftlint.yml */,
 				846381702BBFB2F2002968E5 /* AppDelegate.swift */,
 				F5E4A9D62BC987EA00350368 /* Category */,
 				84A4219C2BCB15DF007F3276 /* CategoryCreation */,
@@ -272,6 +275,7 @@
 				846381692BBFB2F2002968E5 /* Sources */,
 				8463816A2BBFB2F2002968E5 /* Frameworks */,
 				8463816B2BBFB2F2002968E5 /* Resources */,
+				F53246EC2BDEE79600D2736C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -320,12 +324,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F53246EB2BDEE73100D2736C /* .swiftlint.yml in Resources */,
 				846381802BBFB2F4002968E5 /* LaunchScreen.storyboard in Resources */,
 				8463817D2BBFB2F4002968E5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F53246EC2BDEE79600D2736C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# for ARM\nif [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n# check only edited files\ngit status --porcelain | grep -v '^ \\?D' | cut -c 4- | sed 's/.* -> //' | tr -d '\"' | while read file \ndo\n    if [[ \"$file\" == *.swift ]]; then\n        swiftlint \"$file\" --fix\n    fi\ndone\n\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		846381692BBFB2F2002968E5 /* Sources */ = {

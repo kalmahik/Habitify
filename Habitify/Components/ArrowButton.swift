@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class ArrowButton: UIControl {
 
     var action: () -> Void
@@ -25,22 +24,22 @@ final class ArrowButton: UIControl {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func updateSubtitle(subtitle: String? = "") {
         subtitleLabel.text = subtitle
     }
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         return label
     }()
-    
+
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .mainGray
         return label
     }()
-    
+
     private lazy var wrapper: UIStackView =  {
         let stack: UIStackView = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.vertical
@@ -48,13 +47,13 @@ final class ArrowButton: UIControl {
         stack.spacing = 2
         return stack
     }()
-    
+
     private lazy var image: UIImageView = {
         let image = UIImageView(image: UIImage(named: "chevronRight"))
         image.tintColor = .mainGray
         return image
     }()
-    
+
     @objc private func tapOnSelf() {
         action()
     }
@@ -67,17 +66,17 @@ final class ArrowButton: UIControl {
         addTapGesture(action)
         backgroundColor = .mainBackgroud
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             wrapper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             wrapper.trailingAnchor.constraint(equalTo: image.leadingAnchor, constant: -16),
             wrapper.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
+
             image.widthAnchor.constraint(equalToConstant: 24),
             image.heightAnchor.constraint(equalToConstant: 24),
             image.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            image.centerYAnchor.constraint(equalTo: centerYAnchor),
+            image.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }

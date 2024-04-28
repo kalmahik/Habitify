@@ -8,14 +8,14 @@
 import UIKit
 
 final class RootViewController: UIViewController {
-    
+
     // MARK: - UIViewController
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
     }
-    
+
     // MARK: - Configure
 
     private func configureViewController() {

@@ -19,27 +19,26 @@ enum ButtonState {
 
 final class Button: UIButton {
     var action: () -> Void
-    
+
     var color: UIColor = .mainBlack {
         didSet {
             backgroundColor = color
         }
     }
-    
+
     var disabledColor: UIColor = .mainGray
-    
+
     override var isEnabled: Bool {
         didSet {
             if isEnabled {
                 backgroundColor = color
-            }
-            else {
+            } else {
                 backgroundColor = disabledColor
                 layer.borderColor = UIColor.mainGray.cgColor
             }
         }
     }
-    
+
     var style: ButtonStyle = .normal
 
     init(
@@ -55,17 +54,17 @@ final class Button: UIButton {
         setTitle(title, for: .normal)
         backgroundColor = color
         setupViews()
-        setupConstraints() 
+        setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc private func didTapButton() {
         action()
     }
-    
+
     private func setupViews() {
         backgroundColor = style == .flat ? .mainWhite : color
         setTitleColor(style == .flat ? color : .mainWhite, for: .normal)
@@ -74,7 +73,7 @@ final class Button: UIButton {
         layer.borderWidth = 1
         layer.borderColor = isEnabled ? color.cgColor : UIColor.mainGray.cgColor
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 60)

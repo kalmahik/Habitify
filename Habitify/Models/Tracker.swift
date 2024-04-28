@@ -19,7 +19,7 @@ struct Tracker {
     let color: String
     let emoji: String
     let schedule: String
-    
+
     init(id: UUID, type: TrackerType, name: String, color: String, emoji: String, schedule: String) {
         self.id = id
         self.type = type
@@ -28,7 +28,7 @@ struct Tracker {
         self.emoji = emoji
         self.schedule = schedule
     }
-    
+
     init(_ newTracker: TrackerPreparation) {
         self.id = UUID()
         self.type = newTracker.type

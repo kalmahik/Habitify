@@ -8,16 +8,16 @@
 import UIKit
 
 final class ScheduleScreenViewController: UIViewController {
-    
+
     // MARK: - Private Properties
-    
+
     private let trackerManager = TrackerManager.shared
-    
+
     private lazy var doneButton = Button(title: LocalizedStrings.doneButton, color: .mainBlack, style: .normal) {
         self.trackerManager.changeSchedule(schedule: self.trackerManager.weekDayList)
         self.dismiss(animated: true)
     }
-    
+
     private lazy var tableView: UITableView = {
         let tableView  = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ final class ScheduleScreenViewController: UIViewController {
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         return tableView
     }()
-    
+
     // MARK: - UIViewController
 
     override func viewDidLoad() {
@@ -37,7 +37,7 @@ final class ScheduleScreenViewController: UIViewController {
         setupView()
         setupConstraints()
     }
-    
+
     private func rowWasTapped(_ indexPath: IndexPath) {
         trackerManager.changeSelectedSchedules(indexPath: indexPath)
         tableView.reloadRows(at: [indexPath], with: .fade)
@@ -62,14 +62,14 @@ extension ScheduleScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifier, for: indexPath)
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
-        
+
         let weekDay = trackerManager.weekDayList[indexPath.row]
         scheduleCell.setupCell(schedule: weekDay)
-        
+
         scheduleCell.clipsToBounds = true
         scheduleCell.layer.cornerRadius = 16
         scheduleCell.delegate = self
-        
+
         // то что ниже похоже на говно, попытаться отрефакторить
         if indexPath.row == 0 {
             scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -102,17 +102,17 @@ extension ScheduleScreenViewController {
         view.setupView(tableView)
         view.setupView(doneButton)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
+
             doneButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             doneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            doneButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            doneButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 }

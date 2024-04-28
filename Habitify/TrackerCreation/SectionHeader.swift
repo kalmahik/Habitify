@@ -8,11 +8,11 @@
 import UIKit
 
 final class SectionHeader: UICollectionReusableView {
-    
+
     // MARK: - Constants
-    
+
     static let identifier = "SectionHeader"
-    
+
     // MARK: - Private Properties
 
     private lazy var titleLabel = {
@@ -20,16 +20,16 @@ final class SectionHeader: UICollectionReusableView {
         label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         return label
     }()
-    
+
     // MARK: - Initializers
-    
+
     private func commonInit() {
         setupViews()
         setupConstraints()
     }
-    
+
     // MARK: - Public Methods
-    
+
     // а точно нам нужен этот метод? есть же инит, может его заюзать?
     func setupSection(title: String) {
         titleLabel.text = title
@@ -41,13 +41,13 @@ extension SectionHeader {
     private func setupViews() {
         setupView(titleLabel)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
         ])
     }
 }

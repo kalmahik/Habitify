@@ -26,11 +26,11 @@ final class TrackersViewController: UIViewController {
         setupViews()
         setupConstraints()
         addObserver()
-        
+
         let selectedDayOfWeek = Calendar.current.weekdaySymbols
         print(selectedDayOfWeek)
     }
-    
+
     // MARK: - UIViews
 
     private lazy var collectionView: UICollectionView = {
@@ -48,7 +48,6 @@ final class TrackersViewController: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
-
 
     // MARK: - Private Functions
 
@@ -87,7 +86,7 @@ extension TrackersViewController: UICollectionViewDelegate {
 extension TrackersViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if (trackerManager.trackers.isEmpty) {
+        if trackerManager.trackers.isEmpty {
             collectionView.setEmptyMessage("💫", LocalizedStrings.trackersEmpty)
         } else {
             collectionView.restore()
@@ -209,7 +208,7 @@ extension TrackersViewController {
         navigationItem.leftBarButtonItem = add
         navigationItem.searchController = UISearchController(searchResultsController: nil)
     }
-    
+
     private func setupDatePicker() {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
@@ -228,7 +227,7 @@ extension TrackersViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

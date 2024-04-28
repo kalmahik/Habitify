@@ -9,7 +9,7 @@ import Foundation
 
 enum DayOfWeek: String, CaseIterable {
     case monday, tuesday, wednesday, thursday, friday, saturday, sunday
-    
+
     var shortName: String {
         switch self {
             case .monday:     return "Пн"
@@ -21,7 +21,7 @@ enum DayOfWeek: String, CaseIterable {
             case .sunday:     return "Вс"
         }
     }
-    
+
     var fullName: String {
         switch self {
             case .monday:    return "Понедельник"
@@ -33,7 +33,7 @@ enum DayOfWeek: String, CaseIterable {
             case .sunday:    return "Воскресенье"
         }
     }
-    
+
     static func scheduleToString(schedule: [DayOfWeekSwitch]) -> String {
         if schedule.filter({ $0.isEnabled }).count == 7 {
             return "Каждый день"
@@ -48,10 +48,10 @@ enum DayOfWeek: String, CaseIterable {
         }
         return schedule
             .filter { $0.isEnabled }
-            .map{ $0.dayOfWeek.shortName }
+            .map { $0.dayOfWeek.shortName }
             .joined(separator: ", ")
     }
-    
+
     static func stringToSchedule(scheduleString: String) -> [DayOfWeekSwitch] {
         if scheduleString == "Каждый день" {
             return DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }

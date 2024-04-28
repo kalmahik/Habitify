@@ -8,11 +8,11 @@
 import UIKit
 
 final class TrackerTypeModalViewController: UIViewController {
-    
+
     // MARK: - Private Properties
-    
+
     private let trackerManager = TrackerManager.shared
-    
+
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.vertical
@@ -20,7 +20,7 @@ final class TrackerTypeModalViewController: UIViewController {
         stack.spacing = 16
         return stack
     }()
-    
+
     private lazy var regularButton = Button(
         title: LocalizedStrings.trackerRegularTypeButton,
         color: .mainBlack,
@@ -31,7 +31,7 @@ final class TrackerTypeModalViewController: UIViewController {
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }
-    
+
     private  lazy var nonRegularButton = Button(
         title: LocalizedStrings.trackerSingleTypeButton,
         color: .mainBlack,
@@ -42,7 +42,7 @@ final class TrackerTypeModalViewController: UIViewController {
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
     }
-    
+
     // MARK: - UIViewController
 
     override func viewDidLoad() {
@@ -50,7 +50,7 @@ final class TrackerTypeModalViewController: UIViewController {
         setupView()
         setupConstraints()
     }
-    
+
     // MARK: - Configure
 
     private func setupView() {
@@ -60,12 +60,12 @@ final class TrackerTypeModalViewController: UIViewController {
         wrapperView.addArrangedSubview(regularButton)
         wrapperView.addArrangedSubview(nonRegularButton)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             wrapperView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             wrapperView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            wrapperView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            wrapperView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
 }

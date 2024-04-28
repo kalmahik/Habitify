@@ -13,8 +13,8 @@ struct Section {
 }
 
 let collectionData = [
-    Section(title: "", data: [""]), //hack for the feader
+    Section(title: "", data: [""]), // hack for the feader
     Section(title: "Emoji", data: emojiList),
     Section(title: "Цвет", data: colorList),
-    Section(title: "", data: [""]), //hack for the footer
+    Section(title: "", data: [""]) // hack for the footer
 ]

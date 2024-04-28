@@ -15,26 +15,26 @@ class TrackerManager {
     private(set) var trackerRecord: [UUID: [Date]] = [:]
     private(set) var trackers: [TrackerCategory] = []
     private(set) var newTracker: TrackerPreparation
-    
+
     // почему нельзя сделать как обычно private let isRegular = ...?
     var isRegular: Bool {
         newTracker.type == .regular
     }
-    
+
     var isValid: Bool {
         !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         (isRegular ? !newTracker.schedule.isEmpty : true)
     }
-    
+
     private init() {
         self.newTracker = defaultTracker
         self.weekDayList = defaultDayList
     }
-    
+
     private let defaultDayList = DayOfWeek.allCases.map {
         DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false)
     }
-    
+
     private let defaultTracker = TrackerPreparation(
         type: .regular,
         name: "",
@@ -47,31 +47,31 @@ class TrackerManager {
         newTracker = defaultTracker
         weekDayList = defaultDayList
     }
-    
+
     func changeSelectedDay(selectedDay: Date) {
         self.selectedDay = selectedDay
     }
-    
+
     func changeSelectedSchedules(indexPath: IndexPath) {
         let weekDay = weekDayList[indexPath.row]
         weekDayList[indexPath.row].isEnabled = !weekDay.isEnabled
     }
-    
+
     func changeType(trackerType: TrackerType) {
         self.newTracker.type = trackerType
     }
-    
+
     func changeName(name: String?) {
         newTracker.name = name ?? ""
         NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
     }
-    
+
     func changeSchedule(schedule: [DayOfWeekSwitch]) {
         let schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
         newTracker.schedule = schedule
         NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
     }
-    
+
     func makeRecord(trackerUUID: UUID) {
         if trackerRecord[trackerUUID] != nil {
             if let dayExist = trackerRecord[trackerUUID]?.firstIndex(where: {
@@ -86,9 +86,9 @@ class TrackerManager {
         }
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
-    
+
     func createTracker() {
-        let categoryIndex = trackers.firstIndex{ $0.title == "Главнное" } ?? -1
+        let categoryIndex = trackers.firstIndex { $0.title == "Главнное" } ?? -1
         if categoryIndex == -1 {
             trackers.append(TrackerCategory(title: "Главнное", trackers: [Tracker(newTracker)]))
         } else {
@@ -96,18 +96,18 @@ class TrackerManager {
         }
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
-    
+
     func getTrackers() {
         for category in trackers {
             let filteredByDay = category.trackers.filter {
-                let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map{ $0.dayOfWeek }
+                let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { $0.dayOfWeek }
 //                let selectedDayOfWeek = selectedDay.w
 //                let exist = schedule.contains(/*<#T##other: Collection##Collection#>*/)
                 return false
             }
         }
     }
-    
+
     func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {
         trackers[indexPath.section].trackers[indexPath.row]
     }

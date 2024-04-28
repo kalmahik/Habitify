@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // the same like tracker but all fields are var
 struct TrackerPreparation {
     var type: TrackerType
