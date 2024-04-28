@@ -7,14 +7,21 @@
 
 import UIKit
 
+enum CollectionSection: Int {
+    case header = 0, emoji, color, footer
+}
+
 final class TrackerCreationViewController: UIViewController {
+    
+    // MARK: - Constants
+    
     static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
     
     // MARK: - Private Properties
-        
+    
     private let trackerManager = TrackerManager.shared
-
     private var observer: NSObjectProtocol?
+    private lazy var collectionWidth = collectionView.frame.width
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -44,6 +51,8 @@ final class TrackerCreationViewController: UIViewController {
         addObserver()
     }
     
+    // MARK: - Private Methods
+    
     @objc private func didCreateTapped() {
         trackerManager.createTracker()
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
@@ -66,8 +75,15 @@ final class TrackerCreationViewController: UIViewController {
 
 extension TrackerCreationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-        cell?.selectCell()
+        switch indexPath.section {
+        case CollectionSection.emoji.rawValue:
+            let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
+            cell?.selectCell()
+        case CollectionSection.color.rawValue:
+            let cell = collectionView.cellForItem(at: indexPath) as? ColorCell
+            cell?.selectCell()
+        default: return
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -91,25 +107,25 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         switch indexPath.section {
-        case 0:
+        case CollectionSection.header.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHeader.identifier, for: indexPath)
             guard let headerCell = cell as? CollectionHeader else { return UICollectionViewCell() }
             headerCell.setupCell()
             return headerCell
-        case 1:
+        case CollectionSection.emoji.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath)
             let emoji = emojiList[indexPath.row]
             guard let emojiCell = cell as? EmojiCell else { return UICollectionViewCell() }
             emojiCell.setupCell(emoji: emoji)
             return emojiCell
-        case 2:
+        case CollectionSection.color.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCell.identifier, for: indexPath)
             let colorString = colorList[indexPath.row]
             let color = UIColor(hex: colorString)
             guard let colorCell = cell as? ColorCell, let color else { return UICollectionViewCell() }
             colorCell.setupCell(color: color)
             return colorCell
-        case 3:
+        case CollectionSection.footer.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFooter.identifier, for: indexPath)
             guard let footerCell = cell as? CollectionFooter else { return UICollectionViewCell() }
             footerCell.delegate = self
@@ -127,8 +143,8 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch indexPath.section {
-        case 0: return UICollectionReusableView()
-        case 3: return UICollectionReusableView()
+        case CollectionSection.header.rawValue: return UICollectionReusableView(frame: .zero)
+        case CollectionSection.footer.rawValue: return UICollectionReusableView(frame: .zero)
         default:
             let sectionTitle = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -150,30 +166,32 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let section = indexPath.section
-        
         switch section {
             // ну что за говно! убрать!
-        case 0: return CGSize(width: collectionView.frame.width, height: trackerManager.isRegular ? 275 : 200)
-        case 1: return CGSize(width: 52, height: 52)
-        case 2: return CGSize(width: 52, height: 52)
-        case 3: return CGSize(width: collectionView.frame.width, height: 60)
+        case CollectionSection.header.rawValue: return CGSize(width: collectionWidth, height: trackerManager.isRegular ? 275 : 200)
+        case CollectionSection.emoji.rawValue: return CGSize(width: 52, height: 52)
+        case CollectionSection.color.rawValue: return CGSize(width: 52, height: 52)
+        case CollectionSection.footer.rawValue: return CGSize(width: collectionWidth, height: 60)
         default: return CGSize(width: 0, height: 0)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        // Set insets for each section here
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
         switch section {
-        case 0:
+        case CollectionSection.header.rawValue:
             return Insets.horizontalInset
-        case 1:
+        case CollectionSection.emoji.rawValue:
             return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
-        case 2:
+        case CollectionSection.color.rawValue:
             return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
-        case 3:
+        case CollectionSection.footer.rawValue:
             return UIEdgeInsets(top: 40, left: 20, bottom: 0, right: 20)
         default:
-            return Insets.emptyInset // Default insets
+            return Insets.emptyInset
         }
     }
     
@@ -202,7 +220,7 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
             at: indexPath
         )
         return headerView.systemLayoutSizeFitting(
-            CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
+            CGSize(width: collectionWidth, height: UIView.layoutFittingExpandedSize.height),
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )

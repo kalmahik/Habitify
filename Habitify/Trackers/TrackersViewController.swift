@@ -42,6 +42,9 @@ final class TrackersViewController: UIViewController {
         setupViews()
         setupConstraints()
         addObserver()
+        
+        let selectedDayOfWeek = Calendar.current.weekdaySymbols
+        print(selectedDayOfWeek)
     }
 
     // MARK: - Private Functions

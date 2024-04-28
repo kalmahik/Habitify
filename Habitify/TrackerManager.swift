@@ -9,15 +9,11 @@ import Foundation
 
 class TrackerManager {
     static let shared = TrackerManager()
-    
+
     private(set) var selectedDay: Date = Date()
-    
     private(set) var weekDayList: [DayOfWeekSwitch]
-    
     private(set) var trackerRecord: [UUID: [Date]] = [:]
-    
     private(set) var trackers: [TrackerCategory] = []
-    
     private(set) var newTracker: TrackerPreparation
     
     // почему нельзя сделать как обычно private let isRegular = ...?
@@ -99,5 +95,16 @@ class TrackerManager {
             trackers[categoryIndex].trackers.append(Tracker(newTracker))
         }
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
+    }
+    
+    func getTrackers() {
+        for category in trackers {
+            let filteredByDay = category.trackers.filter {
+                let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map{ $0.dayOfWeek }
+//                let selectedDayOfWeek = selectedDay.w
+//                let exist = schedule.contains(/*<#T##other: Collection##Collection#>*/)
+                return false
+            }
+        }
     }
 }
