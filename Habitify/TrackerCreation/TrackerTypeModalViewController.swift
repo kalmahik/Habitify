@@ -22,7 +22,7 @@ final class TrackerTypeModalViewController: UIViewController {
     }()
 
     private lazy var regularButton = Button(
-        title: LocalizedStrings.trackerRegularTypeButton,
+        title: NSLocalizedString("trackerRegularTypeButton", comment: ""),
         color: .mainBlack,
         style: .normal
     ) {
@@ -33,7 +33,7 @@ final class TrackerTypeModalViewController: UIViewController {
     }
 
     private  lazy var nonRegularButton = Button(
-        title: LocalizedStrings.trackerSingleTypeButton,
+        title: NSLocalizedString("trackerSingleTypeButton", comment: ""),
         color: .mainBlack,
         style: .normal
     ) {
@@ -55,7 +55,7 @@ final class TrackerTypeModalViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = LocalizedStrings.trackerType
+        navigationItem.title = NSLocalizedString("trackerType", comment: "")
         view.setupView(wrapperView)
         wrapperView.addArrangedSubview(regularButton)
         wrapperView.addArrangedSubview(nonRegularButton)

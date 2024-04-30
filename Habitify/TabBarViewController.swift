@@ -13,17 +13,17 @@ final class TabBarViewController: UITabBarController {
     // MARK: - Configure
 
     private func setupViewControllers() {
-        let trackersTab = UINavigationController(rootViewController: TrackersViewController())
+        let trackersTab = TrackersViewController().wrapWithNavigationController()
         let statisticsTab = StatisticsViewController().wrapWithNavigationController()
 
         trackersTab.tabBarItem = UITabBarItem(
-            title: LocalizedStrings.trackersTab,
+            title: NSLocalizedString("trackersTab", comment: ""),
             image: UIImage(named: "trackersTab"),
             selectedImage: UIImage(named: "trackersTab")
         )
 
         statisticsTab.tabBarItem = UITabBarItem(
-            title: LocalizedStrings.statisticsTab,
+            title: NSLocalizedString("statisticsTab", comment: ""),
             image: UIImage(named: "statisticsTab"),
             selectedImage: UIImage(named: "statisticsTab")
         )

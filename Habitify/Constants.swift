@@ -18,28 +18,6 @@ struct Config {
     static let trackerSpaceBetweenCells: CGFloat = 8
 }
 
-enum LocalizedStrings {
-    static let trackersTitle = "Трекеры"
-    static let trackersEmpty = "Что будем отслеживать?"
-    static let statisticsEmpty = "Анализировать пока нечего"
-    static let dateFormat = "dd.MM.yyyy"
-    static let cancelButton = "Отменить"
-    static let creationButton = "Создать"
-    static let trackerNamePlaceholder = "Введите название трекера"
-    static let categoryButton = "Категория"
-    static let schduleButton = "Расписание"
-    static let trackerRegularType = "Новая привычка"
-    static let trackerSingleType = "Новое нерегулярное событие"
-    static let trackerRegularTypeButton = "Привычка"
-    static let trackerSingleTypeButton = "Нерегулярное событие"
-    static let trackerType = "Создание трекера"
-    static let trackersTab = "Трекеры"
-    static let statisticsTab = "Статистика"
-    static let doneButton = "Готово"
-    static let scheduleTitle = "Расписание"
-    static let trackerNameLengthError = "Ограничение 38 символов"
-}
-
 let emojiList = [
     "🙂", "😻", "🌺", "🐶", "❤️", "😱",
     "😇", "😡", "🥶", "🤔", "🙌", "🍔",
@@ -50,4 +28,65 @@ let colorList = [
     "#FD4C49FF", "#FF881EFF", "#007BFAFF", "#6E44FEFF", "#33CF69FF", "#E66DD4FF",
     "#F9D4D4FF", "#34A7FEFF", "#46E69DFF", "#35347CFF", "#FF674DFF", "#FF99CCFF",
     "#F6C48BFF", "#7994F5FF", "#832CF1FF", "#AD56DAFF", "#8D72E6FF", "#2FD058FF"
+]
+
+let trackersMockData = [
+    TrackerCategory(
+        title: "123",
+        trackers: [
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "123",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: ""
+            ),
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "123",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: ""
+            ),
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "123",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: ""
+            )
+        ]
+    ),
+    TrackerCategory(
+        title: "456",
+        trackers: [
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "123",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: ""
+            ),
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "123",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: ""
+            ),
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "123",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: ""
+            )
+        ]
+    )
 ]

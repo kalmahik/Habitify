@@ -26,9 +26,6 @@ final class TrackersViewController: UIViewController {
         setupViews()
         setupConstraints()
         addObserver()
-
-        let selectedDayOfWeek = Calendar.current.weekdaySymbols
-        print(selectedDayOfWeek)
     }
 
     // MARK: - UIViews
@@ -87,7 +84,7 @@ extension TrackersViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if trackerManager.trackers.isEmpty {
-            collectionView.setEmptyMessage("💫", LocalizedStrings.trackersEmpty)
+            collectionView.setEmptyMessage("💫", NSLocalizedString("trackersEmpty", comment: ""))
         } else {
             collectionView.restore()
         }
@@ -159,18 +156,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        // ну это вообще рокет саенс, столько действий, чтобы просто вернуть высоту хедера секции
-        let indexPath = IndexPath(row: 0, section: section)
-        let headerView = self.collectionView(
-            collectionView,
-            viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
-            at: indexPath
-        )
-        return headerView.systemLayoutSizeFitting(
-            CGSize(width: collectionWidth, height: UIView.layoutFittingExpandedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
+        return CGSize(width: collectionWidth, height: 46)
     }
 }
 
@@ -190,7 +176,7 @@ extension TrackersViewController {
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         let selectedDate = sender.date
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = LocalizedStrings.dateFormat
+        dateFormatter.dateFormat = NSLocalizedString("dateFormat", comment: "")
         let formattedDate = dateFormatter.string(from: selectedDate)
         trackerManager.changeSelectedDay(selectedDay: selectedDate)
         print("Выбранная дата: \(formattedDate)")
@@ -202,7 +188,7 @@ extension TrackersViewController {
 extension TrackersViewController {
 
     private func setupNavBar() {
-        navigationItem.title = LocalizedStrings.trackersTitle
+        navigationItem.title = NSLocalizedString("trackersTitle", comment: "")
         navigationController?.navigationBar.prefersLargeTitles = true
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         add.tintColor = .mainBlack
@@ -215,6 +201,7 @@ extension TrackersViewController {
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        datePicker.maximumDate = Date()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
 

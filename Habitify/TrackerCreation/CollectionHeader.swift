@@ -23,7 +23,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
-        textField.placeholder = LocalizedStrings.trackerNamePlaceholder
+        textField.placeholder = NSLocalizedString("trackerNamePlaceholder", comment: "")
         textField.backgroundColor = .mainBackgroud
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
@@ -34,20 +34,23 @@ final class CollectionHeader: UICollectionViewCell {
         return textField
     }()
     
-    private lazy var errorLabel: UILabel = {
-        let label = UILabel()
-        label.text = LocalizedStrings.trackerNameLengthError
-        label.textColor = .mainRed
-        return label
-    }()
+//    private lazy var errorLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = LocalizedStrings.trackerNameLengthError
+//        label.textColor = .mainRed
+//        return label
+//    }()
 
-    private lazy var categoryButton = ArrowButton(title: LocalizedStrings.categoryButton, subtitle: "Главное") {
+    private lazy var categoryButton = ArrowButton(
+        title: NSLocalizedString("categoryButton", comment: ""),
+        subtitle: "Главное"
+    ) {
         let viewController = CategoriesScreenViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
     private lazy var scheduleButton = ArrowButton(
-        title: LocalizedStrings.schduleButton,
+        title: NSLocalizedString("schduleButton", comment: ""),
         subtitle: trackerManager.newTracker.schedule
     ) {
         let viewController = ScheduleScreenViewController().wrapWithNavigationController()
@@ -64,6 +67,7 @@ final class CollectionHeader: UICollectionViewCell {
     private let wrapperView: UIStackView =  {
         let view = UIStackView()
         view.axis = .vertical
+        view.alignment = .center
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
         return view
@@ -108,7 +112,7 @@ extension CollectionHeader: UITextFieldDelegate {
     
     @objc private func textFieldDidChange(textField: UITextField) {
         guard let length = textField.text?.count else { return }
-        trackerManager.setError(error: length < 38 ? nil : LocalizedStrings.trackerNameLengthError)
+        trackerManager.setError(error: length < 38 ? nil : NSLocalizedString("trackerNameLengthError", comment: ""))
     }
 }
 
@@ -117,7 +121,7 @@ extension CollectionHeader: UITextFieldDelegate {
 extension CollectionHeader {
     private func setupViews() {
         contentView.setupView(trackerNameInput)
-        contentView.setupView(errorLabel)
+//        contentView.setupView(errorLabel)
         contentView.setupView(wrapperView)
         wrapperView.addArrangedSubview(categoryButton)
         if trackerManager.isRegular {
@@ -135,9 +139,9 @@ extension CollectionHeader {
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            errorLabel.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 8),
-            errorLabel.bottomAnchor.constraint(equalTo: wrapperView.topAnchor, constant: -24),
-            errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            errorLabel.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 8),
+//            errorLabel.bottomAnchor.constraint(equalTo: wrapperView.topAnchor, constant: -24),
+//            errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
 
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -148,12 +152,10 @@ extension CollectionHeader {
             categoryButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
             categoryButton.heightAnchor.constraint(equalToConstant: 75)
         ])
-        // переиспользование попахивает говном, но как лучше?
         if trackerManager.isRegular {
             NSLayoutConstraint.activate([
-                line.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
-                line.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
                 line.heightAnchor.constraint(equalToConstant: 1),
+                line.widthAnchor.constraint(equalTo: wrapperView.widthAnchor, constant: -32),
                 line.topAnchor.constraint(equalTo: categoryButton.bottomAnchor),
 
                 scheduleButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),

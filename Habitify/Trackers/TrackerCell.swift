@@ -77,7 +77,9 @@ final class TrackerCell: UICollectionViewCell {
         actionButton.layer.opacity = isCompleted ? 0.3 : 1
         actionButton.setImage(UIImage(named: isCompleted ? "done" : "plus"), for: .normal)
         titleLabel.text = tracker.name
-        quantityLabel.text = String(count)
+        let format = NSLocalizedString("number_of_days", comment: "")
+        let message = String.localizedStringWithFormat(format, count)
+        quantityLabel.text = message
         setupViews()
         setupConstraints()
     }

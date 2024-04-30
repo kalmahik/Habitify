@@ -13,15 +13,7 @@ class TrackerManager {
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSwitch]
     private(set) var trackerRecord: [UUID: [Date]] = [:]
-    private(set) var trackers: [TrackerCategory] = [TrackerCategory(
-        title: "123",
-        trackers: [Tracker(id: UUID(),
-                           type: .regular,
-                           name: "123",
-                           color: "#FD4C49FF",
-                           emoji: "🙂",
-                           schedule: ""
-                          )])]
+    private(set) var trackers: [TrackerCategory] = [] // trackersMockData
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
 
@@ -59,6 +51,7 @@ class TrackerManager {
 
     func changeSelectedDay(selectedDay: Date) {
         self.selectedDay = selectedDay
+        NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
 
     func changeSelectedSchedules(indexPath: IndexPath) {

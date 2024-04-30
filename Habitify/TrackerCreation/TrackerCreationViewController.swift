@@ -211,25 +211,21 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-        let headerView = self.collectionView(
-            collectionView,
-            viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
-            at: indexPath
-        )
-        return headerView.systemLayoutSizeFitting(
-            CGSize(width: collectionWidth, height: UIView.layoutFittingExpandedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
+        switch section {
+            case CollectionSection.header.rawValue: return .zero
+            case CollectionSection.emoji.rawValue: return CGSize(width: collectionWidth, height: 74)
+            case CollectionSection.color.rawValue: return CGSize(width: collectionWidth, height: 74)
+            case CollectionSection.footer.rawValue: return .zero
+            default: return .zero
+        }
     }
     
     func calculateHeaderHeight() -> CGFloat {
         var height: CGFloat = 75 //input
         if trackerManager.error != nil {
-            height += 22 + 8 + 24 //error height, top inset, bottom inset
+            height += 22 + 8 + 32 + 24 //error height, top inset, bottom inset
         } else {
-            height += 24
+            height += 24 + 24 // 2 paddings
         }
         if trackerManager.isRegular {
             height += 150 // 2 buttons
@@ -255,8 +251,8 @@ extension TrackerCreationViewController {
 
     func setupViews() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = trackerManager.isRegular ?
-        LocalizedStrings.trackerRegularType : LocalizedStrings.trackerRegularType
+        navigationItem.title =
+        NSLocalizedString(trackerManager.isRegular ? "trackerRegularType" : "trackerSingleType", comment: "")
         view.backgroundColor = .white
         view.setupView(collectionView)
     }
