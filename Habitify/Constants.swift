@@ -37,6 +37,7 @@ enum LocalizedStrings {
     static let statisticsTab = "Статистика"
     static let doneButton = "Готово"
     static let scheduleTitle = "Расписание"
+    static let trackerNameLengthError = "Ограничение 38 символов"
 }
 
 let emojiList = [

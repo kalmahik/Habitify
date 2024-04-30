@@ -17,7 +17,7 @@ final class CollectionHeader: UICollectionViewCell {
     private let trackerManager = TrackerManager.shared
 
     // почему нельзя сделать так:
-//    private let schedule = trackerManager.shared.newTracker.schedule
+    //    private let schedule = trackerManager.shared.newTracker.schedule
 
     // MARK: - UIViews
 
@@ -29,7 +29,16 @@ final class CollectionHeader: UICollectionViewCell {
         textField.layer.masksToBounds = true
         textField.delegate = self
         textField.returnKeyType = UIReturnKeyType.done
+        textField.clearButtonMode = .whileEditing
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
+    }()
+    
+    private lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = LocalizedStrings.trackerNameLengthError
+        label.textColor = .mainRed
+        return label
     }()
 
     private lazy var categoryButton = ArrowButton(title: LocalizedStrings.categoryButton, subtitle: "Главное") {
@@ -52,8 +61,9 @@ final class CollectionHeader: UICollectionViewCell {
         return stack
     }()
 
-    private let wrapperView: UIView =  {
-        let view = UIView()
+    private let wrapperView: UIStackView =  {
+        let view = UIStackView()
+        view.axis = .vertical
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
         return view
@@ -84,6 +94,22 @@ extension CollectionHeader: UITextFieldDelegate {
         textField.endEditing(true)
         return false
     }
+    
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        let maxLength = 38
+        let currentString = (textField.text ?? "") as NSString
+        let newString = currentString.replacingCharacters(in: range, with: string)
+        return newString.count <= maxLength
+    }
+    
+    @objc private func textFieldDidChange(textField: UITextField) {
+        guard let length = textField.text?.count else { return }
+        trackerManager.setError(error: length < 38 ? nil : LocalizedStrings.trackerNameLengthError)
+    }
 }
 
 // MARK: - Configure
@@ -91,11 +117,12 @@ extension CollectionHeader: UITextFieldDelegate {
 extension CollectionHeader {
     private func setupViews() {
         contentView.setupView(trackerNameInput)
+        contentView.setupView(errorLabel)
         contentView.setupView(wrapperView)
-        wrapperView.setupView(categoryButton)
+        wrapperView.addArrangedSubview(categoryButton)
         if trackerManager.isRegular {
-            wrapperView.setupView(line)
-            wrapperView.setupView(scheduleButton)
+            wrapperView.addArrangedSubview(line)
+            wrapperView.addArrangedSubview(scheduleButton)
         }
         wrapperView.setNeedsLayout()
         wrapperView.layoutIfNeeded()
@@ -107,9 +134,11 @@ extension CollectionHeader {
             trackerNameInput.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
+            errorLabel.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 8),
+            errorLabel.bottomAnchor.constraint(equalTo: wrapperView.topAnchor, constant: -24),
+            errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            // как сделать нормально?
-            wrapperView.heightAnchor.constraint(equalToConstant: trackerManager.isRegular ?  150 : 75),
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             wrapperView.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 24),

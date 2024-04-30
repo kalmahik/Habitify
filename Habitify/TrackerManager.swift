@@ -13,8 +13,17 @@ class TrackerManager {
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSwitch]
     private(set) var trackerRecord: [UUID: [Date]] = [:]
-    private(set) var trackers: [TrackerCategory] = []
+    private(set) var trackers: [TrackerCategory] = [TrackerCategory(
+        title: "123",
+        trackers: [Tracker(id: UUID(),
+                           type: .regular,
+                           name: "123",
+                           color: "#FD4C49FF",
+                           emoji: "🙂",
+                           schedule: ""
+                          )])]
     private(set) var newTracker: TrackerPreparation
+    private(set) var error: String?
 
     // почему нельзя сделать как обычно private let isRegular = ...?
     var isRegular: Bool {
@@ -71,12 +80,19 @@ class TrackerManager {
         newTracker.schedule = schedule
         NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
     }
+    
+    // может быть его отрефакторить следует
+    func isTrackerCompleteForSelectedDay(trackerUUID: UUID) -> Int {
+        guard let trackerRecord = trackerRecord[trackerUUID] else { return -1 }
+        return trackerRecord.firstIndex(where: {
+            Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day)
+        }) ?? -1
+    }
 
     func makeRecord(trackerUUID: UUID) {
         if trackerRecord[trackerUUID] != nil {
-            if let dayExist = trackerRecord[trackerUUID]?.firstIndex(where: {
-                Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day)
-            }) {
+            let dayExist = isTrackerCompleteForSelectedDay(trackerUUID: trackerUUID)
+            if dayExist >= 0 {
                 trackerRecord[trackerUUID]?.remove(at: dayExist)
             } else {
                 trackerRecord[trackerUUID]?.append(selectedDay)
@@ -110,5 +126,9 @@ class TrackerManager {
 
     func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {
         trackers[indexPath.section].trackers[indexPath.row]
+    }
+    
+    func setError(error: String?) {
+        self.error = error
     }
 }

@@ -15,8 +15,8 @@ final class TrackerCell: UICollectionViewCell {
     // MARK: - Public Properties
 
     weak var delegate: TrackerCellDelegate?
-
-    // MARK: - Private Properties
+        
+    // MARK: - UIViews
 
     private lazy var cellBackgroundView: UIView = {
         let view = UIView()
@@ -58,36 +58,28 @@ final class TrackerCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var plusButton: UIButton = {
+    private lazy var actionButton: UIButton = {
         let button = UIButton.systemButton(
-            with: UIImage(named: "plus") ?? UIImage(),
+            with: UIImage(),
             target: self,
-            action: #selector(didTapPlusButton)
+            action: #selector(didTapActionButton)
         )
         return button
     }()
 
-    // MARK: - Initializers
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        setupConstraints()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     // MARK: - Public Methods
 
-    func setupCell(tracker: Tracker, count: Int) {
+    func setupCell(tracker: Tracker, count: Int, isCompleted: Bool) {
         let color = UIColor(hex: tracker.color)
         cellBackgroundView.backgroundColor = color
-        plusButton.tintColor = color
         emoji.text = tracker.emoji
+        actionButton.tintColor = color
+        actionButton.layer.opacity = isCompleted ? 0.3 : 1
+        actionButton.setImage(UIImage(named: isCompleted ? "done" : "plus"), for: .normal)
         titleLabel.text = tracker.name
         quantityLabel.text = String(count)
+        setupViews()
+        setupConstraints()
     }
 
     func selectCell() {
@@ -95,7 +87,7 @@ final class TrackerCell: UICollectionViewCell {
 
     // MARK: - Private Methods
 
-    @objc private func didTapPlusButton() {
+    @objc private func didTapActionButton() {
         delegate?.didTapPlusButton(self)
     }
 }
@@ -110,7 +102,7 @@ extension TrackerCell {
         emojiWrapper.setupView(emoji)
         cellBackgroundView.setupView(titleLabel)
         quantityManagementView.setupView(quantityLabel)
-        quantityManagementView.setupView(plusButton)
+        quantityManagementView.setupView(actionButton)
     }
 
     private func setupConstraints() {
@@ -139,10 +131,10 @@ extension TrackerCell {
             quantityLabel.topAnchor.constraint(equalTo: quantityManagementView.topAnchor, constant: 16),
             quantityLabel.leadingAnchor.constraint(equalTo: quantityManagementView.leadingAnchor, constant: 12),
 
-            plusButton.topAnchor.constraint(equalTo: quantityManagementView.topAnchor, constant: 8),
-            plusButton.trailingAnchor.constraint(equalTo: quantityManagementView.trailingAnchor, constant: -12),
-            plusButton.widthAnchor.constraint(equalToConstant: 34),
-            plusButton.heightAnchor.constraint(equalToConstant: 34)
+            actionButton.topAnchor.constraint(equalTo: quantityManagementView.topAnchor, constant: 8),
+            actionButton.trailingAnchor.constraint(equalTo: quantityManagementView.trailingAnchor, constant: -12),
+            actionButton.widthAnchor.constraint(equalToConstant: 34),
+            actionButton.heightAnchor.constraint(equalToConstant: 34),
         ])
     }
 }

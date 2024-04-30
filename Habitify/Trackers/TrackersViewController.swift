@@ -103,7 +103,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         let tracker = trackerManager.trackers[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
         let trackerCount = trackerManager.trackerRecord[tracker.id]?.count ?? 0
-        trackerCell.setupCell(tracker: tracker, count: trackerCount)
+        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerUUID: tracker.id)
+        trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted >= 0 )
         trackerCell.delegate = self
         return trackerCell
     }
@@ -212,6 +213,7 @@ extension TrackersViewController {
     private func setupDatePicker() {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }

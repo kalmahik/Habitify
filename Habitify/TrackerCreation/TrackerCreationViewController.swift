@@ -167,8 +167,7 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let section = indexPath.section
         switch section {
-            // ну что за говно! убрать!
-        case CollectionSection.header.rawValue: return CGSize(width: collectionWidth, height: trackerManager.isRegular ? 275 : 200)
+        case CollectionSection.header.rawValue: return CGSize(width: collectionWidth, height: calculateHeaderHeight())
         case CollectionSection.emoji.rawValue: return CGSize(width: 52, height: 52)
         case CollectionSection.color.rawValue: return CGSize(width: 52, height: 52)
         case CollectionSection.footer.rawValue: return CGSize(width: collectionWidth, height: 60)
@@ -223,6 +222,22 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
+    }
+    
+    func calculateHeaderHeight() -> CGFloat {
+        var height: CGFloat = 75 //input
+        if trackerManager.error != nil {
+            height += 22 + 8 + 24 //error height, top inset, bottom inset
+        } else {
+            height += 24
+        }
+        if trackerManager.isRegular {
+            height += 150 // 2 buttons
+        } else {
+            height += 75 // 1 button
+        }
+        print(height)
+        return height
     }
 }
 
