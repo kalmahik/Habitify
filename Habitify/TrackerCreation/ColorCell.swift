@@ -12,6 +12,8 @@ final class ColorCell: UICollectionViewCell {
 
     static let identifier = "ColorCell"
     
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -19,7 +21,7 @@ final class ColorCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     // MARK: - Private Properties

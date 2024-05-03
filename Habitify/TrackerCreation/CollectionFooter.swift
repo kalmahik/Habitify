@@ -8,9 +8,28 @@
 import UIKit
 
 final class CollectionFooter: UICollectionViewCell {
+
+    // MARK: - Constants
+
     static let identifier = "CollectionFooter"
+    
+    // MARK: - Initializers
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    // MARK: - Public Properties
 
     weak var delegate: CollectionFooterDelegate?
+    
+    // MARK: - UIViews
 
     private let footerLabel = UILabel()
 
@@ -23,20 +42,24 @@ final class CollectionFooter: UICollectionViewCell {
         stack.spacing = 8
         return stack
     }()
+    
+    // MARK: - Private Functions
 
-    private lazy var cancelButton = Button(title: NSLocalizedString("cancelButton", comment: ""), color: .mainRed, style: .flat) {
+    private lazy var cancelButton = Button(
+        title: NSLocalizedString("cancelButton", comment: ""), color: .mainRed, style: .flat
+    ) {
         self.parentViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 
-    private lazy var creationButton = Button(title: NSLocalizedString("creationButton", comment: ""), color: .mainBlack, style: .normal) {
+    private lazy var creationButton = Button(
+        title: NSLocalizedString("creationButton", comment: ""), color: .mainBlack, style: .normal
+    ) {
         self.delegate?.didTapCreate()
     }
 
     // MARK: - Initializers
 
     func setupCell() {
-        setupViews()
-        setupConstraints()
         creationButton.isEnabled = trackerManager.isValid
     }
 }

@@ -34,28 +34,26 @@ final class CategoryCell: UITableViewCell {
     }()
 
     // MARK: - Initializers
-
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-//    
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     // MARK: - Public Methods
 
     func setupCell(category: TrackerCategory) {
-        setupViews()
-        setupConstraints()
         titleLabel.text = category.title
     }
 
     func selectCell() {
         titleLabel.backgroundColor = .gray
     }
-
-    // MARK: - Private Methods
 }
 
 extension CategoryCell {

@@ -11,6 +11,18 @@ final class EmojiCell: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "EmojiCell"
+    
+    // MARK: - Initializers
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 
     // MARK: - Private Properties
 
@@ -25,8 +37,6 @@ final class EmojiCell: UICollectionViewCell {
 
     func setupCell(emoji: String) {
         emojiLabel.text = emoji
-        setupViews()
-        setupConstraints()
     }
 
     func selectCell() {

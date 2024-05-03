@@ -58,7 +58,6 @@ final class TrackersViewController: UIViewController {
             object: nil,
             queue: .main
         ) {
-            // пока оставим так, а уже потом будем релоадить нужные ячейки
             [weak self] _ in self?.collectionView.reloadData()
         }
     }
@@ -143,21 +142,19 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat { return 0 }
+    ) -> CGFloat { 0 }
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat { return 0 }
+    ) -> CGFloat { 0 }
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        return CGSize(width: collectionWidth, height: 46)
-    }
+    ) -> CGSize { CGSize(width: collectionWidth, height: 46) }
 }
 
 // MARK: - TrackerCellDelegate
@@ -166,7 +163,6 @@ extension TrackersViewController: TrackerCellDelegate {
     func didTapPlusButton(_ cell: TrackerCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let tracker = trackerManager.getTrackerByIndexPath(at: indexPath)
-        print(cell)
         trackerManager.makeRecord(trackerUUID: tracker.id)
     }
 }

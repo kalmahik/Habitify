@@ -11,13 +11,20 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "CollectionHeader"
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 
     // MARK: - Private Properties
 
     private let trackerManager = TrackerManager.shared
-
-    // почему нельзя сделать так:
-    //    private let schedule = trackerManager.shared.newTracker.schedule
 
     // MARK: - UIViews
 
@@ -82,10 +89,6 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Public Methods
 
     func setupCell() {
-        // это ок что эти методы тут? или они должны быть в ините?
-        setupViews()
-        setupConstraints()
-        // такое ощущение, что это костыль, есть ли другой вариант обновить тайтл, без специальной функции?
         scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
     }
 }

@@ -11,6 +11,18 @@ final class ScheduleCell: UITableViewCell {
     // MARK: - Constants
 
     static let identifier = "ScheduleCell"
+    
+    // MARK: - Initializers
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 
     // MARK: - Public Properties
 
@@ -33,8 +45,6 @@ final class ScheduleCell: UITableViewCell {
     // MARK: - Public Methods
 
     func setupCell(schedule: DayOfWeekSwitch) {
-        setupViews()
-        setupConstraints()
         titleLabel.text = schedule.dayOfWeek.fullName
         toggle.isOn = schedule.isEnabled
     }
