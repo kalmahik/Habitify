@@ -29,10 +29,7 @@ final class ArrowButton: UIControl {
         subtitleLabel.text = subtitle
     }
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    private lazy var titleLabel: UILabel = UILabel()
 
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()

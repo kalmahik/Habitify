@@ -24,10 +24,7 @@ final class TrackerCell: UICollectionViewCell {
         return view
     }()
 
-    private lazy var quantityManagementView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private lazy var quantityManagementView: UIView = UIView()
 
     private lazy var emojiWrapper: UIView = {
         let view = UIView()

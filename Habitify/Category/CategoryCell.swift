@@ -21,10 +21,7 @@ final class CategoryCell: UITableViewCell {
         return label
     }()
 
-    private lazy var checkImage: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "checkmark"))
-        return image
-    }()
+    private lazy var checkImage: UIImageView = UIImageView(image: UIImage(systemName: "checkmark"))
 
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()

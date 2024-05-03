@@ -26,10 +26,7 @@ final class ColorCell: UICollectionViewCell {
     
     // MARK: - Private Properties
 
-    private lazy var colorView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private lazy var colorView: UIView = UIView()
 
     // MARK: - Public Methods
 

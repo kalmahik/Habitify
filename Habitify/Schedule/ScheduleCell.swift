@@ -30,10 +30,7 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - UIViews
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    private lazy var titleLabel: UILabel = UILabel()
 
     private lazy var toggle: UISwitch = {
         let toggle = UISwitch()
