@@ -13,11 +13,10 @@ class TrackerManager {
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSwitch]
     private(set) var trackerRecord: [UUID: [Date]] = [:]
-    private(set) var trackers: [TrackerCategory] = [] // trackersMockData
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
+    private var trackers: [TrackerCategory] = trackersMockData // trackersMockData
 
-    // почему нельзя сделать как обычно private let isRegular = ...?
     var isRegular: Bool {
         newTracker.type == .regular
     }
@@ -25,6 +24,15 @@ class TrackerManager {
     var isValid: Bool {
         !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         (isRegular ? !newTracker.schedule.isEmpty : true)
+    }
+    
+    var filteredtrackers: [TrackerCategory] {
+        trackers.map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
+            // для удобства сравнения, превратим его в массив стрингов
+            let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { String(describing: $0.dayOfWeek) }
+            let selectedDayOfWeek = selectedDay.dayOfWeek()
+            return schedule.contains(selectedDayOfWeek)
+        })}.filter { !$0.trackers.isEmpty } //убираем пустые категории
     }
 
     private init() {
@@ -96,29 +104,20 @@ class TrackerManager {
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
 
-    func createTracker() {
-        let categoryIndex = trackers.firstIndex { $0.title == "Главнное" } ?? -1
-        if categoryIndex == -1 {
-            trackers.append(TrackerCategory(title: "Главнное", trackers: [Tracker(newTracker)]))
+    func createTracker(categoryName: String) {
+        let categoryIndex = trackers.firstIndex { $0.title == categoryName } ?? -1
+        let tracker = Tracker(newTracker)
+        if categoryIndex >= 0 {
+            let trackersWithNew = trackers[categoryIndex].trackers + [tracker]
+            trackers.append(TrackerCategory(title: categoryName, trackers: trackersWithNew))
         } else {
-            trackers[categoryIndex].trackers.append(Tracker(newTracker))
+            trackers = trackers + [TrackerCategory(title: categoryName, trackers: [tracker])]
         }
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
 
-    func getTrackers() {
-        for category in trackers {
-            let filteredByDay = category.trackers.filter {
-                let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { $0.dayOfWeek }
-//                let selectedDayOfWeek = selectedDay.w
-//                let exist = schedule.contains(/*<#T##other: Collection##Collection#>*/)
-                return false
-            }
-        }
-    }
-
     func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {
-        trackers[indexPath.section].trackers[indexPath.row]
+        filteredtrackers[indexPath.section].trackers[indexPath.row]
     }
     
     func setError(error: String?) {

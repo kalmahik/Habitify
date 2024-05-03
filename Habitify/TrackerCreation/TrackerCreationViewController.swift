@@ -54,7 +54,7 @@ final class TrackerCreationViewController: UIViewController {
     // MARK: - Private Methods
 
     @objc private func didCreateTapped() {
-        trackerManager.createTracker()
+        trackerManager.createTracker(categoryName: "Важное")
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 
@@ -143,8 +143,10 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch indexPath.section {
-        case CollectionSection.header.rawValue: return UICollectionReusableView(frame: .zero)
-        case CollectionSection.footer.rawValue: return UICollectionReusableView(frame: .zero)
+        case CollectionSection.header.rawValue: 
+            return UICollectionReusableView(frame: .zero)
+        case CollectionSection.footer.rawValue:
+            return UICollectionReusableView(frame: .zero)
         default:
             let sectionTitle = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -167,11 +169,16 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let section = indexPath.section
         switch section {
-        case CollectionSection.header.rawValue: return CGSize(width: collectionWidth, height: calculateHeaderHeight())
-        case CollectionSection.emoji.rawValue: return CGSize(width: 52, height: 52)
-        case CollectionSection.color.rawValue: return CGSize(width: 52, height: 52)
-        case CollectionSection.footer.rawValue: return CGSize(width: collectionWidth, height: 60)
-        default: return CGSize(width: 0, height: 0)
+        case CollectionSection.header.rawValue: 
+            return CGSize(width: collectionWidth, height: calculateHeaderHeight())
+        case CollectionSection.emoji.rawValue: 
+            return CGSize(width: 52, height: 52)
+        case CollectionSection.color.rawValue: 
+            return CGSize(width: 52, height: 52)
+        case CollectionSection.footer.rawValue: 
+            return CGSize(width: collectionWidth, height: 60)
+        default: 
+            return CGSize(width: 0, height: 0)
         }
     }
 
@@ -198,13 +205,13 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat { return 0 }
+    ) -> CGFloat { 0 }
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat { return 0 }
+    ) -> CGFloat { 0 }
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -212,11 +219,16 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         switch section {
-            case CollectionSection.header.rawValue: return .zero
-            case CollectionSection.emoji.rawValue: return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.color.rawValue: return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.footer.rawValue: return .zero
-            default: return .zero
+            case CollectionSection.header.rawValue: 
+                return .zero
+            case CollectionSection.emoji.rawValue: 
+                return CGSize(width: collectionWidth, height: 74)
+            case CollectionSection.color.rawValue: 
+                return CGSize(width: collectionWidth, height: 74)
+            case CollectionSection.footer.rawValue: 
+                return .zero
+            default: 
+                return .zero
         }
     }
     
@@ -232,7 +244,6 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         } else {
             height += 75 // 1 button
         }
-        print(height)
         return height
     }
 }

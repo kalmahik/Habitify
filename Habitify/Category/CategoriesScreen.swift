@@ -55,13 +55,13 @@ extension CategoriesScreenViewController: UITableViewDelegate {
 
 extension CategoriesScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        trackerManager.trackers.count
+        trackerManager.filteredtrackers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         guard let categoryCell = cell as? CategoryCell else { return UITableViewCell() }
-        let category = trackerManager.trackers[indexPath.row]
+        let category = trackerManager.filteredtrackers[indexPath.row]
 //        let dateLabel = photo.createdAt?.dateString ?? ""
 //        imageListCell.selectionStyle = .none
 //        imageListCell.backgroundColor = .ypBlack

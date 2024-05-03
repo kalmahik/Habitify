@@ -8,7 +8,7 @@
 import Foundation
 
 enum DayOfWeek: String, CaseIterable {
-    case monday, tuesday, wednesday, thursday, friday, saturday, sunday
+    case monday = "Пн", tuesday = "Вт", wednesday = "Ср", thursday = "Чт", friday = "Пт", saturday = "Сб", sunday = "Вс"
 
     var shortName: String {
         switch self {
@@ -53,6 +53,9 @@ enum DayOfWeek: String, CaseIterable {
     }
 
     static func stringToSchedule(scheduleString: String) -> [DayOfWeekSwitch] {
+        if scheduleString.isEmpty {
+            return []
+        }
         if scheduleString == "Каждый день" {
             return DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
         }
@@ -61,7 +64,7 @@ enum DayOfWeek: String, CaseIterable {
         }
         return scheduleString
             .components(separatedBy: ", ")
-            .map { DayOfWeekSwitch(dayOfWeek: DayOfWeek(rawValue: String($0)) ?? .monday, isEnabled: true)}
+            .map { DayOfWeekSwitch(dayOfWeek: DayOfWeek(rawValue: $0) ?? .monday, isEnabled: true) }
     }
 }
 

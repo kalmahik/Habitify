@@ -83,25 +83,25 @@ extension TrackersViewController: UICollectionViewDelegate {
 extension TrackersViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if trackerManager.trackers.isEmpty {
+        if trackerManager.filteredtrackers.isEmpty {
             collectionView.setEmptyMessage("💫", NSLocalizedString("trackersEmpty", comment: ""))
         } else {
             collectionView.restore()
         }
-        return trackerManager.trackers.count
+        return trackerManager.filteredtrackers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        trackerManager.trackers[section].trackers.count
+        trackerManager.filteredtrackers[section].trackers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
-        let tracker = trackerManager.trackers[indexPath.section].trackers[indexPath.row]
+        let tracker = trackerManager.filteredtrackers[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
         let trackerCount = trackerManager.trackerRecord[tracker.id]?.count ?? 0
-        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerUUID: tracker.id)
-        trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted >= 0 )
+        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerUUID: tracker.id) >= 0
+        trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted )
         trackerCell.delegate = self
         return trackerCell
     }
@@ -116,7 +116,7 @@ extension TrackersViewController: UICollectionViewDataSource {
             withReuseIdentifier: TrackerSectionHeader.identifier,
             for: indexPath
         ) as! TrackerSectionHeader
-        sectionTitle.setupSection(title: trackerManager.trackers[indexPath.section].title)
+        sectionTitle.setupSection(title: trackerManager.filteredtrackers[indexPath.section].title)
         return sectionTitle
     }
 }
@@ -166,6 +166,7 @@ extension TrackersViewController: TrackerCellDelegate {
     func didTapPlusButton(_ cell: TrackerCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let tracker = trackerManager.getTrackerByIndexPath(at: indexPath)
+        print(cell)
         trackerManager.makeRecord(trackerUUID: tracker.id)
     }
 }
@@ -179,7 +180,6 @@ extension TrackersViewController {
         dateFormatter.dateFormat = NSLocalizedString("dateFormat", comment: "")
         let formattedDate = dateFormatter.string(from: selectedDate)
         trackerManager.changeSelectedDay(selectedDay: selectedDate)
-        print("Выбранная дата: \(formattedDate)")
     }
 }
 

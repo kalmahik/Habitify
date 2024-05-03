@@ -11,7 +11,17 @@ final class ColorCell: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "ColorCell"
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Private Properties
 
     private lazy var colorView: UIView = {
@@ -23,9 +33,6 @@ final class ColorCell: UICollectionViewCell {
 
     func setupCell(color: UIColor) {
         colorView.backgroundColor = color
-        colorView.layer.cornerRadius = 8
-        setupViews()
-        setupConstraints()
     }
 
     func selectCell() {
@@ -38,6 +45,7 @@ final class ColorCell: UICollectionViewCell {
 extension ColorCell {
     private func setupViews() {
         contentView.setupView(colorView)
+        colorView.layer.cornerRadius = 8
     }
 
     private func setupConstraints() {
