@@ -17,17 +17,6 @@ final class TrackersViewController: UIViewController {
     private lazy var searchBar = UISearchBar(frame: .zero)
     private lazy var collectionWidth = collectionView.frame.width
 
-    // MARK: - UIViewController
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupNavBar()
-        setupDatePicker()
-        setupViews()
-        setupConstraints()
-        addObserver()
-    }
-
     // MARK: - UIViews
 
     private lazy var collectionView: UICollectionView = {
@@ -45,6 +34,17 @@ final class TrackersViewController: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
+    
+    // MARK: - UIViewController
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavBar()
+        setupDatePicker()
+        setupViews()
+        setupConstraints()
+        addObserver()
+    }
 
     // MARK: - Private Functions
 
