@@ -16,17 +16,15 @@ class TrackerManager {
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
     private var trackers: [TrackerCategory] = [] // trackersMockData
+    private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
+    private let defaultTracker = TrackerPreparation( type: .regular, name: "", color: "", emoji: "", schedule: "")
     
-    var isRegular: Bool {
-        newTracker.type == .regular
+    private init() {
+        self.newTracker = defaultTracker
+        self.weekDayList = defaultDayList
     }
     
-    var isValid: Bool {
-        !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        (isRegular ? !newTracker.schedule.isEmpty : true) &&
-        !newTracker.emoji.isEmpty &&
-        !newTracker.color.isEmpty
-    }
+    // MARK: - Tracker list properties
     
     var filteredtrackers: [TrackerCategory] {
         trackers.map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
@@ -41,70 +39,25 @@ class TrackerManager {
         })}
         .filter { !$0.trackers.isEmpty } //убираем пустые категории
     }
+
+    // MARK: - Creation properties
     
-    private init() {
-        self.newTracker = defaultTracker
-        self.weekDayList = defaultDayList
+    var isRegular: Bool { newTracker.type == .regular }
+    
+    var isValid: Bool {
+        !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        (isRegular ? !newTracker.schedule.isEmpty : true) &&
+        !newTracker.emoji.isEmpty &&
+        !newTracker.color.isEmpty
     }
     
-    private let defaultDayList = DayOfWeek.allCases.map {
-        DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false)
-    }
-    
-    private let defaultTracker = TrackerPreparation(
-        type: .regular,
-        name: "",
-        color: "",
-        emoji: "",
-        schedule: ""
-    )
-    
-    func resetCurrentTracker() {
-        newTracker = defaultTracker
-        weekDayList = defaultDayList
-    }
+    // MARK: - Tracker list methods
     
     func changeSelectedDay(selectedDay: Date) {
         self.selectedDay = selectedDay
-        NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
+        updateTrackersUI()
     }
     
-    func changeSelectedSchedules(indexPath: IndexPath) {
-        let weekDay = weekDayList[indexPath.row]
-        weekDayList[indexPath.row].isEnabled = !weekDay.isEnabled
-    }
-    
-    func changeType(trackerType: TrackerType) {
-        self.newTracker.type = trackerType
-    }
-    
-    func changeEmoji(emoji: String?) {
-        self.newTracker.emoji = emoji ?? ""
-    }
-    
-    func changeColor(color: String?) {
-        self.newTracker.color = color ?? ""
-    }
-
-    func changeName(name: String?) {
-        newTracker.name = name ?? ""
-        NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
-    }
-
-    func changeSchedule(schedule: [DayOfWeekSwitch]) {
-        let schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
-        newTracker.schedule = schedule
-        NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
-    }
-    
-    // может быть его отрефакторить следует
-    func isTrackerCompleteForSelectedDay(trackerUUID: UUID) -> Int {
-        guard let trackerRecord = trackerRecord[trackerUUID] else { return -1 }
-        return trackerRecord.firstIndex(where: {
-            Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day)
-        }) ?? -1
-    }
-
     func makeRecord(trackerUUID: UUID) {
         if trackerRecord[trackerUUID] != nil {
             let dayExist = isTrackerCompleteForSelectedDay(trackerUUID: trackerUUID)
@@ -116,18 +69,66 @@ class TrackerManager {
         } else {
             trackerRecord[trackerUUID] = [selectedDay]
         }
-        NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
+        updateTrackersUI()
     }
-
+    
+    // MARK: - Creation methods
+    
+    func changeType(trackerType: TrackerType) {
+        self.newTracker.type = trackerType
+    }
+    
+    func changeName(name: String?) {
+        newTracker.name = name ?? ""
+        updateCreationUI()
+    }
+    
+    func changeSchedule(schedule: [DayOfWeekSwitch]) {
+        let schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
+        newTracker.schedule = schedule
+        updateCreationUI()
+    }
+    
+    func changeSelectedSchedules(indexPath: IndexPath) {
+        let weekDay = weekDayList[indexPath.row]
+        weekDayList[indexPath.row].isEnabled = !weekDay.isEnabled
+    }
+    
+    func changeEmoji(emoji: String?) {
+        self.newTracker.emoji = emoji ?? ""
+//        updateCreationUI()
+    }
+    
+    func changeColor(color: String?) {
+        self.newTracker.color = color ?? ""
+//        updateCreationUI()
+    }
+    
+    func setError(error: String?) {
+        self.error = error
+    }
+    
     func createTracker(categoryName: String) {
         let categoryIndex = trackers.firstIndex { $0.title == categoryName } ?? -1
         let tracker = Tracker(newTracker)
         if categoryIndex >= 0 {
-            let trackersWithNew = trackers[categoryIndex].trackers + [tracker]
-            trackers.append(TrackerCategory(title: categoryName, trackers: trackersWithNew))
+            trackers.append(TrackerCategory(title: categoryName, trackers: trackers[categoryIndex].trackers + [tracker]))
         } else {
             trackers = trackers + [TrackerCategory(title: categoryName, trackers: [tracker])]
         }
+        updateTrackersUI()
+    }
+    
+    // MARK: - Utils
+    
+    func updateCreationUI() {
+        // выглядит это не очень, т к менеджер обновляет юай, но пока оставим это тут
+        // у нас экран создания это коллекция с фиксированным (небольшим) набором значений, и будем считать, что проще и понятнее обновлять ее целиком, чем вычислять, какую секцию стоит обновить
+        NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
+    }
+    
+    func updateTrackersUI() {
+        //если трекеров много будет - то это не эффективно, лучше точечно обновлять коллекцию
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
 
@@ -135,7 +136,13 @@ class TrackerManager {
         filteredtrackers[indexPath.section].trackers[indexPath.row]
     }
     
-    func setError(error: String?) {
-        self.error = error
+    func isTrackerCompleteForSelectedDay(trackerUUID: UUID) -> Int {
+        guard let trackerRecord = trackerRecord[trackerUUID] else { return -1 }
+        return trackerRecord.firstIndex(where: { Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day) }) ?? -1
+    }
+    
+    func resetCurrentTracker() {
+        newTracker = defaultTracker
+        weekDayList = defaultDayList
     }
 }
