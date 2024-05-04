@@ -23,6 +23,12 @@ final class EmojiCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            emojiLabel.backgroundColor = isSelected ? .mainLigthGray : .mainWhite
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -38,10 +44,6 @@ final class EmojiCell: UICollectionViewCell {
     func setupCell(emoji: String) {
         emojiLabel.text = emoji
     }
-
-    func selectCell() {
-        emojiLabel.backgroundColor = .gray
-    }
 }
 
 // MARK: - Configure
@@ -49,12 +51,16 @@ final class EmojiCell: UICollectionViewCell {
 extension EmojiCell {
     private func setupViews() {
         contentView.setupView(emojiLabel)
+        emojiLabel.layer.cornerRadius = 16
+        emojiLabel.layer.masksToBounds = true
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             emojiLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emojiLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            emojiLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            emojiLabel.widthAnchor.constraint(equalToConstant: 52),
+            emojiLabel.heightAnchor.constraint(equalToConstant: 52),
         ])
     }
 }

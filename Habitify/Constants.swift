@@ -34,24 +34,24 @@ let trackersMockData = [
     TrackerCategory(
         title: "123",
         trackers: [
-//            Tracker(
-//                id: UUID(uuidString: "6D70BB77-169C-4058-B2F1-01C6A79C6E38")!,
-//                type: .regular,
-//                name: "Будние дни",
-//                color: "#FF881EFF",
-//                emoji: "🙂",
-//                schedule: "Будние дни"
-//            ),
-//            Tracker(
-//                id: UUID(uuidString: "2CBDA97A-58BD-458E-9BA3-897C15A72E21")!,
-//                type: .regular,
-//                name: "Каждый день",
-//                color: "#FD4C49FF",
-//                emoji: "🙂",
-//                schedule: "Каждый день"
-//            ),
             Tracker(
-                id: UUID(uuidString: "776302AD-9F40-4C84-B102-4B9FE8449039")!,
+                id: UUID(),
+                type: .regular,
+                name: "Будние дни",
+                color: "#FF881EFF",
+                emoji: "🙂",
+                schedule: "Будние дни"
+            ),
+            Tracker(
+                id: UUID(),
+                type: .regular,
+                name: "Каждый день",
+                color: "#FD4C49FF",
+                emoji: "🙂",
+                schedule: "Каждый день"
+            ),
+            Tracker(
+                id: UUID(),
                 type: .regular,
                 name: "Пн, Ср, Пт",
                 color: "#007BFAFF",

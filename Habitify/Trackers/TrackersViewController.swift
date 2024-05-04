@@ -63,20 +63,6 @@ final class TrackersViewController: UIViewController {
     }
 }
 
-// MARK: - UICollectionViewDelegate
-
-extension TrackersViewController: UICollectionViewDelegate {
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-    //        cell?.selectCell()
-    //    }
-    //
-    //    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-    //        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-    //        cell?.selectCell()
-    //    }
-}
-
 // MARK: - UICollectionViewDataSource
 
 extension TrackersViewController: UICollectionViewDataSource {
@@ -171,11 +157,7 @@ extension TrackersViewController: TrackerCellDelegate {
 
 extension TrackersViewController {
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        let selectedDate = sender.date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = NSLocalizedString("dateFormat", comment: "")
-        let formattedDate = dateFormatter.string(from: selectedDate)
-        trackerManager.changeSelectedDay(selectedDay: selectedDate)
+        trackerManager.changeSelectedDay(selectedDay: sender.date)
     }
 }
 

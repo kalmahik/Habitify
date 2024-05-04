@@ -24,6 +24,16 @@ final class ColorCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
+    override var isSelected: Bool {
+        didSet {
+            contentView.layer.borderWidth = 3
+            contentView.layer.borderColor = isSelected ?
+            colorView.backgroundColor?.withAlphaComponent(0.3).cgColor : UIColor.mainWhite.cgColor
+            contentView.layer.cornerRadius = 16
+            contentView.layer.masksToBounds = true
+        }
+    }
+    
     // MARK: - Private Properties
 
     private lazy var colorView: UIView = UIView()
@@ -32,10 +42,6 @@ final class ColorCell: UICollectionViewCell {
 
     func setupCell(color: UIColor) {
         colorView.backgroundColor = color
-    }
-
-    func selectCell() {
-        backgroundColor = .gray
     }
 }
 
@@ -49,6 +55,8 @@ extension ColorCell {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            contentView.widthAnchor.constraint(equalToConstant: 52),
+            contentView.heightAnchor.constraint(equalToConstant: 52),
             colorView.widthAnchor.constraint(equalToConstant: 40),
             colorView.heightAnchor.constraint(equalToConstant: 40),
             colorView.centerXAnchor.constraint(equalTo: centerXAnchor),

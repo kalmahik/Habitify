@@ -38,7 +38,7 @@ final class TrackerCreationViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.white
-        collectionView.allowsMultipleSelection = false
+        collectionView.allowsMultipleSelection = true
         return collectionView
     }()
 
@@ -74,21 +74,37 @@ final class TrackerCreationViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 
 extension TrackerCreationViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case CollectionSection.emoji.rawValue:
-            let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-            cell?.selectCell()
+            let emoji = emojiList[indexPath.row]
+            trackerManager.changeEmoji(emoji: emoji)
         case CollectionSection.color.rawValue:
-            let cell = collectionView.cellForItem(at: indexPath) as? ColorCell
-            cell?.selectCell()
-        default: return
+            let colorString = colorList[indexPath.row]
+            trackerManager.changeColor(color: colorString)
+        default:
+            return
         }
     }
 
+    // может лучще запретить деселект?
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell
-        cell?.selectCell()
+        switch indexPath.section {
+        case CollectionSection.emoji.rawValue:
+            trackerManager.changeEmoji(emoji: nil)
+        case CollectionSection.color.rawValue:
+            trackerManager.changeColor(color: nil)
+        default:
+            return
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        collectionView.indexPathsForSelectedItems?
+            .filter({ $0.section == indexPath.section })
+            .forEach({ collectionView.deselectItem(at: $0, animated: false) })
+        return true
     }
 }
 

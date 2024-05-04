@@ -9,66 +9,81 @@ import Foundation
 
 class TrackerManager {
     static let shared = TrackerManager()
-
+    
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSwitch]
     private(set) var trackerRecord: [UUID: [Date]] = [:]
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
-    private var trackers: [TrackerCategory] = trackersMockData // trackersMockData
-
+    private var trackers: [TrackerCategory] = [] // trackersMockData
+    
     var isRegular: Bool {
         newTracker.type == .regular
     }
-
+    
     var isValid: Bool {
         !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        (isRegular ? !newTracker.schedule.isEmpty : true)
+        (isRegular ? !newTracker.schedule.isEmpty : true) &&
+        !newTracker.emoji.isEmpty &&
+        !newTracker.color.isEmpty
     }
     
     var filteredtrackers: [TrackerCategory] {
         trackers.map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
+            // немного сэкономим на вычислениях, и если трекер не регуляроный, то отображаем его всегда
+            if $0.schedule.isEmpty {
+                return true
+            }
             // для удобства сравнения, превратим его в массив стрингов
             let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { String(describing: $0.dayOfWeek) }
             let selectedDayOfWeek = selectedDay.dayOfWeek()
             return schedule.contains(selectedDayOfWeek)
-        })}.filter { !$0.trackers.isEmpty } //убираем пустые категории
+        })}
+        .filter { !$0.trackers.isEmpty } //убираем пустые категории
     }
-
+    
     private init() {
         self.newTracker = defaultTracker
         self.weekDayList = defaultDayList
     }
-
+    
     private let defaultDayList = DayOfWeek.allCases.map {
         DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false)
     }
-
+    
     private let defaultTracker = TrackerPreparation(
         type: .regular,
         name: "",
-        color: "#832CF1FF",
-        emoji: "🙂",
+        color: "",
+        emoji: "",
         schedule: ""
     )
-
+    
     func resetCurrentTracker() {
         newTracker = defaultTracker
         weekDayList = defaultDayList
     }
-
+    
     func changeSelectedDay(selectedDay: Date) {
         self.selectedDay = selectedDay
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
     }
-
+    
     func changeSelectedSchedules(indexPath: IndexPath) {
         let weekDay = weekDayList[indexPath.row]
         weekDayList[indexPath.row].isEnabled = !weekDay.isEnabled
     }
-
+    
     func changeType(trackerType: TrackerType) {
         self.newTracker.type = trackerType
+    }
+    
+    func changeEmoji(emoji: String?) {
+        self.newTracker.emoji = emoji ?? ""
+    }
+    
+    func changeColor(color: String?) {
+        self.newTracker.color = color ?? ""
     }
 
     func changeName(name: String?) {
