@@ -7,7 +7,11 @@
 
 import Foundation
 
-// the same like tracker but all fields are var
+enum TrackerType {
+    case regular
+    case single
+}
+
 struct TrackerPreparation {
     var type: TrackerType
     var name: String
