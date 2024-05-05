@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  Habitify
+
+  Created by Murad Azimov on 30.04.2024.
+  
+*/
+
+"trackersTitle" = "Трекеры";
+"trackersEmpty" = "Что будем отслеживать?";
+"statisticsEmpty" = "Анализировать пока нечего";
+"dateFormat" = "dd.MM.yyyy";
+"cancelButton" = "Отменить";
+"creationButton" = "Создать";
+"trackerNamePlaceholder" = "Введите название трекера";
+"categoryButton" = "Категория";
+"schduleButton" = "Расписание";
+"trackerRegularType" = "Новая привычка";
+"trackerSingleType" = "Новое нерегулярное событие";
+"trackerRegularTypeButton" = "Привычка";
+"trackerSingleTypeButton" = "Нерегулярное событие";
+"trackerType" = "Создание трекера";
+"trackersTab" = "Трекеры";
+"statisticsTab" = "Статистика";
+"doneButton" = "Готово";
+"scheduleTitle" = "Расписание";
+"trackerNameLengthError" = "Ограничение 38 символов";
