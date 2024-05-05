@@ -90,6 +90,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     func setupCell() {
         scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
+        trackerNameInput.text = trackerManager.newTracker.name
     }
 }
 

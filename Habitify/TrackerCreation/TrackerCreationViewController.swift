@@ -54,20 +54,18 @@ final class TrackerCreationViewController: UIViewController {
     // MARK: - Private Methods
 
     @objc private func didCreateTapped() {
-        trackerManager.createTracker(categoryName: "Важное")
+        trackerManager.createTracker(categoryName: "Главное")
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 
     private func addObserver() {
-        observer = NotificationCenter.default
-            .addObserver(
-                forName: TrackerCreationViewController.reloadCollection,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                // в целом коллекция не большая и фиксированная, можно обновить целиком
-                self?.collectionView.reloadData()
-            }
+        observer = NotificationCenter.default.addObserver(
+            forName: TrackerCreationViewController.reloadCollection,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.collectionView.reloadSections(IndexSet(arrayLiteral: 0, 3))
+        }
     }
 }
 

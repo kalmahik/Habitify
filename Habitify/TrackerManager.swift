@@ -17,7 +17,7 @@ class TrackerManager {
     private(set) var error: String?
     private var trackers: [TrackerCategory] = [] // trackersMockData
     private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
-    private let defaultTracker = TrackerPreparation( type: .regular, name: "", color: "", emoji: "", schedule: "")
+    private let defaultTracker = TrackerPreparation(type: .regular, name: "", color: "", emoji: "", schedule: "")
     
     private init() {
         self.newTracker = defaultTracker
@@ -96,12 +96,12 @@ class TrackerManager {
     
     func changeEmoji(emoji: String?) {
         self.newTracker.emoji = emoji ?? ""
-//        updateCreationUI()
+        updateCreationUI()
     }
     
     func changeColor(color: String?) {
         self.newTracker.color = color ?? ""
-//        updateCreationUI()
+        updateCreationUI()
     }
     
     func setError(error: String?) {
@@ -112,7 +112,10 @@ class TrackerManager {
         let categoryIndex = trackers.firstIndex { $0.title == categoryName } ?? -1
         let tracker = Tracker(newTracker)
         if categoryIndex >= 0 {
-            trackers.append(TrackerCategory(title: categoryName, trackers: trackers[categoryIndex].trackers + [tracker]))
+            let trackers = trackers[categoryIndex].trackers + [tracker]
+            let category = TrackerCategory(title: categoryName, trackers: trackers)
+            self.trackers.remove(at: categoryIndex)
+            self.trackers.insert(category, at: categoryIndex)
         } else {
             trackers = trackers + [TrackerCategory(title: categoryName, trackers: [tracker])]
         }
@@ -123,7 +126,6 @@ class TrackerManager {
     
     func updateCreationUI() {
         // выглядит это не очень, т к менеджер обновляет юай, но пока оставим это тут
-        // у нас экран создания это коллекция с фиксированным (небольшим) набором значений, и будем считать, что проще и понятнее обновлять ее целиком, чем вычислять, какую секцию стоит обновить
         NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
     }
     
