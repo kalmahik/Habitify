@@ -64,7 +64,11 @@ final class TrackerCreationViewController: UIViewController {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.collectionView.reloadSections(IndexSet(arrayLiteral: 0, 3))
+            // no need to update the whole collection
+            self?.collectionView.reloadSections(IndexSet(arrayLiteral:
+                CollectionSection.header.rawValue,
+                CollectionSection.footer.rawValue
+            ))
         }
     }
 }
