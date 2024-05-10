@@ -16,7 +16,9 @@ final class TrackersViewController: UIViewController {
     private let trackerManager = TrackerManager.shared
     private lazy var searchBar = UISearchBar(frame: .zero)
     private lazy var collectionWidth = collectionView.frame.width
-
+    private var store = TrackerCategoryStore.shared
+    private var trackerStore = TrackerStore.shared
+    
     // MARK: - UIViews
 
     private lazy var collectionView: UICollectionView = {
@@ -49,6 +51,9 @@ final class TrackersViewController: UIViewController {
     // MARK: - Private Functions
 
     @objc private func addTapped() {
+        print("1", store.getCategories())
+        print("2", store.getCategory(by: "Главное"))
+        print("3", trackerStore.getTrackers())
         present(TrackerTypeModalViewController().wrapWithNavigationController(), animated: true)
     }
 

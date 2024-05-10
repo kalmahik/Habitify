@@ -22,11 +22,19 @@ struct Tracker {
         self.schedule = schedule
     }
 
-    init(_ newTracker: TrackerPreparation) {
+    init(from tracker: TrackerPreparation) {
         self.id = UUID()
-        self.name = newTracker.name
-        self.color = newTracker.color
-        self.emoji = newTracker.emoji
-        self.schedule = newTracker.schedule
+        self.name = tracker.name
+        self.color = tracker.color
+        self.emoji = tracker.emoji
+        self.schedule = tracker.schedule
+    }
+    
+    init(from tracker: TrackerCoreData) {
+        self.id = tracker.id ?? UUID()
+        self.name = tracker.name ?? ""
+        self.color = tracker.color ?? ""
+        self.emoji = tracker.emoji ?? ""
+        self.schedule = tracker.schedule ?? ""
     }
 }

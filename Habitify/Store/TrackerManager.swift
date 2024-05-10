@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TrackerManager {
+final class TrackerManager {
     static let shared = TrackerManager()
     
     private(set) var selectedDay: Date = Date()
@@ -18,6 +18,8 @@ class TrackerManager {
     private var trackers: [TrackerCategory] = [] // trackersMockData
     private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
     private let defaultTracker = TrackerPreparation(type: .regular, name: "", color: "", emoji: "", schedule: "")
+    private let trackerStore = TrackerStore.shared
+    private let categoryStore = TrackerCategoryStore.shared
     
     private init() {
         self.newTracker = defaultTracker
@@ -27,17 +29,19 @@ class TrackerManager {
     // MARK: - Tracker list properties
     
     var filteredtrackers: [TrackerCategory] {
-        trackers.map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
-            // немного сэкономим на вычислениях, и если трекер не регуляроный, то отображаем его всегда
-            if $0.schedule.isEmpty {
-                return true
-            }
-            // для удобства сравнения, превратим его в массив стрингов
-            let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { String(describing: $0.dayOfWeek) }
-            let selectedDayOfWeek = selectedDay.dayOfWeek()
-            return schedule.contains(selectedDayOfWeek)
-        })}
-        .filter { !$0.trackers.isEmpty } //убираем пустые категории
+        let categories = categoryStore.getCategories()
+        return categories
+//        trackers.map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
+//            // немного сэкономим на вычислениях, и если трекер не регуляроный, то отображаем его всегда
+//            if $0.schedule.isEmpty {
+//                return true
+//            }
+//            // для удобства сравнения, превратим его в массив стрингов
+//            let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { String(describing: $0.dayOfWeek) }
+//            let selectedDayOfWeek = selectedDay.dayOfWeek()
+//            return schedule.contains(selectedDayOfWeek)
+//        })}
+//        .filter { !$0.trackers.isEmpty } //убираем пустые категории
     }
 
     // MARK: - Creation properties
@@ -109,16 +113,20 @@ class TrackerManager {
     }
     
     func createTracker(categoryName: String) {
-        let categoryIndex = trackers.firstIndex { $0.title == categoryName } ?? -1
-        let tracker = Tracker(newTracker)
-        if categoryIndex >= 0 {
-            let trackers = trackers[categoryIndex].trackers + [tracker]
-            let category = TrackerCategory(title: categoryName, trackers: trackers)
-            self.trackers.remove(at: categoryIndex)
-            self.trackers.insert(category, at: categoryIndex)
-        } else {
-            trackers = trackers + [TrackerCategory(title: categoryName, trackers: [tracker])]
-        }
+//        let categoryIndex = trackers.firstIndex { $0.title == categoryName } ?? -1
+//        let tracker = Tracker(from: newTracker)
+//        if categoryIndex >= 0 {
+//            let trackers = trackers[categoryIndex].trackers + [tracker]
+//            let category = TrackerCategory(title: categoryName, trackers: trackers)
+//            self.trackers.remove(at: categoryIndex)
+//            self.trackers.insert(category, at: categoryIndex)
+//        } else {
+//            trackers = trackers + [TrackerCategory(title: categoryName, trackers: [tracker])]
+//        }
+        let tracker = Tracker(from: newTracker)
+//        let categoryEntity = categoryStore.createСategory(with: categoryName)
+//        trackerStore.createTracker(with: tracker, category: categoryEntity)
+        trackerStore.createTracker(with: tracker)
         updateTrackersUI()
     }
     
