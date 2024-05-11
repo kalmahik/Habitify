@@ -28,6 +28,7 @@ final class Store: NSObject {
         trackerEntity.emoji = tracker.emoji
         trackerEntity.color = tracker.color
         trackerEntity.schedule = tracker.schedule
+        trackerEntity.createdAt = Date()
         
         let categoryEntity = createСategory(with: categoryName)
         categoryEntity.addToTrackers(trackerEntity)
@@ -41,24 +42,15 @@ final class Store: NSObject {
     }
     
     func getCategories() -> [TrackerCategory] {
-        let fetchCategoryRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
+        let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         do {
-            let categoryEntities = try context.fetch(fetchCategoryRequest)
-            return categoryEntities.map { TrackerCategory(title: $0.title ?? "", trackers: getTrackers(by: $0))}
-        } catch let error as NSError {
-            print(error.userInfo)
-            return []
-        }
-    }
-    
-    private func getTrackers(by category: TrackerCategoryCoreData) -> [Tracker] {
-        let fetchRequest: NSFetchRequest<TrackerCoreData> = TrackerCoreData.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "category == %@", category)
-
-        do {
-            let trackerEntities = try context.fetch(fetchRequest)
-            let trackers = trackerEntities.map { Tracker(from: $0) }
-            return trackers
+            let categoryEntities = try context.fetch(fetchRequest)
+            return categoryEntities.map {
+                let trackers = $0.trackers?
+                    .map { Tracker(from: $0 as! TrackerCoreData) }
+                    .sorted { $0.createdAt < $1.createdAt }
+                return TrackerCategory(title: $0.title ?? "", trackers: trackers ?? [])
+            }
         } catch let error as NSError {
             print(error.userInfo)
             return []

@@ -39,21 +39,24 @@ let trackersMockData = [
                 name: "Будние дни",
                 color: "#FF881EFF",
                 emoji: "🙂",
-                schedule: "Будние дни"
+                schedule: "Будние дни",
+                createdAt: Date()
             ),
             Tracker(
                 id: UUID(),
                 name: "Каждый день",
                 color: "#FD4C49FF",
                 emoji: "🙂",
-                schedule: "Каждый день"
+                schedule: "Каждый день",
+                createdAt: Date()
             ),
             Tracker(
                 id: UUID(),
                 name: "Пн, Ср, Пт",
                 color: "#007BFAFF",
                 emoji: "🙂",
-                schedule: "Пн, Ср, Пт"
+                schedule: "Пн, Ср, Пт",
+                createdAt: Date()
             )
         ]
     ),

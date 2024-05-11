@@ -13,13 +13,15 @@ struct Tracker {
     let color: String
     let emoji: String
     let schedule: String
+    let createdAt: Date
 
-    init(id: UUID, name: String, color: String, emoji: String, schedule: String) {
+    init(id: UUID, name: String, color: String, emoji: String, schedule: String, createdAt: Date) {
         self.id = id
         self.name = name
         self.color = color
         self.emoji = emoji
         self.schedule = schedule
+        self.createdAt = createdAt
     }
 
     init(from tracker: TrackerPreparation) {
@@ -28,6 +30,7 @@ struct Tracker {
         self.color = tracker.color
         self.emoji = tracker.emoji
         self.schedule = tracker.schedule
+        self.createdAt = Date()
     }
     
     init(from tracker: TrackerCoreData) {
@@ -36,5 +39,6 @@ struct Tracker {
         self.color = tracker.color ?? ""
         self.emoji = tracker.emoji ?? ""
         self.schedule = tracker.schedule ?? ""
+        self.createdAt = tracker.createdAt ?? Date()
     }
 }

@@ -50,10 +50,6 @@ final class TrackersViewController: UIViewController {
     // MARK: - Private Functions
 
     @objc private func addTapped() {
-        print("1", store.getCategories())
-//        print("2", store.getCategory(by: "Главное"))
-//        print("3", store.getTrackers())
-        
         present(TrackerTypeModalViewController().wrapWithNavigationController(), animated: true)
     }
 
