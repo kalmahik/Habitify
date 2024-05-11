@@ -36,7 +36,6 @@ let trackersMockData = [
         trackers: [
             Tracker(
                 id: UUID(),
-                type: .regular,
                 name: "Будние дни",
                 color: "#FF881EFF",
                 emoji: "🙂",
@@ -44,7 +43,6 @@ let trackersMockData = [
             ),
             Tracker(
                 id: UUID(),
-                type: .regular,
                 name: "Каждый день",
                 color: "#FD4C49FF",
                 emoji: "🙂",
@@ -52,7 +50,6 @@ let trackersMockData = [
             ),
             Tracker(
                 id: UUID(),
-                type: .regular,
                 name: "Пн, Ср, Пт",
                 color: "#007BFAFF",
                 emoji: "🙂",
