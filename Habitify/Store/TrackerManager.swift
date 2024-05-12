@@ -12,7 +12,6 @@ final class TrackerManager {
     
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSwitch]
-    private(set) var trackerRecord: [UUID: [Date]] = [:]
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
     private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
