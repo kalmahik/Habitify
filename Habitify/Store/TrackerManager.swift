@@ -59,17 +59,8 @@ final class TrackerManager {
         updateTrackersUI()
     }
     
-    func makeRecord(trackerUUID: UUID) {
-        if trackerRecord[trackerUUID] != nil {
-            let dayExist = isTrackerCompleteForSelectedDay(trackerUUID: trackerUUID)
-            if dayExist >= 0 {
-                trackerRecord[trackerUUID]?.remove(at: dayExist)
-            } else {
-                trackerRecord[trackerUUID]?.append(selectedDay)
-            }
-        } else {
-            trackerRecord[trackerUUID] = [selectedDay]
-        }
+    func makeRecord(trackerId: UUID) {
+        store.makeRecord(with: trackerId, at: selectedDay)
         updateTrackersUI()
     }
     
@@ -131,9 +122,13 @@ final class TrackerManager {
         filteredtrackers[indexPath.section].trackers[indexPath.row]
     }
     
-    func isTrackerCompleteForSelectedDay(trackerUUID: UUID) -> Int {
-        guard let trackerRecord = trackerRecord[trackerUUID] else { return -1 }
-        return trackerRecord.firstIndex(where: { Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day) }) ?? -1
+    func isTrackerCompleteForSelectedDay(trackerId: UUID) -> Int {
+        let records = store.getRecords(by: trackerId)
+        return records.firstIndex { Calendar.current.isDate($0.date, equalTo: selectedDay, toGranularity: .day) } ?? -1
+    }
+    
+    func getTrackerCount(trackerId: UUID) -> Int {
+        store.getRecords(by: trackerId).count
     }
     
     func resetCurrentTracker() {

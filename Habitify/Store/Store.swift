@@ -37,7 +37,7 @@ final class Store: NSObject {
             try context.save()
         }
         catch let error as NSError {
-            print(error)
+            print(error.userInfo)
         }
     }
     
@@ -52,6 +52,55 @@ final class Store: NSObject {
                 return TrackerCategory(title: $0.title ?? "", trackers: trackers ?? [])
             }
         } catch let error as NSError {
+            print(error.userInfo)
+            return []
+        }
+    }
+    
+    func makeRecord(with trackerId: UUID, at date: Date) {
+        // берем все записи
+        let records = getRecords(of: trackerId)
+        // проверяем если уже есть запись навыбранный день
+        let index = records.firstIndex { Calendar.current.isDate($0.date ?? Date(), equalTo: date, toGranularity: .day) } ?? -1
+        // если запись есть
+        if index > 0 {
+            // то удаляем ее
+            context.delete(records[index])
+        } else {
+            // иначе создаем
+            let recordEntity = TrackerRecordCoreData(context: context)
+            recordEntity.id = trackerId
+            recordEntity.date = date
+        }
+        do {
+            try context.save()
+        }
+        catch let error as NSError {
+            print(error.userInfo)
+        }
+    }
+    
+    func getRecords(by trackerId: UUID) -> [TrackerRecord] {
+        let fetchRequest: NSFetchRequest<TrackerRecordCoreData> = TrackerRecordCoreData.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", trackerId as CVarArg)
+        do {
+            let recordEntities = try context.fetch(fetchRequest)
+            return recordEntities.map { TrackerRecord(from: $0)}
+        }
+        catch let error as NSError {
+            print(error.userInfo)
+            return []
+        }
+    }
+    
+    private func getRecords(of trackerId: UUID) -> [TrackerRecordCoreData] {
+        let fetchRequest: NSFetchRequest<TrackerRecordCoreData> = TrackerRecordCoreData.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", trackerId as CVarArg)
+        do {
+            let recordEntities = try context.fetch(fetchRequest)
+            return recordEntities
+        }
+        catch let error as NSError {
             print(error.userInfo)
             return []
         }
@@ -83,6 +132,22 @@ final class Store: NSObject {
                 return nil
             }
             return category
+        }
+        catch let error as NSError {
+            print(error.userInfo)
+            return nil
+        }
+    }
+    
+    // пока не используется
+    private func getTracker(by id: UUID) -> TrackerCoreData? {
+        let fetchRequest: NSFetchRequest<TrackerCoreData> = TrackerCoreData.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        do {
+            guard let tracker = try context.fetch(fetchRequest).first else {
+                return nil
+            }
+            return tracker
         }
         catch let error as NSError {
             print(error.userInfo)
