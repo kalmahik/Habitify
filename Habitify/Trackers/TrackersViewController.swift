@@ -16,7 +16,9 @@ final class TrackersViewController: UIViewController {
     private let trackerManager = TrackerManager.shared
     private lazy var searchBar = UISearchBar(frame: .zero)
     private lazy var collectionWidth = collectionView.frame.width
-    private var store = Store.shared
+    private var dataProvider: DataProviderProtocol? {
+        DataProvider(Store.shared, delegate: self)
+    }
     
     // MARK: - UIViews
 
@@ -104,6 +106,13 @@ extension TrackersViewController: UICollectionViewDataSource {
         ) as! TrackerSectionHeader
         sectionTitle.setupSection(title: trackerManager.filteredtrackers[indexPath.section].title)
         return sectionTitle
+    }
+}
+
+// MARK: - DataProviderDelegate
+extension TrackersViewController: DataProviderDelegate {
+    func didUpdate() {
+        collectionView.reloadData()
     }
 }
 
