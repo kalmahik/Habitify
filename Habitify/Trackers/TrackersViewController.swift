@@ -16,7 +16,10 @@ final class TrackersViewController: UIViewController {
     private let trackerManager = TrackerManager.shared
     private lazy var searchBar = UISearchBar(frame: .zero)
     private lazy var collectionWidth = collectionView.frame.width
-
+    private var dataProvider: DataProviderProtocol? {
+        DataProvider(Store.shared, delegate: self)
+    }
+    
     // MARK: - UIViews
 
     private lazy var collectionView: UICollectionView = {
@@ -84,8 +87,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
         let tracker = trackerManager.filteredtrackers[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
-        let trackerCount = trackerManager.trackerRecord[tracker.id]?.count ?? 0
-        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerUUID: tracker.id) >= 0
+        let trackerCount = trackerManager.getTrackerCount(trackerId: tracker.id)
+        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerId: tracker.id) >= 0
         trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted )
         trackerCell.delegate = self
         return trackerCell
@@ -103,6 +106,13 @@ extension TrackersViewController: UICollectionViewDataSource {
         ) as! TrackerSectionHeader
         sectionTitle.setupSection(title: trackerManager.filteredtrackers[indexPath.section].title)
         return sectionTitle
+    }
+}
+
+// MARK: - DataProviderDelegate
+extension TrackersViewController: DataProviderDelegate {
+    func didUpdate() {
+        collectionView.reloadData()
     }
 }
 
@@ -149,7 +159,7 @@ extension TrackersViewController: TrackerCellDelegate {
     func didTapPlusButton(_ cell: TrackerCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let tracker = trackerManager.getTrackerByIndexPath(at: indexPath)
-        trackerManager.makeRecord(trackerUUID: tracker.id)
+        trackerManager.makeRecord(trackerId: tracker.id)
     }
 }
 

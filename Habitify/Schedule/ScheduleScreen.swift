@@ -28,8 +28,7 @@ final class ScheduleScreenViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.separatorStyle = .none
         return tableView
     }()
 
@@ -67,19 +66,16 @@ extension ScheduleScreenViewController: UITableViewDataSource {
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
 
         let weekDay = trackerManager.weekDayList[indexPath.row]
-        scheduleCell.setupCell(schedule: weekDay)
-
+        let isLastCell = indexPath.row == trackerManager.weekDayList.count - 1
+        scheduleCell.setupCell(schedule: weekDay, isSeparatorHidden: isLastCell)
         scheduleCell.clipsToBounds = true
         scheduleCell.layer.cornerRadius = 16
-        scheduleCell.layer.borderColor = UIColor.white.cgColor
         scheduleCell.delegate = self
 
         // то что ниже похоже на говно, попытаться отрефакторить
         if indexPath.row == 0 {
-            scheduleCell.layer.borderWidth = 1
             scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else if indexPath.row == trackerManager.weekDayList.count - 1 {
-            scheduleCell.layer.borderWidth = 1
             scheduleCell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             scheduleCell.layer.maskedCorners = []

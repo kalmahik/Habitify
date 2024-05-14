@@ -7,17 +7,16 @@
 
 import Foundation
 
-class TrackerManager {
+final class TrackerManager {
     static let shared = TrackerManager()
     
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSwitch]
-    private(set) var trackerRecord: [UUID: [Date]] = [:]
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
-    private var trackers: [TrackerCategory] = [] // trackersMockData
     private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
     private let defaultTracker = TrackerPreparation(type: .regular, name: "", color: "", emoji: "", schedule: "")
+    private let store = Store.shared
     
     private init() {
         self.newTracker = defaultTracker
@@ -26,8 +25,9 @@ class TrackerManager {
     
     // MARK: - Tracker list properties
     
+    // мне кажется эту фильрацию лучше перенести на сторону кор даты, оставим на десерт
     var filteredtrackers: [TrackerCategory] {
-        trackers.map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
+        store.getCategories().map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
             // немного сэкономим на вычислениях, и если трекер не регуляроный, то отображаем его всегда
             if $0.schedule.isEmpty {
                 return true
@@ -58,17 +58,8 @@ class TrackerManager {
         updateTrackersUI()
     }
     
-    func makeRecord(trackerUUID: UUID) {
-        if trackerRecord[trackerUUID] != nil {
-            let dayExist = isTrackerCompleteForSelectedDay(trackerUUID: trackerUUID)
-            if dayExist >= 0 {
-                trackerRecord[trackerUUID]?.remove(at: dayExist)
-            } else {
-                trackerRecord[trackerUUID]?.append(selectedDay)
-            }
-        } else {
-            trackerRecord[trackerUUID] = [selectedDay]
-        }
+    func makeRecord(trackerId: UUID) {
+        store.makeRecord(with: trackerId, at: selectedDay)
         updateTrackersUI()
     }
     
@@ -109,16 +100,8 @@ class TrackerManager {
     }
     
     func createTracker(categoryName: String) {
-        let categoryIndex = trackers.firstIndex { $0.title == categoryName } ?? -1
-        let tracker = Tracker(newTracker)
-        if categoryIndex >= 0 {
-            let trackers = trackers[categoryIndex].trackers + [tracker]
-            let category = TrackerCategory(title: categoryName, trackers: trackers)
-            self.trackers.remove(at: categoryIndex)
-            self.trackers.insert(category, at: categoryIndex)
-        } else {
-            trackers = trackers + [TrackerCategory(title: categoryName, trackers: [tracker])]
-        }
+        let tracker = Tracker(from: newTracker)
+        store.createTracker(with: tracker, and: categoryName)
         updateTrackersUI()
     }
     
@@ -138,9 +121,13 @@ class TrackerManager {
         filteredtrackers[indexPath.section].trackers[indexPath.row]
     }
     
-    func isTrackerCompleteForSelectedDay(trackerUUID: UUID) -> Int {
-        guard let trackerRecord = trackerRecord[trackerUUID] else { return -1 }
-        return trackerRecord.firstIndex(where: { Calendar.current.isDate($0, equalTo: selectedDay, toGranularity: .day) }) ?? -1
+    func isTrackerCompleteForSelectedDay(trackerId: UUID) -> Int {
+        let records = store.getRecords(by: trackerId)
+        return records.firstIndex { Calendar.current.isDate($0.date, equalTo: selectedDay, toGranularity: .day) } ?? -1
+    }
+    
+    func getTrackerCount(trackerId: UUID) -> Int {
+        store.getRecords(by: trackerId).count
     }
     
     func resetCurrentTracker() {
