@@ -11,6 +11,10 @@ final class ScheduleCell: UITableViewCell {
     // MARK: - Constants
 
     static let identifier = "ScheduleCell"
+
+    // MARK: - Public Properties
+
+    weak var delegate: ScheduleCellDelegate?
     
     // MARK: - Initializers
     
@@ -23,10 +27,6 @@ final class ScheduleCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
-    // MARK: - Public Properties
-
-    weak var delegate: ScheduleCellDelegate?
 
     // MARK: - UIViews
 

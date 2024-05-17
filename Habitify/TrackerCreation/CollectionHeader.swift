@@ -11,7 +11,13 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "CollectionHeader"
+
+    // MARK: - Private Properties
+
+    private let trackerManager = TrackerManager.shared
     
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -21,10 +27,6 @@ final class CollectionHeader: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
-    // MARK: - Private Properties
-
-    private let trackerManager = TrackerManager.shared
 
     // MARK: - UIViews
 

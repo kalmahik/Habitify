@@ -13,14 +13,18 @@ final class CategoryCreationViewController: UIViewController {
 
     private lazy var categoryNameInput: UITextField = {
         let textField = TextField()
-        textField.placeholder = "Введите название категории"
+        textField.placeholder = NSLocalizedString("categoryNamePlaceholder", comment: "")
         textField.backgroundColor = .mainLigthGray
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         return textField
     }()
 
-    private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
+    private lazy var doneButton = Button(
+        title: NSLocalizedString("doneButton", comment: ""),
+        color: .mainBlack,
+        style: .normal
+    ) {
         guard let name = self.categoryNameInput.text else { return }
         self.createNewCategory(with: name)
     }
@@ -46,7 +50,7 @@ final class CategoryCreationViewController: UIViewController {
 extension CategoryCreationViewController {
 
     private func setupNavBar() {
-        navigationItem.title = "Новая категория"
+        navigationItem.title =  NSLocalizedString("categoryCreationTitle", comment: "")
     }
 
     private func setupViews() {

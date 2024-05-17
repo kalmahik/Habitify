@@ -19,7 +19,8 @@ final class RootViewController: UIViewController {
     // MARK: - Configure
 
     private func configureViewController() {
-        let tabBarController = TabBarViewController()
+//        let tabBarController = TabBarViewController()
+        let tabBarController = OnboradingViewController()
         guard let window = UIApplication.shared.windows.first else { return }
         window.rootViewController = tabBarController
     }

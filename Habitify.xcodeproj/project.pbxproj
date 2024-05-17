@@ -42,6 +42,9 @@
 		846381A02BC651F0002968E5 /* CollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463819F2BC651F0002968E5 /* CollectionHeader.swift */; };
 		846381A42BC7AB67002968E5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846381A32BC7AB67002968E5 /* UIImage+Extension.swift */; };
 		846622C92BC7D048002105E2 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846622C82BC7D048002105E2 /* TextField.swift */; };
+		849F53372BF72B1E00BF9955 /* OnboradingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F53362BF72B1E00BF9955 /* OnboradingViewController.swift */; };
+		849F533A2BF732E200BF9955 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F53392BF732E200BF9955 /* Pages.swift */; };
+		849F533C2BF7360300BF9955 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F533B2BF7360300BF9955 /* PageViewController.swift */; };
 		84A4219B2BCB15B5007F3276 /* CategoryCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */; };
 		F53246EB2BDEE73100D2736C /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F53246EA2BDEE73100D2736C /* .swiftlint.yml */; };
 		F53933BC2BE18EED004B1C55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F53933BE2BE18EED004B1C55 /* Localizable.strings */; };
@@ -97,6 +100,9 @@
 		8463819F2BC651F0002968E5 /* CollectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionHeader.swift; sourceTree = "<group>"; };
 		846381A32BC7AB67002968E5 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		846622C82BC7D048002105E2 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Habitify/Components/TextField.swift; sourceTree = SOURCE_ROOT; };
+		849F53362BF72B1E00BF9955 /* OnboradingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboradingViewController.swift; sourceTree = "<group>"; };
+		849F53392BF732E200BF9955 /* Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
+		849F533B2BF7360300BF9955 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCreationViewController.swift; sourceTree = "<group>"; };
 		F53246EA2BDEE73100D2736C /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = Habitify/.swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		F53933BD2BE18EED004B1C55 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -179,6 +185,7 @@
 		8463816F2BBFB2F2002968E5 /* Habitify */ = {
 			isa = PBXGroup;
 			children = (
+				849F53382BF72B2600BF9955 /* Onborading */,
 				840E730D2BE8BEB400C22AE0 /* Store */,
 				F53246EA2BDEE73100D2736C /* .swiftlint.yml */,
 				846381702BBFB2F2002968E5 /* AppDelegate.swift */,
@@ -226,6 +233,16 @@
 				840E73032BD7882900C22AE0 /* TrackerPreparation.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		849F53382BF72B2600BF9955 /* Onborading */ = {
+			isa = PBXGroup;
+			children = (
+				849F53362BF72B1E00BF9955 /* OnboradingViewController.swift */,
+				849F53392BF732E200BF9955 /* Pages.swift */,
+				849F533B2BF7360300BF9955 /* PageViewController.swift */,
+			);
+			path = Onborading;
 			sourceTree = "<group>";
 		};
 		84A421992BCAF516007F3276 /* Extensions */ = {
@@ -386,11 +403,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				846381922BC4766B002968E5 /* SectionHeader.swift in Sources */,
+				849F533C2BF7360300BF9955 /* PageViewController.swift in Sources */,
 				F53933C92BE26D8B004B1C55 /* Date+Extension.swift in Sources */,
 				F557C11A2BC289DE004052B3 /* UIViewController+Extension.swift in Sources */,
 				840E730C2BDD124600C22AE0 /* TrackerManager.swift in Sources */,
 				846381962BC50551002968E5 /* Tracker.swift in Sources */,
 				F565B2E52BC3C67200A06B16 /* EmojiCell.swift in Sources */,
+				849F533A2BF732E200BF9955 /* Pages.swift in Sources */,
 				84A4219B2BCB15B5007F3276 /* CategoryCreationViewController.swift in Sources */,
 				8463817B2BBFB2F2002968E5 /* Habitify.xcdatamodeld in Sources */,
 				846381A02BC651F0002968E5 /* CollectionHeader.swift in Sources */,
@@ -411,6 +430,7 @@
 				846381732BBFB2F2002968E5 /* SceneDelegate.swift in Sources */,
 				846381A42BC7AB67002968E5 /* UIImage+Extension.swift in Sources */,
 				846381982BC5056A002968E5 /* TrackerCategory.swift in Sources */,
+				849F53372BF72B1E00BF9955 /* OnboradingViewController.swift in Sources */,
 				843F2D582BD0F4A0001B0A9C /* DayOfWeek.swift in Sources */,
 				843F2D552BD0E776001B0A9C /* ScheduleCell.swift in Sources */,
 				F557C1242BC3AFDA004052B3 /* TrackerCreationViewController.swift in Sources */,
