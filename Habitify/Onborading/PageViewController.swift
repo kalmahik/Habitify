@@ -11,8 +11,7 @@ final class PageViewController: UIViewController {
     // MARK: - Public Properties
 
     var page: Pages
-    var completionHandler: () -> Void
-
+    
     // MARK: - Private Properties
 
     private lazy var titleLabel: UILabel = {
@@ -44,14 +43,13 @@ final class PageViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
-        self.completionHandler()
+        RootViewController().switchToApp()
     }
     
     // MARK: - Initializers
     
-    init(with page: Pages, completionHandler: @escaping () -> Void) {
+    init(with page: Pages) {
         self.page = page
-        self.completionHandler = completionHandler
         super.init(nibName: nil, bundle: nil)
     }
     

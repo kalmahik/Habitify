@@ -9,7 +9,6 @@ import UIKit
 
 final class OnboradingViewController: UIPageViewController {
     private var pages: [Pages] = Pages.allCases
-    private let settingsStore = SettingsStore()
     
     override init(
         transitionStyle style: UIPageViewController.TransitionStyle,
@@ -24,15 +23,10 @@ final class OnboradingViewController: UIPageViewController {
     }
     
     override func viewDidLoad() {
-        setupViews()
-        setupConstraints()
-    }
-    
-    private func switchToApp() {
-        settingsStore.setOnboardingShown()
-        let tabBarController = TabBarViewController()
-        guard let window = UIApplication.shared.windows.first else { return }
-        window.rootViewController = tabBarController
+        dataSource = self
+        delegate = self
+        let initialVC = PageViewController(with: pages[0])
+        setViewControllers([initialVC], direction: .forward, animated: true, completion: nil)
     }
 }
 
@@ -49,7 +43,7 @@ extension OnboradingViewController: UIPageViewControllerDataSource, UIPageViewCo
             return nil
         }
         index -= 1
-        return PageViewController(with: pages[index], completionHandler: switchToApp)
+        return PageViewController(with: pages[index])
     }
     
     func pageViewController(
@@ -64,24 +58,6 @@ extension OnboradingViewController: UIPageViewControllerDataSource, UIPageViewCo
             return nil
         }
         index += 1
-        return PageViewController(with: pages[index], completionHandler: switchToApp)
-    }
-}
-
-// MARK: - Configure
-
-extension OnboradingViewController {
-    
-    private func setupViews() {
-        dataSource = self
-        delegate = self
-        let initialVC = PageViewController(with: pages[0], completionHandler: switchToApp)
-        setViewControllers([initialVC], direction: .forward, animated: true, completion: nil)
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-
-        ])
+        return PageViewController(with: pages[index])
     }
 }

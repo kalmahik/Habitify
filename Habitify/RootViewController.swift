@@ -22,11 +22,17 @@ final class RootViewController: UIViewController {
     private func configureViewController() {
         let rootController: UIViewController
         if settingsStore.isOnbordingWasShown {
-//            rootController = TabBarViewController()
-            rootController = OnboradingViewController()
+            rootController = TabBarViewController()
         } else {
             rootController = OnboradingViewController()
         }
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.rootViewController = rootController
+    }
+    
+    func switchToApp() {
+        settingsStore.setOnboardingShown()
+        let rootController = TabBarViewController()
         guard let window = UIApplication.shared.windows.first else { return }
         window.rootViewController = rootController
     }
