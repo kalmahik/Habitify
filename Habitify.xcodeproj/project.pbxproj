@@ -60,6 +60,7 @@
 		F565B2E12BC3B5A500A06B16 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */; };
 		F565B2E52BC3C67200A06B16 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E42BC3C67200A06B16 /* EmojiCell.swift */; };
 		F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */; };
+		F5C0C42E2BF9F607006B9B77 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C0C42D2BF9F607006B9B77 /* SettingsStore.swift */; };
 		F5E4A9D92BC9888300350368 /* CategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E4A9D82BC9888300350368 /* CategoriesScreen.swift */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +121,7 @@
 		F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		F565B2E42BC3C67200A06B16 /* EmojiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
 		F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionData.swift; sourceTree = "<group>"; };
+		F5C0C42D2BF9F607006B9B77 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		F5E4A9D82BC9888300350368 /* CategoriesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +143,7 @@
 				840E730E2BE8BF5200C22AE0 /* Store.swift */,
 				840E730B2BDD124600C22AE0 /* TrackerManager.swift */,
 				844EB7372BF127AF00E2E9EB /* DataProvider.swift */,
+				F5C0C42D2BF9F607006B9B77 /* SettingsStore.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */,
 				843F2D492BCE51B0001B0A9C /* CategoryCell.swift in Sources */,
 				F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */,
+				F5C0C42E2BF9F607006B9B77 /* SettingsStore.swift in Sources */,
 				F557C1122BC1B063004052B3 /* EmptyView.swift in Sources */,
 				F557C1162BC1F47C004052B3 /* TrackerTypeModalViewController.swift in Sources */,
 				840E73082BDC0C4300C22AE0 /* ScheduleCellDelegate.swift in Sources */,
