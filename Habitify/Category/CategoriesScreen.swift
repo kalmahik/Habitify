@@ -1,5 +1,5 @@
 //
-//  TrackersViewController.swift
+//  CategoriesScreenViewController.swift
 //  Habitify
 //
 //  Created by kalmahik on 05.04.2024.
@@ -13,20 +13,22 @@ final class CategoriesScreenViewController: UIViewController {
 
     private let trackerManager = TrackerManager.shared
 
-    private lazy var addCategoryButton = Button(title: "Добавить категорию", color: .mainBlack, style: .normal) {
+    private lazy var addCategoryButton = Button(
+        title: NSLocalizedString("categoryCreationButton", comment: ""),
+        color: .mainBlack,
+        style: .normal
+    ) {
         self.present(CategoryCreationViewController().wrapWithNavigationController(), animated: true)
     }
-
-    private lazy var emptyView = EmptyView(emoji: "💫", title: "Привычки и события можно объединить по смыслу")
 
     private lazy var tableView: UITableView = {
         let tableView  = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.showsVerticalScrollIndicator = false
         tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.identifier)
-        tableView.contentInset = Insets.horizontalInset
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.scrollIndicatorInsets = tableView.contentInset
         return tableView
     }()
@@ -55,18 +57,21 @@ extension CategoriesScreenViewController: UITableViewDelegate {
 
 extension CategoriesScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        trackerManager.filteredtrackers.count
+        if trackerManager.categories.isEmpty {
+            tableView.setEmptyMessage("💫", NSLocalizedString("categoriesEmpty", comment: ""))
+        } else {
+            tableView.restore()
+        }
+        return trackerManager.categories.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         guard let categoryCell = cell as? CategoryCell else { return UITableViewCell() }
-        let category = trackerManager.filteredtrackers[indexPath.row]
-//        let dateLabel = photo.createdAt?.dateString ?? ""
-//        imageListCell.selectionStyle = .none
-//        imageListCell.backgroundColor = .ypBlack
-//        categoryCell.delegate = self
-        categoryCell.setupCell(category: category)
+        let category = trackerManager.categories[indexPath.row]
+        let isFirstCell = indexPath.row == 0
+        let isLastCell = indexPath.row == trackerManager.categories.count - 1
+        categoryCell.setupCell(category: category, isFirst: isFirstCell, isLast: isLastCell)
         return categoryCell
     }
 
@@ -80,18 +85,17 @@ extension CategoriesScreenViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = "Категория"
+        navigationItem.title = NSLocalizedString("categoryTitle", comment: "")
         view.setupView(tableView)
-//        view.setupView(emptyView)
         view.setupView(addCategoryButton)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: addCategoryButton.topAnchor, constant: -24),
 
             addCategoryButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addCategoryButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),

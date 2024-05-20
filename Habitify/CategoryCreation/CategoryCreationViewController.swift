@@ -9,6 +9,8 @@ import UIKit
 
 final class CategoryCreationViewController: UIViewController {
 
+    private let trackerManager = TrackerManager.shared
+
     // MARK: - Private Properties
 
     private lazy var categoryNameInput: UITextField = {
@@ -17,6 +19,10 @@ final class CategoryCreationViewController: UIViewController {
         textField.backgroundColor = .mainLigthGray
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.clearButtonMode = .whileEditing
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        textField.delegate = self
         return textField
     }()
 
@@ -25,8 +31,10 @@ final class CategoryCreationViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
+        // weak self?
         guard let name = self.categoryNameInput.text else { return }
-        self.createNewCategory(with: name)
+        self.trackerManager.createCategory(categoryName: name)
+        self.dismiss(animated: true)
     }
 
     // MARK: - UIViewController
@@ -37,12 +45,6 @@ final class CategoryCreationViewController: UIViewController {
         setupViews()
         setupConstraints()
     }
-
-    // MARK: - Private Functions
-
-    private func createNewCategory(with name: String) {
-    }
-
 }
 
 // MARK: - Configure View
@@ -55,6 +57,7 @@ extension CategoryCreationViewController {
 
     private func setupViews() {
         view.backgroundColor = .mainWhite
+        doneButton.isEnabled = false
         view.setupView(categoryNameInput)
         view.setupView(doneButton)
     }
@@ -70,5 +73,19 @@ extension CategoryCreationViewController {
             doneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             doneButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
+    }
+}
+
+extension CategoryCreationViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return false
+    }
+
+    @objc private func textFieldDidChange(textField: UITextField) {
+        if let text = textField.text {
+            let isEmpty = text.trim().isEmpty
+            doneButton.isEnabled = !isEmpty
+        }
     }
 }

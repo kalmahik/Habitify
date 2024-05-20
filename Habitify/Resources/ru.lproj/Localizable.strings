@@ -26,6 +26,9 @@
 "doneButton" = "Готово";
 "scheduleTitle" = "Расписание";
 "categoryCreationTitle" = "Новая категория";
+"categoryCreationButton" = "Добавить категорию";
+"categoriesEmpty" = "Привычки и события можно \n объединить по смыслу";
+"categoryTitle" = "Категория";
 "trackerNameLengthError" = "Ограничение 38 символов";
 "onboardingTitleOne" = "Отслеживайте только то, что хотите";
 "onboardingTitleTwo" = "Даже если это не литры воды и йога";

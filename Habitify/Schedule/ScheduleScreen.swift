@@ -12,7 +12,7 @@ final class ScheduleScreenViewController: UIViewController {
     // MARK: - Private Properties
 
     private let trackerManager = TrackerManager.shared
-    
+
     // MARK: - UIViews
 
     private lazy var doneButton = Button(title: NSLocalizedString("doneButton", comment: ""), color: .mainBlack, style: .normal) {
@@ -66,20 +66,10 @@ extension ScheduleScreenViewController: UITableViewDataSource {
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
 
         let weekDay = trackerManager.weekDayList[indexPath.row]
+        let isFirstCell = indexPath.row == 0
         let isLastCell = indexPath.row == trackerManager.weekDayList.count - 1
-        scheduleCell.setupCell(schedule: weekDay, isSeparatorHidden: isLastCell)
-        scheduleCell.clipsToBounds = true
-        scheduleCell.layer.cornerRadius = 16
+        scheduleCell.setupCell(schedule: weekDay, isFirst: isFirstCell, isLast: isLastCell)
         scheduleCell.delegate = self
-
-        // то что ниже похоже на говно, попытаться отрефакторить
-        if indexPath.row == 0 {
-            scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else if indexPath.row == trackerManager.weekDayList.count - 1 {
-            scheduleCell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        } else {
-            scheduleCell.layer.maskedCorners = []
-        }
         return scheduleCell
     }
 
@@ -100,7 +90,7 @@ extension ScheduleScreenViewController {
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = NSLocalizedString("scheduleTitle", comment: "") 
+        navigationItem.title = NSLocalizedString("scheduleTitle", comment: "")
         view.setupView(tableView)
         view.setupView(doneButton)
     }

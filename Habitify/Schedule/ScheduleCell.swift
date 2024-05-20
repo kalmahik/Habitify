@@ -15,15 +15,15 @@ final class ScheduleCell: UITableViewCell {
     // MARK: - Public Properties
 
     weak var delegate: ScheduleCellDelegate?
-    
+
     // MARK: - Initializers
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -38,7 +38,7 @@ final class ScheduleCell: UITableViewCell {
         toggle.addTarget(self, action: #selector(didSwitchTapped), for: .allEvents)
         return toggle
     }()
-    
+
     private lazy var separator: UIView = {
         let view = UIView()
         view.backgroundColor = .mainLigthGray
@@ -47,10 +47,20 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(schedule: DayOfWeekSwitch, isSeparatorHidden: Bool) {
+    func setupCell(schedule: DayOfWeekSwitch, isFirst: Bool, isLast: Bool) {
         titleLabel.text = schedule.dayOfWeek.fullName
         toggle.isOn = schedule.isEnabled
-        separator.isHidden = isSeparatorHidden
+        separator.isHidden = isLast
+
+        clipsToBounds = true
+        layer.cornerRadius = 16
+        if isFirst {
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else if isLast {
+            layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+            layer.maskedCorners = []
+        }
     }
 
     // MARK: - Private Methods
@@ -78,7 +88,7 @@ extension ScheduleCell {
 
             toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             toggle.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
+
             separator.bottomAnchor.constraint(equalTo: bottomAnchor),
             separator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             separator.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),

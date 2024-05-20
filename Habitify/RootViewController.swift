@@ -22,6 +22,7 @@ final class RootViewController: UIViewController {
     private func configureViewController() {
         let rootController: UIViewController
         if settingsStore.isOnbordingWasShown {
+//            rootController = CategoriesScreenViewController()
             rootController = TabBarViewController()
         } else {
             rootController = OnboradingViewController()
@@ -29,7 +30,7 @@ final class RootViewController: UIViewController {
         guard let window = UIApplication.shared.windows.first else { return }
         window.rootViewController = rootController
     }
-    
+
     func switchToApp() {
         settingsStore.setOnboardingShown()
         let rootController = TabBarViewController()

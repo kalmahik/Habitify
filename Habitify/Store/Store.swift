@@ -13,13 +13,13 @@ protocol StoreProtocol {
 }
 
 final class Store: NSObject, StoreProtocol {
-    
+
     var context: NSManagedObjectContext {
         persistentContainer.viewContext
     }
-    
+
     public static let shared = Store()
-    
+
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
@@ -45,9 +45,9 @@ final class Store: NSObject, StoreProtocol {
             }
         }
     }
-    
+
     private override init() {}
-    
+
     func createTracker(with tracker: Tracker, and categoryName: String) {
         let trackerEntity = TrackerCoreData(context: context)
         trackerEntity.id = tracker.id
@@ -56,34 +56,36 @@ final class Store: NSObject, StoreProtocol {
         trackerEntity.color = tracker.color
         trackerEntity.schedule = tracker.schedule
         trackerEntity.createdAt = Date()
-        
+
         let categoryEntity = createСategory(with: categoryName)
         categoryEntity.addToTrackers(trackerEntity)
-        
+
         do {
             try context.save()
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
         }
     }
-    
-    func getCategories() -> [TrackerCategory] {
+
+    func getCategories(withTrackeers: Bool) -> [TrackerCategory] {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         do {
             let categoryEntities = try context.fetch(fetchRequest)
-            return categoryEntities.map {
-                let trackers = $0.trackers?
-                    .map { Tracker(from: $0 as! TrackerCoreData) }
-                    .sorted { $0.createdAt < $1.createdAt }
-                return TrackerCategory(title: $0.title ?? "", trackers: trackers ?? [])
+            if withTrackeers {
+                return categoryEntities.map {
+                    let trackers = $0.trackers?
+                        .map { Tracker(from: $0 as! TrackerCoreData) }
+                        .sorted { $0.createdAt < $1.createdAt }
+                    return TrackerCategory(title: $0.title ?? "", trackers: trackers ?? [])
+                }
             }
+            return categoryEntities.map { TrackerCategory(title: $0.title ?? "", trackers: []) }
         } catch let error as NSError {
             print(error.userInfo)
             return []
         }
     }
-    
+
     func makeRecord(with trackerId: UUID, at date: Date) {
         // берем все записи
         let records = getRecords(of: trackerId)
@@ -101,42 +103,39 @@ final class Store: NSObject, StoreProtocol {
         }
         do {
             try context.save()
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
         }
     }
-    
+
     func getRecords(by trackerId: UUID) -> [TrackerRecord] {
         let fetchRequest: NSFetchRequest<TrackerRecordCoreData> = TrackerRecordCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", trackerId as CVarArg)
         do {
             let recordEntities = try context.fetch(fetchRequest)
             return recordEntities.map { TrackerRecord(from: $0)}
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
             return []
         }
     }
-    
+
     private func getRecords(of trackerId: UUID) -> [TrackerRecordCoreData] {
         let fetchRequest: NSFetchRequest<TrackerRecordCoreData> = TrackerRecordCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", trackerId as CVarArg)
         do {
             let recordEntities = try context.fetch(fetchRequest)
             return recordEntities
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
             return []
         }
     }
-    
+
     // создаем категорию. Если категория уже существует - то не создаем новую
-    private func createСategory(with categoryName: String) -> TrackerCategoryCoreData {
+    func createСategory(with categoryName: String) -> TrackerCategoryCoreData {
         if let existedCategory = getCategory(by: categoryName) {
-            //TODO: find out the best way to handle existed category
+            // TODO: find out the best way to handle existed category
             return existedCategory
         }
         let categoryEntity = TrackerCategoryCoreData(context: context)
@@ -144,13 +143,12 @@ final class Store: NSObject, StoreProtocol {
         do {
             try context.save()
             return categoryEntity
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
             return categoryEntity
         }
     }
-    
+
     private func getCategory(by name: String) -> TrackerCategoryCoreData? {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "title == %@", name)
@@ -159,13 +157,12 @@ final class Store: NSObject, StoreProtocol {
                 return nil
             }
             return category
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
             return nil
         }
     }
-    
+
     // пока не используется
     private func getTracker(by id: UUID) -> TrackerCoreData? {
         let fetchRequest: NSFetchRequest<TrackerCoreData> = TrackerCoreData.fetchRequest()
@@ -175,8 +172,7 @@ final class Store: NSObject, StoreProtocol {
                 return nil
             }
             return tracker
-        }
-        catch let error as NSError {
+        } catch let error as NSError {
             print(error.userInfo)
             return nil
         }

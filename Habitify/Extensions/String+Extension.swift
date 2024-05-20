@@ -21,3 +21,9 @@ extension String {
         return image
     }
 }
+
+extension String {
+    func trim() -> String {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}

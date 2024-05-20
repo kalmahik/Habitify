@@ -61,6 +61,7 @@
 		F565B2E52BC3C67200A06B16 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E42BC3C67200A06B16 /* EmojiCell.swift */; };
 		F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */; };
 		F5C0C42E2BF9F607006B9B77 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C0C42D2BF9F607006B9B77 /* SettingsStore.swift */; };
+		F5C0C4302BFA5191006B9B77 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C0C42F2BFA5191006B9B77 /* UITableView+Extension.swift */; };
 		F5E4A9D92BC9888300350368 /* CategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E4A9D82BC9888300350368 /* CategoriesScreen.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +123,7 @@
 		F565B2E42BC3C67200A06B16 /* EmojiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
 		F565B2E62BC3CA9E00A06B16 /* CollectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionData.swift; sourceTree = "<group>"; };
 		F5C0C42D2BF9F607006B9B77 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		F5C0C42F2BFA5191006B9B77 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		F5E4A9D82BC9888300350368 /* CategoriesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -257,6 +259,7 @@
 				F557C1192BC289DE004052B3 /* UIViewController+Extension.swift */,
 				F565B2E02BC3B5A500A06B16 /* UIColor+Extension.swift */,
 				843F2D462BCE3D46001B0A9C /* UICollectionView+Extension.swift */,
+				F5C0C42F2BFA5191006B9B77 /* UITableView+Extension.swift */,
 				840E73052BD9A98600C22AE0 /* String+Extension.swift */,
 				F53933C82BE26D8B004B1C55 /* Date+Extension.swift */,
 			);
@@ -428,6 +431,7 @@
 				F557C1162BC1F47C004052B3 /* TrackerTypeModalViewController.swift in Sources */,
 				840E73082BDC0C4300C22AE0 /* ScheduleCellDelegate.swift in Sources */,
 				8463819C2BC50D0C002968E5 /* ColorCell.swift in Sources */,
+				F5C0C4302BFA5191006B9B77 /* UITableView+Extension.swift in Sources */,
 				843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */,
 				F565B2E12BC3B5A500A06B16 /* UIColor+Extension.swift in Sources */,
 				846381882BBFB847002968E5 /* TabBarViewController.swift in Sources */,
@@ -618,6 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Habitify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -645,6 +650,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Habitify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
