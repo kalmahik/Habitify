@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ScheduleScreenViewController: UIViewController {
+final class ScheduleViewController: UIViewController {
 
     // MARK: - Private Properties
 
@@ -48,7 +48,7 @@ final class ScheduleScreenViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension ScheduleScreenViewController: UITableViewDelegate {
+extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         rowWasTapped(indexPath)
     }
@@ -56,7 +56,7 @@ extension ScheduleScreenViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension ScheduleScreenViewController: UITableViewDataSource {
+extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         trackerManager.weekDayList.count
     }
@@ -76,7 +76,7 @@ extension ScheduleScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 75 }
 }
 
-extension ScheduleScreenViewController: ScheduleCellDelegate {
+extension ScheduleViewController: ScheduleCellDelegate {
     func didTapSwitch(_ cell: ScheduleCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         rowWasTapped(indexPath)
@@ -85,7 +85,7 @@ extension ScheduleScreenViewController: ScheduleCellDelegate {
 
 // MARK: - applyConstraints && addSubViews
 
-extension ScheduleScreenViewController {
+extension ScheduleViewController {
     // MARK: - Configure
 
     private func setupView() {

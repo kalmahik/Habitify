@@ -15,7 +15,7 @@ final class TrackerManager {
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
     private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
-    private let defaultTracker = TrackerPreparation(type: .regular, name: "", color: "", emoji: "", schedule: "")
+    private let defaultTracker = TrackerPreparation(type: .regular, name: "", color: "", emoji: "", schedule: "", categoryName: "")
     private let store = Store.shared
 
     private init() {
@@ -52,7 +52,8 @@ final class TrackerManager {
         !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         (isRegular ? !newTracker.schedule.isEmpty : true) &&
         !newTracker.emoji.isEmpty &&
-        !newTracker.color.isEmpty
+        !newTracker.color.isEmpty &&
+        !newTracker.categoryName.isEmpty
     }
 
     // MARK: - Tracker list methods
@@ -99,18 +100,23 @@ final class TrackerManager {
         updateCreationUI()
     }
 
+    func changeCategory(categoryName: String?) {
+        self.newTracker.categoryName = categoryName ?? ""
+    }
+
     func setError(error: String?) {
         self.error = error
     }
 
-    func createTracker(categoryName: String) {
+    func createTracker() {
         let tracker = Tracker(from: newTracker)
-        store.createTracker(with: tracker, and: categoryName)
+        store.createTracker(with: tracker, and: newTracker.categoryName)
         updateTrackersUI()
     }
 
     func createCategory(categoryName: String) {
         store.createСategory(with: categoryName)
+        updateCategoriesUI()
     }
 
     // MARK: - Utils
@@ -123,6 +129,10 @@ final class TrackerManager {
     func updateTrackersUI() {
         // если трекеров много будет - то это не эффективно, лучше точечно обновлять коллекцию
         NotificationCenter.default.post(name: TrackersViewController.reloadCollection, object: self)
+    }
+
+    func updateCategoriesUI() {
+        NotificationCenter.default.post(name: CategoriesViewController.reloadCollection, object: self)
     }
 
     func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {

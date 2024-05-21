@@ -39,6 +39,10 @@ final class CategoryCell: UITableViewCell {
         super.init(coder: coder)
     }
 
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        checkImage.isHidden = !selected
+    }
+
     // MARK: - Public Methods
 
     func setupCell(category: TrackerCategory, isFirst: Bool, isLast: Bool) {
@@ -47,7 +51,6 @@ final class CategoryCell: UITableViewCell {
         backgroundColor = .mainBackgroud
         clipsToBounds = true
         layer.cornerRadius = 16
-        print(isFirst, isLast)
         if isFirst && isLast {
             layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else if isFirst {
@@ -70,8 +73,6 @@ extension CategoryCell {
         setupView(checkImage)
         setupView(separator)
         backgroundColor = .mainLigthGray
-        layer.cornerRadius = 16
-        layer.masksToBounds = true
     }
 
     private func setupConstraints() {

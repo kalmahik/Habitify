@@ -54,7 +54,7 @@ final class TrackerCreationViewController: UIViewController {
     // MARK: - Private Methods
 
     @objc private func didCreateTapped() {
-        trackerManager.createTracker(categoryName: "Главное")
+        trackerManager.createTracker()
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 
@@ -76,7 +76,7 @@ final class TrackerCreationViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 
 extension TrackerCreationViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case CollectionSection.emoji.rawValue:
@@ -101,7 +101,7 @@ extension TrackerCreationViewController: UICollectionViewDelegate {
             return
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         collectionView.indexPathsForSelectedItems?
             .filter({ $0.section == indexPath.section })
@@ -161,7 +161,7 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch indexPath.section {
-        case CollectionSection.header.rawValue: 
+        case CollectionSection.header.rawValue:
             return UICollectionReusableView(frame: .zero)
         case CollectionSection.footer.rawValue:
             return UICollectionReusableView(frame: .zero)
@@ -187,15 +187,15 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let section = indexPath.section
         switch section {
-        case CollectionSection.header.rawValue: 
+        case CollectionSection.header.rawValue:
             return CGSize(width: collectionWidth, height: calculateHeaderHeight())
-        case CollectionSection.emoji.rawValue: 
+        case CollectionSection.emoji.rawValue:
             return CGSize(width: 52, height: 52)
-        case CollectionSection.color.rawValue: 
+        case CollectionSection.color.rawValue:
             return CGSize(width: 52, height: 52)
-        case CollectionSection.footer.rawValue: 
+        case CollectionSection.footer.rawValue:
             return CGSize(width: collectionWidth, height: 60)
-        default: 
+        default:
             return CGSize(width: 0, height: 0)
         }
     }
@@ -237,23 +237,23 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         switch section {
-            case CollectionSection.header.rawValue: 
+            case CollectionSection.header.rawValue:
                 return .zero
-            case CollectionSection.emoji.rawValue: 
+            case CollectionSection.emoji.rawValue:
                 return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.color.rawValue: 
+            case CollectionSection.color.rawValue:
                 return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.footer.rawValue: 
+            case CollectionSection.footer.rawValue:
                 return .zero
-            default: 
+            default:
                 return .zero
         }
     }
-    
+
     func calculateHeaderHeight() -> CGFloat {
-        var height: CGFloat = 75 //input
+        var height: CGFloat = 75 // input
         if trackerManager.error != nil {
-            height += 22 + 8 + 32 + 24 //error height, top inset, bottom inset
+            height += 22 + 8 + 32 + 24 // error height, top inset, bottom inset
         } else {
             height += 24 + 24 // 2 paddings
         }

@@ -11,29 +11,27 @@ final class ColorCell: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "ColorCell"
-    
+
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     override var isSelected: Bool {
         didSet {
-            contentView.layer.borderWidth = 3
-            contentView.layer.borderColor = isSelected ?
+            layer.borderWidth = 3
+            layer.borderColor = isSelected ?
             colorView.backgroundColor?.withAlphaComponent(0.3).cgColor : UIColor.mainWhite.cgColor
-            contentView.layer.cornerRadius = 16
-            contentView.layer.masksToBounds = true
         }
     }
-    
+
     // MARK: - Private Properties
 
     private lazy var colorView: UIView = UIView()

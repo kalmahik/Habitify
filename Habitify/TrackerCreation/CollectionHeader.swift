@@ -45,9 +45,9 @@ final class CollectionHeader: UICollectionViewCell {
 
     private lazy var categoryButton = ArrowButton(
         title: NSLocalizedString("categoryButton", comment: ""),
-        subtitle: "Главное"
+        subtitle: trackerManager.newTracker.categoryName
     ) {
-        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
+        let viewController = CategoriesViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
@@ -55,7 +55,7 @@ final class CollectionHeader: UICollectionViewCell {
         title: NSLocalizedString("schduleButton", comment: ""),
         subtitle: trackerManager.newTracker.schedule
     ) {
-        let viewController = ScheduleScreenViewController().wrapWithNavigationController()
+        let viewController = ScheduleViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
@@ -85,6 +85,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     func setupCell() {
         scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
+        categoryButton.updateSubtitle(subtitle: trackerManager.newTracker.categoryName)
         trackerNameInput.text = trackerManager.newTracker.name
     }
 }
