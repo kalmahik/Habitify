@@ -47,7 +47,9 @@ final class CollectionHeader: UICollectionViewCell {
         title: NSLocalizedString("categoryButton", comment: ""),
         subtitle: trackerManager.newTracker.categoryName
     ) {
-        let viewController = CategoriesViewController().wrapWithNavigationController()
+        let catetegoriesVC = CategoriesViewController()
+        catetegoriesVC.initialize(viewModel: CategoryViewModel(for: CategoryModel()))
+        let viewController = catetegoriesVC.wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 

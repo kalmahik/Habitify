@@ -14,19 +14,17 @@ final class CategoriesViewController: UIViewController {
     static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
 
     // MARK: - Private Properties
-    
-    private var viewModel: CategoryViewModel
-    
 
+    private var viewModel: CategoryViewModel?
+    private var categories: [TrackerCategory] = [] // TODO: это не дублирование данных?
     private var observer: NSObjectProtocol?
-//    private let trackerManager = TrackerManager.shared
 
     private lazy var addCategoryButton = Button(
         title: NSLocalizedString("categoryCreationButton", comment: ""),
         color: .mainBlack,
         style: .normal
     ) {
-        self.viewModel.didAddCategoryTapped()
+        self.viewModel?.didAddCategoryTapped()
     }
 
     private lazy var doneButton = Button(
@@ -34,7 +32,7 @@ final class CategoriesViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
-        self.viewModel.didDoneTapped()
+        self.viewModel?.didDoneTapped()
     }
 
     private lazy var tableView: UITableView = {
@@ -60,10 +58,24 @@ final class CategoriesViewController: UIViewController {
         addObserver()
         getInitialState()
     }
-    
+
     func initialize(viewModel: CategoryViewModel) {
         self.viewModel = viewModel
         bind()
+    }
+
+    func bind() {
+        guard let viewModel else { return }
+
+        viewModel.isEmptyState = { [weak self] isEmpty in
+            isEmpty ?
+            self?.tableView.setEmptyMessage("💫", NSLocalizedString("categoriesEmpty", comment: "")) :
+            self?.tableView.restore()
+        }
+
+        viewModel.categories = { [weak self] categories in
+            self?.categories = categories
+        }
     }
 
     private func addObserver() {
@@ -77,7 +89,7 @@ final class CategoriesViewController: UIViewController {
     }
 
     private func getInitialState() {
-        guard let indexPath = viewModel.getSelectedCategoryIndexPath() else { return }
+        guard let indexPath = viewModel?.getSelectedCategoryIndexPath() else { return }
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         tableView.delegate?.tableView!(tableView, didSelectRowAt: indexPath)
     }
@@ -87,7 +99,7 @@ final class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRowAt(indexPath: indexPath)
+        viewModel?.didSelectRowAt(indexPath: indexPath)
     }
 }
 
@@ -95,20 +107,13 @@ extension CategoriesViewController: UITableViewDelegate {
 
 extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count =  viewModel.getCategoriesCount()
-        // это считается бизнес-логикой? если да, то как это перенести во вьюмодель, если вью модель не знает ничего про вью?
-        if count == 0 {
-            tableView.setEmptyMessage("💫", NSLocalizedString("categoriesEmpty", comment: ""))
-        } else {
-            tableView.restore()
-        }
-        return count
+        return categories.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         guard let categoryCell = cell as? CategoryCell else { return UITableViewCell() }
-        viewModel.setupCell(cell: categoryCell, indexPath: indexPath)
+        viewModel?.setupCell(cell: categoryCell, indexPath: indexPath)
         return categoryCell
     }
 
