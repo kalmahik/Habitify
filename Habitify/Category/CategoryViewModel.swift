@@ -10,17 +10,16 @@ import Foundation
 typealias Binding<T> = (T) -> Void
 
 final class CategoryViewModel {
-    var isEmptyState: Binding<Bool>?
-    var categories: Binding<[TrackerCategory]>?
+    var isEmptyStateBinding: Binding<Bool>?
+    var categoriesBinding: Binding<[TrackerCategory]>?
 
     private let trackerManager = TrackerManager.shared
-
     private let model: CategoryModel
 
     init(for model: CategoryModel) {
         self.model = model
-        self.categories?(trackerManager.categories)
-        self.isEmptyState?(trackerManager.categories.isEmpty)
+        self.categoriesBinding?(trackerManager.categories)
+        self.isEmptyStateBinding?(trackerManager.categories.isEmpty)
     }
 
     func didDoneTapped() {

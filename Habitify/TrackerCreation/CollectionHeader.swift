@@ -48,7 +48,9 @@ final class CollectionHeader: UICollectionViewCell {
         subtitle: trackerManager.newTracker.categoryName
     ) {
         let catetegoriesVC = CategoriesViewController()
-        catetegoriesVC.initialize(viewModel: CategoryViewModel(for: CategoryModel()))
+        let catetegoriesM = CategoryModel()
+        let catetegoriesVM = CategoryViewModel(for: catetegoriesM)
+        catetegoriesVC.initialize(viewModel: catetegoriesVM)
         let viewController = catetegoriesVC.wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }

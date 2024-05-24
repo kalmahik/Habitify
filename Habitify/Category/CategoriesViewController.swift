@@ -64,16 +64,14 @@ final class CategoriesViewController: UIViewController {
         bind()
     }
 
-    func bind() {
-        guard let viewModel else { return }
-
-        viewModel.isEmptyState = { [weak self] isEmpty in
+    private func bind() {
+        viewModel?.isEmptyStateBinding = { [weak self] isEmpty in
             isEmpty ?
             self?.tableView.setEmptyMessage("💫", NSLocalizedString("categoriesEmpty", comment: "")) :
             self?.tableView.restore()
         }
 
-        viewModel.categories = { [weak self] categories in
+        viewModel?.categoriesBinding = { [weak self] categories in
             self?.categories = categories
         }
     }
