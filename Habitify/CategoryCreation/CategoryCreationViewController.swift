@@ -9,7 +9,7 @@ import UIKit
 
 final class CategoryCreationViewController: UIViewController {
 
-    private let trackerManager = TrackerManager.shared
+    private var viewModel: CategoryViewModel?
 
     // MARK: - Private Properties
 
@@ -33,7 +33,7 @@ final class CategoryCreationViewController: UIViewController {
     ) {
         // weak self?
         guard let name = self.categoryNameInput.text else { return }
-        self.trackerManager.createCategory(categoryName: name)
+        self.viewModel?.createCategory(categoryName: name)
         self.dismiss(animated: true)
     }
 
@@ -44,6 +44,15 @@ final class CategoryCreationViewController: UIViewController {
         setupNavBar()
         setupViews()
         setupConstraints()
+    }
+
+    init(viewModel: CategoryViewModel? = nil) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

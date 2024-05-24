@@ -24,7 +24,8 @@ final class CategoriesViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
-        self.viewModel?.didAddCategoryTapped()
+        let categoryCreationVC = CategoryCreationViewController(viewModel: self.viewModel).wrapWithNavigationController()
+        self.present(categoryCreationVC, animated: true)
     }
 
     private lazy var doneButton = Button(
@@ -32,6 +33,7 @@ final class CategoriesViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
+        self.dismiss(animated: true)
         self.viewModel?.didDoneTapped()
     }
 
@@ -62,6 +64,7 @@ final class CategoriesViewController: UIViewController {
     func initialize(viewModel: CategoryViewModel) {
         self.viewModel = viewModel
         bind()
+        viewModel.loadCategories()
     }
 
     private func bind() {

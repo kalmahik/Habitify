@@ -15,7 +15,9 @@ final class TrackerManager {
     private(set) var newTracker: TrackerPreparation
     private(set) var error: String?
     private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
-    private let defaultTracker = TrackerPreparation(type: .regular, name: "", color: "", emoji: "", schedule: "", categoryName: "")
+    private let defaultTracker = TrackerPreparation(
+        type: .regular, name: "", color: "", emoji: "", schedule: "", categoryName: ""
+    )
     private let store = Store.shared
 
     private init() {
@@ -38,10 +40,6 @@ final class TrackerManager {
             return schedule.contains(selectedDayOfWeek)
         })}
         .filter { !$0.trackers.isEmpty } // убираем пустые категории
-    }
-
-    var categories: [TrackerCategory] {
-        store.getCategories(withTrackeers: false)
     }
 
     // MARK: - Creation properties
@@ -112,11 +110,6 @@ final class TrackerManager {
         let tracker = Tracker(from: newTracker)
         store.createTracker(with: tracker, and: newTracker.categoryName)
         updateTrackersUI()
-    }
-
-    func createCategory(categoryName: String) {
-        store.createСategory(with: categoryName)
-        updateCategoriesUI()
     }
 
     // MARK: - Utils
