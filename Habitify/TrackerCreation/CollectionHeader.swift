@@ -47,10 +47,9 @@ final class CollectionHeader: UICollectionViewCell {
         title: NSLocalizedString("categoryButton", comment: ""),
         subtitle: trackerManager.newTracker.categoryName
     ) {
-        let catetegoriesVC = CategoriesViewController()
         let catetegoriesM = CategoryModel()
         let catetegoriesVM = CategoryViewModel(for: catetegoriesM)
-        catetegoriesVC.initialize(viewModel: catetegoriesVM)
+        let catetegoriesVC = CategoriesViewController(viewModel: catetegoriesVM)
         let viewController = catetegoriesVC.wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }

@@ -9,7 +9,7 @@ import UIKit
 
 final class CategoryCreationViewController: UIViewController {
 
-    private var viewModel: CategoryViewModel?
+    private var viewModel: CategoryViewModel
 
     // MARK: - Private Properties
 
@@ -33,7 +33,7 @@ final class CategoryCreationViewController: UIViewController {
     ) {
         // weak self?
         guard let name = self.categoryNameInput.text else { return }
-        self.viewModel?.createCategory(categoryName: name)
+        self.viewModel.createCategory(categoryName: name)
         self.dismiss(animated: true)
     }
 
@@ -46,7 +46,7 @@ final class CategoryCreationViewController: UIViewController {
         setupConstraints()
     }
 
-    init(viewModel: CategoryViewModel? = nil) {
+    init(viewModel: CategoryViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

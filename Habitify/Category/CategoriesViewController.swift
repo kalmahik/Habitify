@@ -15,7 +15,7 @@ final class CategoriesViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private var viewModel: CategoryViewModel?
+    private var viewModel: CategoryViewModel
     private var categories: [TrackerCategory] = [] // TODO: это не дублирование данных?
     private var observer: NSObjectProtocol?
 
@@ -34,7 +34,7 @@ final class CategoriesViewController: UIViewController {
         style: .normal
     ) {
         self.dismiss(animated: true)
-        self.viewModel?.didDoneTapped()
+        self.viewModel.didDoneTapped()
     }
 
     private lazy var tableView: UITableView = {
@@ -61,20 +61,25 @@ final class CategoriesViewController: UIViewController {
         getInitialState()
     }
 
-    func initialize(viewModel: CategoryViewModel) {
+    init(viewModel: CategoryViewModel) {
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         bind()
         viewModel.loadCategories()
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private func bind() {
-        viewModel?.isEmptyStateBinding = { [weak self] isEmpty in
+        viewModel.isEmptyStateBinding = { [weak self] isEmpty in
             isEmpty ?
             self?.tableView.setEmptyMessage("💫", NSLocalizedString("categoriesEmpty", comment: "")) :
             self?.tableView.restore()
         }
 
-        viewModel?.categoriesBinding = { [weak self] categories in
+        viewModel.categoriesBinding = { [weak self] categories in
             self?.categories = categories
         }
     }
@@ -90,7 +95,7 @@ final class CategoriesViewController: UIViewController {
     }
 
     private func getInitialState() {
-        guard let indexPath = viewModel?.getSelectedCategoryIndexPath() else { return }
+        guard let indexPath = viewModel.getSelectedCategoryIndexPath() else { return }
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         tableView.delegate?.tableView!(tableView, didSelectRowAt: indexPath)
     }
@@ -100,7 +105,7 @@ final class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel?.didSelectRowAt(indexPath: indexPath)
+        viewModel.didSelectRowAt(indexPath: indexPath)
     }
 }
 
@@ -114,7 +119,10 @@ extension CategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         guard let categoryCell = cell as? CategoryCell else { return UITableViewCell() }
-        viewModel?.setupCell(cell: categoryCell, indexPath: indexPath)
+        let category = categories[indexPath.row]
+        let isFirstCell = indexPath.row == 0
+        let isLastCell = indexPath.row == categories.count - 1
+        categoryCell.setupCell(category: category, isFirst: isFirstCell, isLast: isLastCell)
         return categoryCell
     }
 

@@ -45,13 +45,6 @@ final class CategoryViewModel {
         loadCategories()
     }
 
-    func setupCell(cell: CategoryCell, indexPath: IndexPath) {
-        let category = model.categories[indexPath.row]
-        let isFirstCell = indexPath.row == 0
-        let isLastCell = indexPath.row == model.categories.count - 1
-        cell.setupCell(category: category, isFirst: isFirstCell, isLast: isLastCell)
-    }
-
     private func updateCreationUI() {
         NotificationCenter.default.post(name: TrackerCreationViewController.reloadCollection, object: self)
     }
