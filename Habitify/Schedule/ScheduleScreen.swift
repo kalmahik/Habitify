@@ -7,12 +7,12 @@
 
 import UIKit
 
-final class ScheduleScreenViewController: UIViewController {
+final class ScheduleViewController: UIViewController {
 
     // MARK: - Private Properties
 
     private let trackerManager = TrackerManager.shared
-    
+
     // MARK: - UIViews
 
     private lazy var doneButton = Button(title: NSLocalizedString("doneButton", comment: ""), color: .mainBlack, style: .normal) {
@@ -48,7 +48,7 @@ final class ScheduleScreenViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension ScheduleScreenViewController: UITableViewDelegate {
+extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         rowWasTapped(indexPath)
     }
@@ -56,7 +56,7 @@ extension ScheduleScreenViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension ScheduleScreenViewController: UITableViewDataSource {
+extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         trackerManager.weekDayList.count
     }
@@ -66,27 +66,17 @@ extension ScheduleScreenViewController: UITableViewDataSource {
         guard let scheduleCell = cell as? ScheduleCell else { return UITableViewCell() }
 
         let weekDay = trackerManager.weekDayList[indexPath.row]
+        let isFirstCell = indexPath.row == 0
         let isLastCell = indexPath.row == trackerManager.weekDayList.count - 1
-        scheduleCell.setupCell(schedule: weekDay, isSeparatorHidden: isLastCell)
-        scheduleCell.clipsToBounds = true
-        scheduleCell.layer.cornerRadius = 16
+        scheduleCell.setupCell(schedule: weekDay, isFirst: isFirstCell, isLast: isLastCell)
         scheduleCell.delegate = self
-
-        // то что ниже похоже на говно, попытаться отрефакторить
-        if indexPath.row == 0 {
-            scheduleCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else if indexPath.row == trackerManager.weekDayList.count - 1 {
-            scheduleCell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        } else {
-            scheduleCell.layer.maskedCorners = []
-        }
         return scheduleCell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 75 }
 }
 
-extension ScheduleScreenViewController: ScheduleCellDelegate {
+extension ScheduleViewController: ScheduleCellDelegate {
     func didTapSwitch(_ cell: ScheduleCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         rowWasTapped(indexPath)
@@ -95,12 +85,12 @@ extension ScheduleScreenViewController: ScheduleCellDelegate {
 
 // MARK: - applyConstraints && addSubViews
 
-extension ScheduleScreenViewController {
+extension ScheduleViewController {
     // MARK: - Configure
 
     private func setupView() {
         view.backgroundColor = .mainWhite
-        navigationItem.title = NSLocalizedString("scheduleTitle", comment: "") 
+        navigationItem.title = NSLocalizedString("scheduleTitle", comment: "")
         view.setupView(tableView)
         view.setupView(doneButton)
     }

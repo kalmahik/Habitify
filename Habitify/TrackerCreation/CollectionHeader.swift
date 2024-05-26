@@ -11,20 +11,22 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "CollectionHeader"
-    
+
+    // MARK: - Private Properties
+
+    private let trackerManager = TrackerManager.shared
+
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
-    // MARK: - Private Properties
-
-    private let trackerManager = TrackerManager.shared
 
     // MARK: - UIViews
 
@@ -40,19 +42,15 @@ final class CollectionHeader: UICollectionViewCell {
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
-    
-//    private lazy var errorLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = LocalizedStrings.trackerNameLengthError
-//        label.textColor = .mainRed
-//        return label
-//    }()
 
     private lazy var categoryButton = ArrowButton(
         title: NSLocalizedString("categoryButton", comment: ""),
-        subtitle: "Главное"
+        subtitle: trackerManager.newTracker.categoryName
     ) {
-        let viewController = CategoriesScreenViewController().wrapWithNavigationController()
+        let catetegoriesM = CategoryModel()
+        let catetegoriesVM = CategoryViewModel(for: catetegoriesM)
+        let catetegoriesVC = CategoriesViewController(viewModel: catetegoriesVM)
+        let viewController = catetegoriesVC.wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
@@ -60,7 +58,7 @@ final class CollectionHeader: UICollectionViewCell {
         title: NSLocalizedString("schduleButton", comment: ""),
         subtitle: trackerManager.newTracker.schedule
     ) {
-        let viewController = ScheduleScreenViewController().wrapWithNavigationController()
+        let viewController = ScheduleViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
@@ -90,6 +88,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     func setupCell() {
         scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
+        categoryButton.updateSubtitle(subtitle: trackerManager.newTracker.categoryName)
         trackerNameInput.text = trackerManager.newTracker.name
     }
 }
@@ -102,7 +101,7 @@ extension CollectionHeader: UITextFieldDelegate {
         textField.endEditing(true)
         return false
     }
-    
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -113,7 +112,7 @@ extension CollectionHeader: UITextFieldDelegate {
         let newString = currentString.replacingCharacters(in: range, with: string)
         return newString.count <= maxLength
     }
-    
+
     @objc private func textFieldDidChange(textField: UITextField) {
         guard let length = textField.text?.count else { return }
         trackerManager.setError(error: length < 38 ? nil : NSLocalizedString("trackerNameLengthError", comment: ""))
@@ -125,15 +124,12 @@ extension CollectionHeader: UITextFieldDelegate {
 extension CollectionHeader {
     private func setupViews() {
         contentView.setupView(trackerNameInput)
-//        contentView.setupView(errorLabel)
         contentView.setupView(wrapperView)
         wrapperView.addArrangedSubview(categoryButton)
         if trackerManager.isRegular {
             wrapperView.addArrangedSubview(line)
             wrapperView.addArrangedSubview(scheduleButton)
         }
-        wrapperView.setNeedsLayout()
-        wrapperView.layoutIfNeeded()
     }
 
     private func setupConstraints() {
@@ -142,10 +138,6 @@ extension CollectionHeader {
             trackerNameInput.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-//            errorLabel.topAnchor.constraint(equalTo: trackerNameInput.bottomAnchor, constant: 8),
-//            errorLabel.bottomAnchor.constraint(equalTo: wrapperView.topAnchor, constant: -24),
-//            errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
 
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),

@@ -9,20 +9,32 @@ import UIKit
 
 final class CategoryCreationViewController: UIViewController {
 
+    private var viewModel: CategoryViewModel
+
     // MARK: - Private Properties
 
     private lazy var categoryNameInput: UITextField = {
         let textField = TextField()
-        textField.placeholder = "Введите название категории"
+        textField.placeholder = NSLocalizedString("categoryNamePlaceholder", comment: "")
         textField.backgroundColor = .mainLigthGray
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.clearButtonMode = .whileEditing
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        textField.delegate = self
         return textField
     }()
 
-    private lazy var doneButton = Button(title: "Готово", color: .mainBlack, style: .normal) {
+    private lazy var doneButton = Button(
+        title: NSLocalizedString("doneButton", comment: ""),
+        color: .mainBlack,
+        style: .normal
+    ) {
+        // weak self?
         guard let name = self.categoryNameInput.text else { return }
-        self.createNewCategory(with: name)
+        self.viewModel.createCategory(categoryName: name)
+        self.dismiss(animated: true)
     }
 
     // MARK: - UIViewController
@@ -34,11 +46,14 @@ final class CategoryCreationViewController: UIViewController {
         setupConstraints()
     }
 
-    // MARK: - Private Functions
-
-    private func createNewCategory(with name: String) {
+    init(viewModel: CategoryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 // MARK: - Configure View
@@ -46,11 +61,12 @@ final class CategoryCreationViewController: UIViewController {
 extension CategoryCreationViewController {
 
     private func setupNavBar() {
-        navigationItem.title = "Новая категория"
+        navigationItem.title =  NSLocalizedString("categoryCreationTitle", comment: "")
     }
 
     private func setupViews() {
         view.backgroundColor = .mainWhite
+        doneButton.isEnabled = false
         view.setupView(categoryNameInput)
         view.setupView(doneButton)
     }
@@ -66,5 +82,19 @@ extension CategoryCreationViewController {
             doneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             doneButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
+    }
+}
+
+extension CategoryCreationViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return false
+    }
+
+    @objc private func textFieldDidChange(textField: UITextField) {
+        if let text = textField.text {
+            let isEmpty = text.trim().isEmpty
+            doneButton.isEnabled = !isEmpty
+        }
     }
 }

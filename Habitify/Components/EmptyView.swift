@@ -19,7 +19,7 @@ final class EmptyView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
 
     private func commonInit() {
@@ -33,6 +33,7 @@ final class EmptyView: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.numberOfLines = 2
         return label
     }()
 

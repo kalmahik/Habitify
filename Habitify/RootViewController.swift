@@ -8,6 +8,7 @@
 import UIKit
 
 final class RootViewController: UIViewController {
+    let settingsStore = SettingsStore()
 
     // MARK: - UIViewController
 
@@ -19,8 +20,22 @@ final class RootViewController: UIViewController {
     // MARK: - Configure
 
     private func configureViewController() {
-        let tabBarController = TabBarViewController()
+        let rootController: UIViewController
+        if settingsStore.isOnbordingWasShown {
+            rootController = TabBarViewController()
+        } else {
+            var onboardingVC = OnboradingViewController()
+            onboardingVC.didCompleteTapped = switchToApp
+            rootController = onboardingVC
+        }
         guard let window = UIApplication.shared.windows.first else { return }
-        window.rootViewController = tabBarController
+        window.rootViewController = rootController
+    }
+
+    func switchToApp() {
+        settingsStore.setOnboardingShown()
+        let rootController = TabBarViewController()
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.rootViewController = rootController
     }
 }

@@ -9,9 +9,12 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
 
-    // MARK: - Private Properties
+    // MARK: - Constants
 
     static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
+
+    // MARK: - Private Properties
+
     private var observer: NSObjectProtocol?
     private let trackerManager = TrackerManager.shared
     private lazy var searchBar = UISearchBar(frame: .zero)
@@ -19,7 +22,7 @@ final class TrackersViewController: UIViewController {
     private var dataProvider: DataProviderProtocol? {
         DataProvider(Store.shared, delegate: self)
     }
-    
+
     // MARK: - UIViews
 
     private lazy var collectionView: UICollectionView = {
@@ -37,7 +40,7 @@ final class TrackersViewController: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
-    
+
     // MARK: - UIViewController
 
     override func viewDidLoad() {
