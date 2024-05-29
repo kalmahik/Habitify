@@ -15,16 +15,16 @@ final class TrackerCell: UICollectionViewCell {
     // MARK: - Public Properties
 
     weak var delegate: TrackerCellDelegate?
-        
+
     // MARK: - UIViews
 
-    private lazy var cellBackgroundView: UIView = {
+    private lazy var cellBackgroundView = {
         let view = UIView()
         view.layer.cornerRadius = 16
         return view
     }()
 
-    private lazy var quantityManagementView: UIView = UIView()
+    private lazy var quantityManagementView = UIView()
 
     private lazy var emojiWrapper: UIView = {
         let view = UIView()
@@ -34,14 +34,14 @@ final class TrackerCell: UICollectionViewCell {
         return view
     }()
 
-    private lazy var emoji: UILabel = {
+    private lazy var emoji = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .center
         return label
     }()
 
-    private lazy var titleLabel: UILabel = {
+    private lazy var titleLabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
@@ -49,20 +49,17 @@ final class TrackerCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var quantityLabel: UILabel = {
+    private lazy var quantityLabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
 
-    private lazy var actionButton: UIButton = {
-        let button = UIButton.systemButton(
-            with: UIImage(),
-            target: self,
-            action: #selector(didTapActionButton)
-        )
-        return button
-    }()
+    private lazy var actionButton = UIButton.systemButton(
+        with: UIImage(),
+        target: self,
+        action: #selector(didTapActionButton)
+    )
 
     // MARK: - Public Methods
 
@@ -81,9 +78,6 @@ final class TrackerCell: UICollectionViewCell {
         setupConstraints()
     }
 
-    func selectCell() {
-    }
-
     // MARK: - Private Methods
 
     @objc private func didTapActionButton() {
@@ -97,8 +91,8 @@ extension TrackerCell {
     private func setupViews() {
         contentView.setupView(cellBackgroundView)
         contentView.setupView(quantityManagementView)
-        cellBackgroundView.setupView(emojiWrapper)
         emojiWrapper.setupView(emoji)
+        cellBackgroundView.setupView(emojiWrapper)
         cellBackgroundView.setupView(titleLabel)
         quantityManagementView.setupView(quantityLabel)
         quantityManagementView.setupView(actionButton)
@@ -133,7 +127,7 @@ extension TrackerCell {
             actionButton.topAnchor.constraint(equalTo: quantityManagementView.topAnchor, constant: 8),
             actionButton.trailingAnchor.constraint(equalTo: quantityManagementView.trailingAnchor, constant: -12),
             actionButton.widthAnchor.constraint(equalToConstant: 34),
-            actionButton.heightAnchor.constraint(equalToConstant: 34),
+            actionButton.heightAnchor.constraint(equalToConstant: 34)
         ])
     }
 }

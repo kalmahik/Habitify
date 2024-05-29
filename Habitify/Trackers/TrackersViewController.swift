@@ -112,7 +112,52 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
+extension TrackersViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        configureContextMenu(index: indexPath.row)
+    }
+
+    func configureContextMenu(index: Int) -> UIContextMenuConfiguration {
+        let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+
+            let pin = UIAction(
+                title: "Закрепить",
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                state: .off
+            ) { (_) in
+                print("edit button clicked")
+            }
+            let edit = UIAction(
+                title: "Редактировать",
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                state: .off
+            ) { (_) in
+                print("delete button clicked")
+            }
+            let delete = UIAction(
+                title: "Удалить",
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                attributes: .destructive,
+                state: .off
+            ) { (_) in
+                print("delete button clicked")
+            }
+            return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [pin, edit, delete])
+        }
+        return context
+    }
+}
+
 // MARK: - DataProviderDelegate
+
 extension TrackersViewController: DataProviderDelegate {
     func didUpdate() {
         collectionView.reloadData()
