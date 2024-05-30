@@ -20,6 +20,8 @@ final class Store: NSObject, StoreProtocol {
 
     public static let shared = Store()
 
+    private override init() {}
+
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
@@ -45,8 +47,6 @@ final class Store: NSObject, StoreProtocol {
             }
         }
     }
-
-    private override init() {}
 
     func createTracker(with tracker: Tracker, and categoryName: String) {
         let trackerEntity = TrackerCoreData(context: context)
@@ -149,13 +149,28 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
+    func pinTracker(with trackerId: UUID, from categoryName: String) {
+        let pinnedCategory = getCategory(by: "Закрепленные")
+        let categoryEntity = getCategory(by: categoryName)
+        let trackerEntity = getTracker(by: trackerId)
+
+        guard let trackerEntity, let pinnedCategory else { return }
+
+        pinnedCategory.addToTrackers(trackerEntity)
+        categoryEntity?.removeFromTrackers(trackerEntity)
+
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print(error.userInfo)
+        }
+    }
+
     private func getCategory(by name: String) -> TrackerCategoryCoreData? {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "title == %@", name)
         do {
-            guard let category = try context.fetch(fetchRequest).first else {
-                return nil
-            }
+            guard let category = try context.fetch(fetchRequest).first else { return nil }
             return category
         } catch let error as NSError {
             print(error.userInfo)
@@ -168,9 +183,7 @@ final class Store: NSObject, StoreProtocol {
         let fetchRequest: NSFetchRequest<TrackerCoreData> = TrackerCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         do {
-            guard let tracker = try context.fetch(fetchRequest).first else {
-                return nil
-            }
+            guard let tracker = try context.fetch(fetchRequest).first else { return nil }
             return tracker
         } catch let error as NSError {
             print(error.userInfo)

@@ -78,9 +78,18 @@ final class TrackerCell: UICollectionViewCell {
         setupConstraints()
     }
 
+    func customPreview() -> UIViewController {
+        let vc = UIViewController()
+        vc.view = cellBackgroundView
+        cellBackgroundView.frame = CGRect(x: 0, y: 0, width: 200, height: 90)
+        vc.preferredContentSize = cellBackgroundView.frame.size
+        return vc
+    }
+
     // MARK: - Private Methods
 
     @objc private func didTapActionButton() {
+        print(delegate)
         delegate?.didTapPlusButton(self)
     }
 }

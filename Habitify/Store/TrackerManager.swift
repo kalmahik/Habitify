@@ -29,7 +29,7 @@ final class TrackerManager {
 
     // мне кажется эту фильрацию лучше перенести на сторону кор даты, оставим на десерт
     var filteredtrackers: [TrackerCategory] {
-        store.getCategories(withTrackeers: true).map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
+        var categories = store.getCategories(withTrackeers: true).map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
             // немного сэкономим на вычислениях, и если трекер не регуляроный, то отображаем его всегда
             if $0.schedule.isEmpty {
                 return true
@@ -40,6 +40,12 @@ final class TrackerManager {
             return schedule.contains(selectedDayOfWeek)
         })}
         .filter { !$0.trackers.isEmpty } // убираем пустые категории
+        // ставим запиненые на первое место
+        let index = categories.firstIndex { $0.title == "Закрепленные" }
+        guard let index else { return categories }
+        let element = categories.remove(at: index)
+        categories.insert(element, at: 0)
+        return categories
     }
 
     // MARK: - Creation properties
@@ -112,6 +118,11 @@ final class TrackerManager {
         updateTrackersUI()
     }
 
+    func pinTracker(with uuid: UUID, from categoryName: String) {
+        store.pinTracker(with: uuid, from: categoryName)
+        updateTrackersUI()
+    }
+
     // MARK: - Utils
 
     func updateCreationUI() {
@@ -128,8 +139,12 @@ final class TrackerManager {
         NotificationCenter.default.post(name: CategoriesViewController.reloadCollection, object: self)
     }
 
-    func getTrackerByIndexPath(at indexPath: IndexPath) -> Tracker {
+    func getTracker(by indexPath: IndexPath) -> Tracker {
         filteredtrackers[indexPath.section].trackers[indexPath.row]
+    }
+
+    func getCategory(by indexPath: IndexPath) -> TrackerCategory {
+        filteredtrackers[indexPath.section]
     }
 
     func isTrackerCompleteForSelectedDay(trackerId: UUID) -> Int {

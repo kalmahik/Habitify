@@ -33,4 +33,7 @@
 "onboardingTitleOne" = "Отслеживайте только то, что хотите";
 "onboardingTitleTwo" = "Даже если это не литры воды и йога";
 "onboardingButton" = "Вот это технологии!";
+"contextActionPin" = "Закрепить";
+"contextActionEdit" = "Редактировать";
+"contextActionDelete" = "Удалить";
 

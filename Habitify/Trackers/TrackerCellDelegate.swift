@@ -9,4 +9,7 @@ import Foundation
 
 protocol TrackerCellDelegate: AnyObject {
     func didTapPlusButton(_ cell: TrackerCell)
+    func didTapPinAction(_ cell: TrackerCell)
+    func didTapEditAction(_ cell: TrackerCell)
+    func didTapDeleteAction(_ cell: TrackerCell)
 }
