@@ -37,7 +37,7 @@ final class TrackerCreationViewController: UIViewController {
         )
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = UIColor.mainWhite
         collectionView.allowsMultipleSelection = true
         return collectionView
     }()
@@ -282,7 +282,6 @@ extension TrackerCreationViewController {
         view.backgroundColor = .mainWhite
         navigationItem.title =
         NSLocalizedString(trackerManager.isRegular ? "trackerRegularType" : "trackerSingleType", comment: "")
-        view.backgroundColor = .white
         view.setupView(collectionView)
     }
 

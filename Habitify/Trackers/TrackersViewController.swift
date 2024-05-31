@@ -36,7 +36,7 @@ final class TrackersViewController: UIViewController {
         )
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = UIColor.mainWhite
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
@@ -230,7 +230,7 @@ extension TrackersViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = .mainWhite
+        view.backgroundColor = UIColor.mainWhite
         view.setupView(searchBar)
         view.setupView(collectionView)
     }
