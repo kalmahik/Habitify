@@ -34,6 +34,7 @@
 "onboardingTitleTwo" = "Даже если это не литры воды и йога";
 "onboardingButton" = "Вот это технологии!";
 "contextActionPin" = "Закрепить";
+"contextActionUnpin" = "Открепить";
 "contextActionEdit" = "Редактировать";
 "contextActionDelete" = "Удалить";
-
+"pinnedCategory" = "Закрепленные";

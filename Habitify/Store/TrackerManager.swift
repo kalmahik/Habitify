@@ -29,23 +29,28 @@ final class TrackerManager {
 
     // мне кажется эту фильрацию лучше перенести на сторону кор даты, оставим на десерт
     var filteredtrackers: [TrackerCategory] {
-        var categories = store.getCategories(withTrackeers: true).map { TrackerCategory(title: $0.title, trackers: $0.trackers.filter {
-            // немного сэкономим на вычислениях, и если трекер не регуляроный, то отображаем его всегда
-            if $0.schedule.isEmpty {
-                return true
-            }
-            // для удобства сравнения, превратим его в массив стрингов
-            let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map { String(describing: $0.dayOfWeek) }
-            let selectedDayOfWeek = selectedDay.dayOfWeek()
-            return schedule.contains(selectedDayOfWeek)
-        })}
-        .filter { !$0.trackers.isEmpty } // убираем пустые категории
-        // ставим запиненые на первое место
-        let index = categories.firstIndex { $0.title == "Закрепленные" }
-        guard let index else { return categories }
-        let element = categories.remove(at: index)
-        categories.insert(element, at: 0)
-        return categories
+        var pinnedTrackers: [Tracker] = []
+        let pinnedCategoryName = NSLocalizedString("pinnedCategory", comment: "")
+        var categories = store.getCategories(withTrackeers: true).map {
+            TrackerCategory(
+                title: $0.title,
+                trackers: $0.trackers.filter {
+                    if $0.categoryName == pinnedCategoryName {
+                        pinnedTrackers.append($0)
+                        return false
+                    }
+                    if $0.schedule.isEmpty { return true }
+                    let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map {
+                        String(describing: $0.dayOfWeek)
+                    }
+                    let selectedDayOfWeek = selectedDay.dayOfWeek()
+                    return schedule.contains(selectedDayOfWeek)
+                }
+            )
+        }
+        let pinnedCategory = TrackerCategory(title: pinnedCategoryName, trackers: pinnedTrackers)
+        categories.insert(pinnedCategory, at: 0)
+        return categories.filter { !$0.trackers.isEmpty }
     }
 
     // MARK: - Creation properties
@@ -114,12 +119,19 @@ final class TrackerManager {
 
     func createTracker() {
         let tracker = Tracker(from: newTracker)
-        store.createTracker(with: tracker, and: newTracker.categoryName)
+        store.createTracker(with: tracker)
         updateTrackersUI()
     }
 
-    func pinTracker(with uuid: UUID, from categoryName: String) {
-        store.pinTracker(with: uuid, from: categoryName)
+    func pinTracker(with indexPath: IndexPath) {
+        let tracker = getTracker(by: indexPath)
+        store.pinTracker(with: tracker.id)
+        updateTrackersUI()
+    }
+
+    func unpinTracker(with indexPath: IndexPath) {
+        let tracker = getTracker(by: indexPath)
+        store.unpinTracker(with: tracker.id)
         updateTrackersUI()
     }
 

@@ -48,7 +48,7 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
-    func createTracker(with tracker: Tracker, and categoryName: String) {
+    func createTracker(with tracker: Tracker) {
         let trackerEntity = TrackerCoreData(context: context)
         trackerEntity.id = tracker.id
         trackerEntity.name = tracker.name
@@ -57,7 +57,7 @@ final class Store: NSObject, StoreProtocol {
         trackerEntity.schedule = tracker.schedule
         trackerEntity.createdAt = Date()
 
-        let categoryEntity = createСategory(with: categoryName)
+        let categoryEntity = createСategory(with: tracker.categoryName)
         categoryEntity.addToTrackers(trackerEntity)
 
         do {
@@ -135,7 +135,6 @@ final class Store: NSObject, StoreProtocol {
     // создаем категорию. Если категория уже существует - то не создаем новую
     func createСategory(with categoryName: String) -> TrackerCategoryCoreData {
         if let existedCategory = getCategory(by: categoryName) {
-            // TODO: find out the best way to handle existed category
             return existedCategory
         }
         let categoryEntity = TrackerCategoryCoreData(context: context)
@@ -149,16 +148,22 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
-    func pinTracker(with trackerId: UUID, from categoryName: String) {
-        let pinnedCategory = getCategory(by: "Закрепленные")
-        let categoryEntity = getCategory(by: categoryName)
+    func pinTracker(with trackerId: UUID) {
+        let pinnedCategoryName = NSLocalizedString("pinnedCategory", comment: "")
         let trackerEntity = getTracker(by: trackerId)
+        guard let trackerEntity else { return }
+        trackerEntity.categoryName = pinnedCategoryName
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print(error.userInfo)
+        }
+    }
 
-        guard let trackerEntity, let pinnedCategory else { return }
-
-        pinnedCategory.addToTrackers(trackerEntity)
-        categoryEntity?.removeFromTrackers(trackerEntity)
-
+    func unpinTracker(with trackerId: UUID) {
+        let trackerEntity = getTracker(by: trackerId)
+        guard let trackerEntity else { return }
+        trackerEntity.categoryName = ""
         do {
             try context.save()
         } catch let error as NSError {

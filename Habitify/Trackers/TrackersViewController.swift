@@ -92,7 +92,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
         let trackerCount = trackerManager.getTrackerCount(trackerId: tracker.id)
         let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerId: tracker.id) >= 0
-        trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted )
+        let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
+        trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted, isPinned: isPinned)
         trackerCell.delegate = self
         return trackerCell
     }
@@ -122,45 +123,8 @@ extension TrackersViewController: UICollectionViewDelegate {
     ) -> UIContextMenuConfiguration? {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
         guard let trackerCell = cell as? TrackerCell else { return UIContextMenuConfiguration() }
-        return configureContextMenu(indexPath: indexPath)
+        return trackerCell.configureContextMenu(indexPath: indexPath)
     }
-}
-
-func configureContextMenu(indexPath: IndexPath) -> UIContextMenuConfiguration {
-    let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
-        let pin = UIAction(
-            title: NSLocalizedString("contextActionPin", comment: ""),
-            image: nil,
-            identifier: nil,
-            discoverabilityTitle: nil,
-            state: .off
-        ) { _ in
-            let tracker = TrackerManager.shared.getTracker(by: indexPath)
-            let category = TrackerManager.shared.getCategory(by: indexPath)
-            TrackerManager.shared.pinTracker(with: tracker.id, from: category.title)
-        }
-        let edit = UIAction(
-            title: NSLocalizedString("contextActionEdit", comment: ""),
-            image: nil,
-            identifier: nil,
-            discoverabilityTitle: nil,
-            state: .off
-        ) { _ in
-            print("delete button clicked")
-        }
-        let delete = UIAction(
-            title: NSLocalizedString("contextActionDelete", comment: ""),
-            image: nil,
-            identifier: nil,
-            discoverabilityTitle: nil,
-            attributes: .destructive,
-            state: .off
-        ) { _ in
-            print("delete button clicked")
-        }
-        return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [pin, edit, delete])
-    }
-    return context
 }
 
 // MARK: - DataProviderDelegate
@@ -219,9 +183,7 @@ extension TrackersViewController: TrackerCellDelegate {
 
     func didTapPinAction(_ cell: TrackerCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
-        let tracker = trackerManager.getTracker(by: indexPath)
-        let category = trackerManager.getCategory(by: indexPath)
-        trackerManager.pinTracker(with: tracker.id, from: category.title)
+        trackerManager.pinTracker(with: indexPath)
     }
 
     func didTapEditAction(_ cell: TrackerCell) {

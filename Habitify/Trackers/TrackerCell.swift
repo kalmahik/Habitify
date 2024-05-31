@@ -16,6 +16,8 @@ final class TrackerCell: UICollectionViewCell {
 
     weak var delegate: TrackerCellDelegate?
 
+    var isPinned: Bool = false
+
     // MARK: - UIViews
 
     private lazy var cellBackgroundView = {
@@ -61,12 +63,16 @@ final class TrackerCell: UICollectionViewCell {
         action: #selector(didTapActionButton)
     )
 
+    private lazy var pinImage = UIImageView(image: UIImage(named: "pin"))
+
     // MARK: - Public Methods
 
-    func setupCell(tracker: Tracker, count: Int, isCompleted: Bool) {
+    func setupCell(tracker: Tracker, count: Int, isCompleted: Bool, isPinned: Bool) {
         let color = UIColor(hex: tracker.color)
         cellBackgroundView.backgroundColor = color
         emoji.text = tracker.emoji
+        pinImage.isHidden = !isPinned
+        self.isPinned = isPinned
         actionButton.tintColor = color
         actionButton.layer.opacity = isCompleted ? 0.3 : 1
         actionButton.setImage(UIImage(named: isCompleted ? "done" : "plus"), for: .normal)
@@ -89,8 +95,58 @@ final class TrackerCell: UICollectionViewCell {
     // MARK: - Private Methods
 
     @objc private func didTapActionButton() {
-        print(delegate)
         delegate?.didTapPlusButton(self)
+    }
+}
+
+extension TrackerCell {
+    func configureContextMenu(indexPath: IndexPath) -> UIContextMenuConfiguration {
+        let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
+            let pin = UIAction(
+                title: NSLocalizedString("contextActionPin", comment: ""),
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                state: .off
+            ) { _ in
+//                delegate?.pinTracker(with: indexPath)
+                self.delegate?.didTapPinAction(self)
+            }
+            let unpin = UIAction(
+                title: NSLocalizedString("contextActionUnpin", comment: ""),
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                state: .off
+            ) { _ in
+            }
+            let edit = UIAction(
+                title: NSLocalizedString("contextActionEdit", comment: ""),
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                state: .off
+            ) { _ in
+                print("delete button clicked")
+            }
+            let delete = UIAction(
+                title: NSLocalizedString("contextActionDelete", comment: ""),
+                image: nil,
+                identifier: nil,
+                discoverabilityTitle: nil,
+                attributes: .destructive,
+                state: .off
+            ) { _ in
+                print("delete button clicked")
+            }
+            return UIMenu(
+                title: "",
+                image: nil,
+                identifier: nil,
+                options: UIMenu.Options.displayInline,
+                children: [self.isPinned ? unpin : pin, edit, delete])
+        }
+        return context
     }
 }
 
@@ -103,6 +159,7 @@ extension TrackerCell {
         emojiWrapper.setupView(emoji)
         cellBackgroundView.setupView(emojiWrapper)
         cellBackgroundView.setupView(titleLabel)
+        cellBackgroundView.setupView(pinImage)
         quantityManagementView.setupView(quantityLabel)
         quantityManagementView.setupView(actionButton)
     }
@@ -125,6 +182,9 @@ extension TrackerCell {
 
             emoji.centerXAnchor.constraint(equalTo: emojiWrapper.centerXAnchor),
             emoji.centerYAnchor.constraint(equalTo: emojiWrapper.centerYAnchor),
+
+            pinImage.topAnchor.constraint(equalTo: cellBackgroundView.topAnchor, constant: 12),
+            pinImage.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor, constant: -4),
 
             titleLabel.leadingAnchor.constraint(equalTo: cellBackgroundView.leadingAnchor, constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor, constant: -12),

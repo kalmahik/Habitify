@@ -14,9 +14,13 @@ enum TrackerType {
 
 struct TrackerPreparation {
     var type: TrackerType
+
     var name: String
     var color: String
     var emoji: String
     var schedule: String
     var categoryName: String
+
+//    let id: UUID
+//    let createdAt: Date
 }
