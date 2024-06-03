@@ -88,13 +88,13 @@ extension TrackersViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
-        let tracker = trackerManager.filteredtrackers[indexPath.section].trackers[indexPath.row]
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
+        trackerCell.delegate = self
+        let tracker = trackerManager.filteredtrackers[indexPath.section].trackers[indexPath.row]
         let trackerCount = trackerManager.getTrackerCount(trackerId: tracker.id)
         let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerId: tracker.id) >= 0
         let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
         trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted, isPinned: isPinned)
-        trackerCell.delegate = self
         return trackerCell
     }
 
@@ -123,16 +123,14 @@ extension TrackersViewController: UICollectionViewDelegate {
     ) -> UIContextMenuConfiguration? {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
         guard let trackerCell = cell as? TrackerCell else { return UIContextMenuConfiguration() }
-        return trackerCell.configureContextMenu(indexPath: indexPath)
+        return trackerCell.configureContextMenu(indexPath: indexPath, delegate: self)
     }
 }
 
 // MARK: - DataProviderDelegate
 
 extension TrackersViewController: DataProviderDelegate {
-    func didUpdate() {
-        collectionView.reloadData()
-    }
+    func didUpdate() { collectionView.reloadData() }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -181,19 +179,22 @@ extension TrackersViewController: TrackerCellDelegate {
         trackerManager.makeRecord(trackerId: tracker.id)
     }
 
-    func didTapPinAction(_ cell: TrackerCell) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+    func didTapPinAction(_ indexPath: IndexPath) {
         trackerManager.pinTracker(with: indexPath)
     }
 
-    func didTapEditAction(_ cell: TrackerCell) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
-        let tracker = trackerManager.getTracker(by: indexPath)
-        trackerManager.makeRecord(trackerId: tracker.id)
+    func didTapUnpinAction(_ indexPath: IndexPath) {
+        trackerManager.unpinTracker(with: indexPath)
     }
 
-    func didTapDeleteAction(_ cell: TrackerCell) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+    func didTapEditAction(_ indexPath: IndexPath) {
+        let tracker = trackerManager.getTracker(by: indexPath)
+        trackerManager.resetCurrentTracker(tracker)
+        let viewController = TrackerCreationViewController().wrapWithNavigationController()
+        self.present(viewController, animated: true)
+    }
+
+    func didTapDeleteAction(_ indexPath: IndexPath) {
         let tracker = trackerManager.getTracker(by: indexPath)
         trackerManager.makeRecord(trackerId: tracker.id)
     }

@@ -11,19 +11,9 @@ final class TrackerManager {
     static let shared = TrackerManager()
 
     private(set) var selectedDay: Date = Date()
-    private(set) var weekDayList: [DayOfWeekSwitch]
-    private(set) var newTracker: TrackerPreparation
-    private(set) var error: String?
-    private let defaultDayList = DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: false) }
-    private let defaultTracker = TrackerPreparation(
-        type: .regular, name: "", color: "", emoji: "", schedule: "", categoryName: ""
-    )
+    private(set) var weekDayList: [DayOfWeekSchedule] = DayOfWeekSchedule.dayOfWeekSchedule
+    private(set) var trackerForCreation: TrackerPreparation = .emptyTracker
     private let store = Store.shared
-
-    private init() {
-        self.newTracker = defaultTracker
-        self.weekDayList = defaultDayList
-    }
 
     // MARK: - Tracker list properties
 
@@ -55,14 +45,14 @@ final class TrackerManager {
 
     // MARK: - Creation properties
 
-    var isRegular: Bool { newTracker.type == .regular }
+    var isRegular: Bool { trackerForCreation.type == .regular }
 
     var isValid: Bool {
-        !newTracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        (isRegular ? !newTracker.schedule.isEmpty : true) &&
-        !newTracker.emoji.isEmpty &&
-        !newTracker.color.isEmpty &&
-        !newTracker.categoryName.isEmpty
+        !trackerForCreation.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        (isRegular ? !trackerForCreation.schedule.isEmpty : true) &&
+        !trackerForCreation.emoji.isEmpty &&
+        !trackerForCreation.color.isEmpty &&
+        !trackerForCreation.categoryName.isEmpty
     }
 
     // MARK: - Tracker list methods
@@ -80,17 +70,16 @@ final class TrackerManager {
     // MARK: - Creation methods
 
     func changeType(trackerType: TrackerType) {
-        self.newTracker.type = trackerType
+        self.trackerForCreation.type = trackerType
     }
 
     func changeName(name: String?) {
-        newTracker.name = name ?? ""
+        trackerForCreation.name = name ?? ""
         updateCreationUI()
     }
 
-    func changeSchedule(schedule: [DayOfWeekSwitch]) {
-        let schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
-        newTracker.schedule = schedule
+    func applySchedule() {
+        trackerForCreation.schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
         updateCreationUI()
     }
 
@@ -100,25 +89,21 @@ final class TrackerManager {
     }
 
     func changeEmoji(emoji: String?) {
-        self.newTracker.emoji = emoji ?? ""
+        self.trackerForCreation.emoji = emoji ?? ""
         updateCreationUI()
     }
 
     func changeColor(color: String?) {
-        self.newTracker.color = color ?? ""
+        self.trackerForCreation.color = color ?? ""
         updateCreationUI()
     }
 
     func changeCategory(categoryName: String?) {
-        self.newTracker.categoryName = categoryName ?? ""
-    }
-
-    func setError(error: String?) {
-        self.error = error
+        self.trackerForCreation.categoryName = categoryName ?? ""
     }
 
     func createTracker() {
-        let tracker = Tracker(from: newTracker)
+        let tracker = Tracker(from: trackerForCreation)
         store.createTracker(with: tracker)
         updateTrackersUI()
     }
@@ -168,8 +153,12 @@ final class TrackerManager {
         store.getRecords(by: trackerId).count
     }
 
-    func resetCurrentTracker() {
-        newTracker = defaultTracker
-        weekDayList = defaultDayList
+    func resetCurrentTracker(_ tracker: Tracker? = nil) {
+        weekDayList = DayOfWeekSchedule.dayOfWeekSchedule
+        if let tracker {
+            trackerForCreation = TrackerPreparation(from: tracker)
+        } else {
+            trackerForCreation = .emptyTracker
+        }
     }
 }

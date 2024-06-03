@@ -12,6 +12,8 @@ final class ColorCell: UICollectionViewCell {
 
     static let identifier = "ColorCell"
 
+    // MARK: - Private properties
+
     // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -29,7 +31,7 @@ final class ColorCell: UICollectionViewCell {
             layer.borderWidth = 3
             layer.cornerRadius = 8
             layer.borderColor = isSelected ?
-            colorView.backgroundColor?.withAlphaComponent(0.3).cgColor : UIColor.mainWhite.cgColor
+                colorView.backgroundColor?.withAlphaComponent(0.3).cgColor : UIColor.mainWhite.cgColor
         }
     }
 

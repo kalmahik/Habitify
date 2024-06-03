@@ -26,7 +26,7 @@ final class TrackerTypeModalViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
-        self.trackerManager.resetCurrentTracker()
+        self.trackerManager.resetCurrentTracker(nil)
         self.trackerManager.changeType(trackerType: .regular)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
@@ -37,7 +37,7 @@ final class TrackerTypeModalViewController: UIViewController {
         color: .mainBlack,
         style: .normal
     ) {
-        self.trackerManager.resetCurrentTracker()
+        self.trackerManager.resetCurrentTracker(nil)
         self.trackerManager.changeType(trackerType: .single)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)

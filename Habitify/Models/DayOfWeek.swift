@@ -8,7 +8,13 @@
 import Foundation
 
 enum DayOfWeek: String, CaseIterable {
-    case monday = "Пн", tuesday = "Вт", wednesday = "Ср", thursday = "Чт", friday = "Пт", saturday = "Сб", sunday = "Вс"
+    case monday = "Пн",
+         tuesday = "Вт",
+         wednesday = "Ср",
+         thursday = "Чт",
+         friday = "Пт",
+         saturday = "Сб",
+         sunday = "Вс"
 
     var shortName: String {
         switch self {
@@ -34,7 +40,7 @@ enum DayOfWeek: String, CaseIterable {
         }
     }
 
-    static func scheduleToString(schedule: [DayOfWeekSwitch]) -> String {
+    static func scheduleToString(schedule: [DayOfWeekSchedule]) -> String {
         if schedule.filter({ $0.isEnabled }).count == 7 {
             return "Каждый день"
         }
@@ -52,23 +58,25 @@ enum DayOfWeek: String, CaseIterable {
             .joined(separator: ", ")
     }
 
-    static func stringToSchedule(scheduleString: String) -> [DayOfWeekSwitch] {
+    static func stringToSchedule(scheduleString: String) -> [DayOfWeekSchedule] {
         if scheduleString.isEmpty {
             return []
         }
         if scheduleString == "Каждый день" {
-            return DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
+            return DayOfWeek.allCases.map { DayOfWeekSchedule(dayOfWeek: $0, isEnabled: true) }
         }
         if scheduleString == "Будние дни" {
-            return DayOfWeek.allCases[0...4].map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
+            return DayOfWeek.allCases[0...4].map { DayOfWeekSchedule(dayOfWeek: $0, isEnabled: true) }
         }
         return scheduleString
             .components(separatedBy: ", ")
-            .map { DayOfWeekSwitch(dayOfWeek: DayOfWeek(rawValue: $0) ?? .monday, isEnabled: true) }
+            .map { DayOfWeekSchedule(dayOfWeek: DayOfWeek(rawValue: $0) ?? .monday, isEnabled: true) }
     }
 }
 
-struct DayOfWeekSwitch {
+struct DayOfWeekSchedule {
+    static let dayOfWeekSchedule = DayOfWeek.allCases.map { DayOfWeekSchedule(dayOfWeek: $0, isEnabled: false) }
+
     let dayOfWeek: DayOfWeek
     var isEnabled: Bool
 }

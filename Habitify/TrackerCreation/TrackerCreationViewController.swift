@@ -66,9 +66,9 @@ final class TrackerCreationViewController: UIViewController {
         ) { [weak self] _ in
             // no need to update the whole collection
             self?.collectionView.reloadSections(IndexSet(arrayLiteral:
-                CollectionSection.header.rawValue,
-                CollectionSection.footer.rawValue
-            ))
+                                                            CollectionSection.header.rawValue,
+                                                         CollectionSection.footer.rawValue
+                                                        ))
         }
     }
 }
@@ -135,6 +135,8 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
             let emoji = emojiList[indexPath.row]
             guard let emojiCell = cell as? EmojiCell else { return UICollectionViewCell() }
             emojiCell.setupCell(emoji: emoji)
+            let isSelected = emoji == trackerManager.trackerForCreation.emoji
+            if isSelected { self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: []) }
             return emojiCell
         case CollectionSection.color.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCell.identifier, for: indexPath)
@@ -142,6 +144,8 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
             let color = UIColor(hex: colorString)
             guard let colorCell = cell as? ColorCell, let color else { return UICollectionViewCell() }
             colorCell.setupCell(color: color)
+            let isSelected = colorString == trackerManager.trackerForCreation.color
+            if isSelected { self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: []) }
             return colorCell
         case CollectionSection.footer.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFooter.identifier, for: indexPath)
@@ -237,26 +241,21 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         switch section {
-            case CollectionSection.header.rawValue:
-                return .zero
-            case CollectionSection.emoji.rawValue:
-                return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.color.rawValue:
-                return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.footer.rawValue:
-                return .zero
-            default:
-                return .zero
+        case CollectionSection.header.rawValue:
+            return .zero
+        case CollectionSection.emoji.rawValue:
+            return CGSize(width: collectionWidth, height: 74)
+        case CollectionSection.color.rawValue:
+            return CGSize(width: collectionWidth, height: 74)
+        case CollectionSection.footer.rawValue:
+            return .zero
+        default:
+            return .zero
         }
     }
 
     func calculateHeaderHeight() -> CGFloat {
-        var height: CGFloat = 75 // input
-        if trackerManager.error != nil {
-            height += 22 + 8 + 32 + 24 // error height, top inset, bottom inset
-        } else {
-            height += 24 + 24 // 2 paddings
-        }
+        var height: CGFloat = 75 + 48 // input and 2 paddings
         if trackerManager.isRegular {
             height += 150 // 2 buttons
         } else {

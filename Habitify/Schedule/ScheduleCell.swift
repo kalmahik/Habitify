@@ -47,7 +47,7 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(schedule: DayOfWeekSwitch, isFirst: Bool, isLast: Bool) {
+    func setupCell(schedule: DayOfWeekSchedule, isFirst: Bool, isLast: Bool) {
         titleLabel.text = schedule.dayOfWeek.fullName
         toggle.isOn = schedule.isEnabled
         separator.isHidden = isLast

@@ -68,28 +68,19 @@ final class TrackerCell: UICollectionViewCell {
     // MARK: - Public Methods
 
     func setupCell(tracker: Tracker, count: Int, isCompleted: Bool, isPinned: Bool) {
+        self.isPinned = isPinned
         let color = UIColor(hex: tracker.color)
+        let format = NSLocalizedString("number_of_days", comment: "")
         cellBackgroundView.backgroundColor = color
         emoji.text = tracker.emoji
         pinImage.isHidden = !isPinned
-        self.isPinned = isPinned
         actionButton.tintColor = color
         actionButton.layer.opacity = isCompleted ? 0.3 : 1
         actionButton.setImage(UIImage(named: isCompleted ? "done" : "plus"), for: .normal)
         titleLabel.text = tracker.name
-        let format = NSLocalizedString("number_of_days", comment: "")
-        let message = String.localizedStringWithFormat(format, count)
-        quantityLabel.text = message
+        quantityLabel.text = .localizedStringWithFormat(format, count)
         setupViews()
         setupConstraints()
-    }
-
-    func customPreview() -> UIViewController {
-        let vc = UIViewController()
-        vc.view = cellBackgroundView
-        cellBackgroundView.frame = CGRect(x: 0, y: 0, width: 200, height: 90)
-        vc.preferredContentSize = cellBackgroundView.frame.size
-        return vc
     }
 
     // MARK: - Private Methods
@@ -100,51 +91,28 @@ final class TrackerCell: UICollectionViewCell {
 }
 
 extension TrackerCell {
-    func configureContextMenu(indexPath: IndexPath) -> UIContextMenuConfiguration {
+    // TODO: почему делегат тут нил? Пришлось пробросить его напрямую, как-то некруто
+    func configureContextMenu(indexPath: IndexPath, delegate: TrackerCellDelegate) -> UIContextMenuConfiguration {
         let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
-            let pin = UIAction(
-                title: NSLocalizedString("contextActionPin", comment: ""),
-                image: nil,
-                identifier: nil,
-                discoverabilityTitle: nil,
-                state: .off
-            ) { _ in
-//                delegate?.pinTracker(with: indexPath)
-                self.delegate?.didTapPinAction(self)
+            let pin = makeAction(NSLocalizedString("contextActionPin", comment: ""), false) { _ in
+                delegate.didTapPinAction(indexPath)
             }
-            let unpin = UIAction(
-                title: NSLocalizedString("contextActionUnpin", comment: ""),
-                image: nil,
-                identifier: nil,
-                discoverabilityTitle: nil,
-                state: .off
-            ) { _ in
+            let unpin = makeAction(NSLocalizedString("contextActionUnpin", comment: ""), false) {  _ in
+                delegate.didTapUnpinAction(indexPath)
             }
-            let edit = UIAction(
-                title: NSLocalizedString("contextActionEdit", comment: ""),
-                image: nil,
-                identifier: nil,
-                discoverabilityTitle: nil,
-                state: .off
-            ) { _ in
-                print("delete button clicked")
+            let edit = makeAction(NSLocalizedString("contextActionEdit", comment: ""), false) { _ in
+                delegate.didTapEditAction(indexPath)
             }
-            let delete = UIAction(
-                title: NSLocalizedString("contextActionDelete", comment: ""),
-                image: nil,
-                identifier: nil,
-                discoverabilityTitle: nil,
-                attributes: .destructive,
-                state: .off
-            ) { _ in
-                print("delete button clicked")
+            let delete = makeAction(NSLocalizedString("contextActionDelete", comment: ""), true) { _ in
+                delegate.didTapDeleteAction(indexPath)
             }
             return UIMenu(
                 title: "",
                 image: nil,
                 identifier: nil,
                 options: UIMenu.Options.displayInline,
-                children: [self.isPinned ? unpin : pin, edit, delete])
+                children: [self.isPinned ? unpin : pin, edit, delete]
+            )
         }
         return context
     }

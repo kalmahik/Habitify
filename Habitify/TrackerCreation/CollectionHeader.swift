@@ -45,7 +45,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     private lazy var categoryButton = ArrowButton(
         title: NSLocalizedString("categoryButton", comment: ""),
-        subtitle: trackerManager.newTracker.categoryName
+        subtitle: trackerManager.trackerForCreation.categoryName
     ) {
         let catetegoriesM = CategoryModel()
         let catetegoriesVM = CategoryViewModel(for: catetegoriesM)
@@ -56,7 +56,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     private lazy var scheduleButton = ArrowButton(
         title: NSLocalizedString("schduleButton", comment: ""),
-        subtitle: trackerManager.newTracker.schedule
+        subtitle: trackerManager.trackerForCreation.schedule
     ) {
         let viewController = ScheduleViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
@@ -87,9 +87,9 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Public Methods
 
     func setupCell() {
-        scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
-        categoryButton.updateSubtitle(subtitle: trackerManager.newTracker.categoryName)
-        trackerNameInput.text = trackerManager.newTracker.name
+        scheduleButton.updateSubtitle(subtitle: trackerManager.trackerForCreation.schedule)
+        categoryButton.updateSubtitle(subtitle: trackerManager.trackerForCreation.categoryName)
+        trackerNameInput.text = trackerManager.trackerForCreation.name
     }
 }
 
@@ -115,7 +115,6 @@ extension CollectionHeader: UITextFieldDelegate {
 
     @objc private func textFieldDidChange(textField: UITextField) {
         guard let length = textField.text?.count else { return }
-        trackerManager.setError(error: length < 38 ? nil : NSLocalizedString("trackerNameLengthError", comment: ""))
     }
 }
 

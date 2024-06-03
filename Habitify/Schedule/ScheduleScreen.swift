@@ -15,8 +15,12 @@ final class ScheduleViewController: UIViewController {
 
     // MARK: - UIViews
 
-    private lazy var doneButton = Button(title: NSLocalizedString("doneButton", comment: ""), color: .mainBlack, style: .normal) {
-        self.trackerManager.changeSchedule(schedule: self.trackerManager.weekDayList)
+    private lazy var doneButton = Button(
+        title: NSLocalizedString("doneButton", comment: ""),
+        color: .mainBlack,
+        style: .normal
+    ) {
+        self.trackerManager.applySchedule()
         self.dismiss(animated: true)
     }
 
