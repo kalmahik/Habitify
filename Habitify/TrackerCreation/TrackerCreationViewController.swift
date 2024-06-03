@@ -64,11 +64,9 @@ final class TrackerCreationViewController: UIViewController {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            // no need to update the whole collection
-            self?.collectionView.reloadSections(IndexSet(arrayLiteral:
-                                                            CollectionSection.header.rawValue,
-                                                         CollectionSection.footer.rawValue
-                                                        ))
+            self?.collectionView.reloadSections(
+                IndexSet(arrayLiteral:CollectionSection.header.rawValue, CollectionSection.footer.rawValue)
+            )
         }
     }
 }
@@ -135,7 +133,7 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
             let emoji = emojiList[indexPath.row]
             guard let emojiCell = cell as? EmojiCell else { return UICollectionViewCell() }
             emojiCell.setupCell(emoji: emoji)
-            let isSelected = emoji == trackerManager.trackerForCreation.emoji
+            let isSelected = emoji == trackerManager.tracker.emoji
             if isSelected { self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: []) }
             return emojiCell
         case CollectionSection.color.rawValue:
@@ -144,7 +142,7 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
             let color = UIColor(hex: colorString)
             guard let colorCell = cell as? ColorCell, let color else { return UICollectionViewCell() }
             colorCell.setupCell(color: color)
-            let isSelected = colorString == trackerManager.trackerForCreation.color
+            let isSelected = colorString == trackerManager.tracker.color
             if isSelected { self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: []) }
             return colorCell
         case CollectionSection.footer.rawValue:

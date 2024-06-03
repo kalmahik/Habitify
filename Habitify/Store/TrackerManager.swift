@@ -12,7 +12,7 @@ final class TrackerManager {
 
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSchedule] = DayOfWeekSchedule.dayOfWeekSchedule
-    private(set) var trackerForCreation: TrackerPreparation = .emptyTracker
+    private(set) var tracker: TrackerPreparation = .emptyTracker
     private let store = Store.shared
 
     // MARK: - Tracker list properties
@@ -45,14 +45,14 @@ final class TrackerManager {
 
     // MARK: - Creation properties
 
-    var isRegular: Bool { trackerForCreation.type == .regular }
+    var isRegular: Bool { tracker.type == .regular }
 
     var isValid: Bool {
-        !trackerForCreation.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        (isRegular ? !trackerForCreation.schedule.isEmpty : true) &&
-        !trackerForCreation.emoji.isEmpty &&
-        !trackerForCreation.color.isEmpty &&
-        !trackerForCreation.categoryName.isEmpty
+        !tracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        (isRegular ? !tracker.schedule.isEmpty : true) &&
+        !tracker.emoji.isEmpty &&
+        !tracker.color.isEmpty &&
+        !tracker.categoryName.isEmpty
     }
 
     // MARK: - Tracker list methods
@@ -70,16 +70,16 @@ final class TrackerManager {
     // MARK: - Creation methods
 
     func changeType(trackerType: TrackerType) {
-        self.trackerForCreation.type = trackerType
+        self.tracker.type = trackerType
     }
 
     func changeName(name: String?) {
-        trackerForCreation.name = name ?? ""
+        tracker.name = name ?? ""
         updateCreationUI()
     }
 
     func applySchedule() {
-        trackerForCreation.schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
+        tracker.schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
         updateCreationUI()
     }
 
@@ -89,21 +89,21 @@ final class TrackerManager {
     }
 
     func changeEmoji(emoji: String?) {
-        self.trackerForCreation.emoji = emoji ?? ""
+        self.tracker.emoji = emoji ?? ""
         updateCreationUI()
     }
 
     func changeColor(color: String?) {
-        self.trackerForCreation.color = color ?? ""
+        self.tracker.color = color ?? ""
         updateCreationUI()
     }
 
     func changeCategory(categoryName: String?) {
-        self.trackerForCreation.categoryName = categoryName ?? ""
+        self.tracker.categoryName = categoryName ?? ""
     }
 
     func createTracker() {
-        let tracker = Tracker(from: trackerForCreation)
+        let tracker = Tracker(from: tracker)
         store.createTracker(with: tracker)
         updateTrackersUI()
     }
@@ -156,9 +156,9 @@ final class TrackerManager {
     func resetCurrentTracker(_ tracker: Tracker? = nil) {
         weekDayList = DayOfWeekSchedule.dayOfWeekSchedule
         if let tracker {
-            trackerForCreation = TrackerPreparation(from: tracker)
+            self.tracker = TrackerPreparation(from: tracker)
         } else {
-            trackerForCreation = .emptyTracker
+            self.tracker = .emptyTracker
         }
     }
 }

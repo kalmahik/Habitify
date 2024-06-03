@@ -16,7 +16,7 @@ final class CategoryModel {
     }
 
     func getCurrentCateegoryName() -> String {
-        trackerManager.trackerForCreation.categoryName
+        trackerManager.tracker.categoryName
     }
 
     func createCategory(categoryName: String) {
