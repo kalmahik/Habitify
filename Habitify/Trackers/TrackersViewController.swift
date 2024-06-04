@@ -197,8 +197,7 @@ extension TrackersViewController: TrackerCellDelegate {
     }
 
     func didTapDeleteAction(_ indexPath: IndexPath) {
-        let tracker = trackerManager.getTracker(by: indexPath)
-        trackerManager.makeRecord(trackerId: tracker.id)
+        trackerManager.deleteTracker(with: indexPath)
     }
 }
 

@@ -122,6 +122,12 @@ final class TrackerManager {
         updateTrackersUI()
     }
 
+    func deleteTracker(with indexPath: IndexPath) {
+        let tracker = getTracker(by: indexPath)
+        store.deleteTracker(with: tracker.id)
+        updateTrackersUI()
+    }
+
     // MARK: - Utils
 
     func updateCreationUI() {

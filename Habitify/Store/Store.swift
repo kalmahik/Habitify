@@ -175,6 +175,17 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
+    func deleteTracker(with trackerId: UUID) {
+        let trackerEntity = getTracker(by: trackerId)
+        guard let trackerEntity else { return }
+        context.delete(trackerEntity)
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print(error.userInfo)
+        }
+    }
+
     private func getCategory(by name: String) -> TrackerCategoryCoreData? {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "title == %@", name)
