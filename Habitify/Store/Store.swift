@@ -49,15 +49,19 @@ final class Store: NSObject, StoreProtocol {
     }
 
     func createTracker(with tracker: Tracker) {
-        let trackerEntity = TrackerCoreData(context: context)
+        let existedTracker = getTracker(by: tracker.id)
+        let trackerEntity = existedTracker ?? TrackerCoreData(context: context)
         trackerEntity.id = tracker.id
         trackerEntity.name = tracker.name
         trackerEntity.emoji = tracker.emoji
         trackerEntity.color = tracker.color
         trackerEntity.schedule = tracker.schedule
-        trackerEntity.createdAt = Date()
+        trackerEntity.createdAt = tracker.createdAt
 
         let categoryEntity = createСategory(with: tracker.categoryName)
+        if let existedTracker {
+            categoryEntity.removeFromTrackers(existedTracker)
+        }
         categoryEntity.addToTrackers(trackerEntity)
 
         do {
@@ -183,7 +187,6 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
-    // пока не используется
     private func getTracker(by id: UUID) -> TrackerCoreData? {
         let fetchRequest: NSFetchRequest<TrackerCoreData> = TrackerCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)

@@ -47,6 +47,8 @@ final class TrackerManager {
 
     var isRegular: Bool { tracker.type == .regular }
 
+    var isEditing: Bool { tracker.id != nil }
+
     var isValid: Bool {
         !tracker.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         (isRegular ? !tracker.schedule.isEmpty : true) &&

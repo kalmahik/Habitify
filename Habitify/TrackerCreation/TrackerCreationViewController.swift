@@ -55,6 +55,7 @@ final class TrackerCreationViewController: UIViewController {
 
     @objc private func didCreateTapped() {
         trackerManager.createTracker()
+        self.presentingViewController?.dismiss(animated: true)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 
@@ -65,7 +66,7 @@ final class TrackerCreationViewController: UIViewController {
             queue: .main
         ) { [weak self] _ in
             self?.collectionView.reloadSections(
-                IndexSet(arrayLiteral:CollectionSection.header.rawValue, CollectionSection.footer.rawValue)
+                IndexSet(arrayLiteral: CollectionSection.header.rawValue, CollectionSection.footer.rawValue)
             )
         }
     }
@@ -126,7 +127,16 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         case CollectionSection.header.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHeader.identifier, for: indexPath)
             guard let headerCell = cell as? CollectionHeader else { return UICollectionViewCell() }
-            headerCell.setupCell()
+            let category = trackerManager.getCategory(by: indexPath)
+            // TODO: переписать это говнище
+            if let trackerId = trackerManager.tracker.id {
+                let trackerCount = trackerManager.getTrackerCount(trackerId: trackerId)
+                let format = NSLocalizedString("numberOffDays", comment: "")
+                let strikeTitle = String.localizedStringWithFormat(format, trackerCount)
+                headerCell.setupCell(strikeTitle, category.title)
+            } else {
+                headerCell.setupCell(nil, nil)
+            }
             return headerCell
         case CollectionSection.emoji.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath)
@@ -154,7 +164,6 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
-
     }
 
     func collectionView(
@@ -259,6 +268,9 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         } else {
             height += 75 // 1 button
         }
+        if trackerManager.isEditing {
+            height += 38 // strike title
+        }
         return height
     }
 }
@@ -278,7 +290,11 @@ extension TrackerCreationViewController {
     func setupViews() {
         view.backgroundColor = .mainWhite
         navigationItem.title =
-        NSLocalizedString(trackerManager.isRegular ? "trackerRegularType" : "trackerSingleType", comment: "")
+        NSLocalizedString(
+            trackerManager.isEditing ? "trackerEditionTitle" :
+                trackerManager.isRegular ? "trackerRegularType" : "trackerSingleType",
+            comment: ""
+        )
         view.setupView(collectionView)
     }
 

@@ -123,7 +123,9 @@ extension TrackersViewController: UICollectionViewDelegate {
     ) -> UIContextMenuConfiguration? {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
         guard let trackerCell = cell as? TrackerCell else { return UIContextMenuConfiguration() }
-        return trackerCell.configureContextMenu(indexPath: indexPath, delegate: self)
+        let tracker = trackerManager.getTracker(by: indexPath)
+        let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
+        return trackerCell.configureContextMenu(indexPath, self, isPinned)
     }
 }
 

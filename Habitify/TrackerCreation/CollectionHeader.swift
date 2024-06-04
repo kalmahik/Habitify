@@ -30,6 +30,12 @@ final class CollectionHeader: UICollectionViewCell {
 
     // MARK: - UIViews
 
+    private lazy var strikeTitle = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        return label
+    }()
+
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
         textField.placeholder = NSLocalizedString("trackerNamePlaceholder", comment: "")
@@ -86,10 +92,13 @@ final class CollectionHeader: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell() {
+    func setupCell(_ strikeTitle: String?, _ categoryName: String?) {
         scheduleButton.updateSubtitle(subtitle: trackerManager.tracker.schedule)
-        categoryButton.updateSubtitle(subtitle: trackerManager.tracker.categoryName)
         trackerNameInput.text = trackerManager.tracker.name
+        self.strikeTitle.text = strikeTitle
+        let category = trackerManager.tracker.categoryName.isEmpty ? categoryName : trackerManager.tracker.categoryName
+        categoryButton.updateSubtitle(subtitle: category)
+        trackerManager.changeCategory(categoryName: category)
     }
 }
 
@@ -114,7 +123,7 @@ extension CollectionHeader: UITextFieldDelegate {
     }
 
     @objc private func textFieldDidChange(textField: UITextField) {
-        guard let length = textField.text?.count else { return }
+        guard (textField.text?.count) != nil else { return }
     }
 }
 
@@ -122,6 +131,7 @@ extension CollectionHeader: UITextFieldDelegate {
 
 extension CollectionHeader {
     private func setupViews() {
+        contentView.setupView(strikeTitle)
         contentView.setupView(trackerNameInput)
         contentView.setupView(wrapperView)
         wrapperView.addArrangedSubview(categoryButton)
@@ -133,8 +143,11 @@ extension CollectionHeader {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            strikeTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
+            strikeTitle.topAnchor.constraint(equalTo: topAnchor),
+
             trackerNameInput.heightAnchor.constraint(equalToConstant: 75),
-            trackerNameInput.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            trackerNameInput.topAnchor.constraint(equalTo: strikeTitle.bottomAnchor, constant: 24),
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 

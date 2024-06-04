@@ -12,11 +12,13 @@
 "dateFormat" = "dd.MM.yyyy";
 "cancelButton" = "Отменить";
 "creationButton" = "Создать";
+"saveButton" = "Сохранить";
 "trackerNamePlaceholder" = "Введите название трекера";
 "categoryNamePlaceholder" = "Введите название трекера";
 "categoryButton" = "Категория";
 "schduleButton" = "Расписание";
 "trackerRegularType" = "Новая привычка";
+"trackerEditionTitle" = "Редактирование привычки";
 "trackerSingleType" = "Новое нерегулярное событие";
 "trackerRegularTypeButton" = "Привычка";
 "trackerSingleTypeButton" = "Нерегулярное событие";

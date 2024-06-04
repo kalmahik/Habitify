@@ -70,7 +70,7 @@ final class TrackerCell: UICollectionViewCell {
     func setupCell(tracker: Tracker, count: Int, isCompleted: Bool, isPinned: Bool) {
         self.isPinned = isPinned
         let color = UIColor(hex: tracker.color)
-        let format = NSLocalizedString("number_of_days", comment: "")
+        let format = NSLocalizedString("numberOffDays", comment: "")
         cellBackgroundView.backgroundColor = color
         emoji.text = tracker.emoji
         pinImage.isHidden = !isPinned
@@ -92,7 +92,11 @@ final class TrackerCell: UICollectionViewCell {
 
 extension TrackerCell {
     // TODO: почему делегат тут нил? Пришлось пробросить его напрямую, как-то некруто
-    func configureContextMenu(indexPath: IndexPath, delegate: TrackerCellDelegate) -> UIContextMenuConfiguration {
+    func configureContextMenu(
+        _ indexPath: IndexPath,
+        _ delegate: TrackerCellDelegate,
+        _ isPinned: Bool
+    ) -> UIContextMenuConfiguration {
         let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
             let pin = makeAction(NSLocalizedString("contextActionPin", comment: ""), false) { _ in
                 delegate.didTapPinAction(indexPath)
@@ -111,7 +115,7 @@ extension TrackerCell {
                 image: nil,
                 identifier: nil,
                 options: UIMenu.Options.displayInline,
-                children: [self.isPinned ? unpin : pin, edit, delete]
+                children: [isPinned ? unpin : pin, edit, delete]
             )
         }
         return context

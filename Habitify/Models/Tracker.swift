@@ -27,12 +27,12 @@ struct Tracker {
     }
 
     init(from tracker: TrackerPreparation) {
-        self.id = UUID()
+        self.id = tracker.id ?? UUID()
         self.name = tracker.name
         self.color = tracker.color
         self.emoji = tracker.emoji
         self.schedule = tracker.schedule
-        self.createdAt = Date()
+        self.createdAt = tracker.createdAt ?? Date()
         self.categoryName = tracker.categoryName
     }
 
