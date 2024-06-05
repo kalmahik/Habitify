@@ -19,25 +19,46 @@ final class TrackerManager {
 
     // MARK: - Tracker list properties
 
-    // мне кажется эту фильрацию лучше перенести на сторону кор даты, оставим на десерт
-    var filteredtrackers: [TrackerCategory] {
+    var categories: [TrackerCategory] {
+        store.getCategories(withTrackers: false)
+    }
+
+    // тут получаем все трекеры, и первыми ставим запиненные
+    var trackers: [TrackerCategory] {
         var pinnedTrackers: [Tracker] = []
         let pinnedCategoryName = NSLocalizedString("pinnedCategory", comment: "")
-        var categories = store.getCategories(withTrackeers: true).map {
+        var categories = store.getCategories(withTrackers: true).map {
             TrackerCategory(
                 title: $0.title,
                 trackers: $0.trackers
                     .filter {
+                        // exclude pinned trackers and collect them
                         if $0.categoryName == pinnedCategoryName {
                             pinnedTrackers.append($0)
                             return false
                         }
+                        return true
+                    }
+            )
+        }
+        let pinnedCategory = TrackerCategory(title: pinnedCategoryName, trackers: pinnedTrackers)
+        categories.insert(pinnedCategory, at: 0)
+        return categories
+    }
+
+    // мне кажется эту фильтрацию лучше перенести на сторону кор даты, оставим на десерт
+    var filteredTrackers: [TrackerCategory] {
+        let categories = trackers.map {
+            TrackerCategory(
+                title: $0.title,
+                trackers: $0.trackers
+                    .filter {
+                        // allow single events
                         if $0.schedule.isEmpty { return true }
-                        let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map {
-                            String(describing: $0.dayOfWeek)
-                        }
+                        // check day of week
+                        let scheduleArray = DayOfWeek.stringToScheduleArray($0.schedule)
                         let selectedDayOfWeek = selectedDay.dayOfWeek()
-                        return schedule.contains(selectedDayOfWeek)
+                        return scheduleArray.contains(selectedDayOfWeek)
                     }.filter {
                         switch filter {
                         case .all:
@@ -45,15 +66,14 @@ final class TrackerManager {
                         case .today:
                             return true
                         case .finished:
-                            return isTrackerCompleteForSelectedDay(trackerId: $0.id) >= 0
+                            return isTrackerCompleteForSelectedDay(trackerId: $0.id)
                         case .unfinished:
-                            return isTrackerCompleteForSelectedDay(trackerId: $0.id) == 0
+                            return !isTrackerCompleteForSelectedDay(trackerId: $0.id)
                         }
                     }
             )
         }
-        let pinnedCategory = TrackerCategory(title: pinnedCategoryName, trackers: pinnedTrackers)
-        categories.insert(pinnedCategory, at: 0)
+        // убираем категории без трекеров
         return categories.filter { !$0.trackers.isEmpty }
     }
 
@@ -95,7 +115,7 @@ final class TrackerManager {
     }
 
     func applySchedule() {
-        tracker.schedule = DayOfWeek.scheduleToString(schedule: weekDayList)
+        tracker.schedule = DayOfWeek.scheduleToString(weekDayList)
         updateCreationUI()
     }
 
@@ -143,20 +163,13 @@ final class TrackerManager {
     }
 
     func applyFilter(indexPath: IndexPath) {
-        let filter = filters[indexPath.row]
-        self.filter = filter
-        switch filter {
-        case .all:
-            print("all")
-        case .today:
+        filter = filters[indexPath.row]
+        if filter == .today {
+            // TODO: set picker
             changeSelectedDay(selectedDay: Date())
-        case .finished:
-            print("finished")
-        case .unfinished:
-            print("unfinished")
+        } else {
+            updateTrackersUI()
         }
-        updateTrackersUI()
-
     }
 
     func getIndexPathOfFilter() -> IndexPath {
@@ -180,16 +193,16 @@ final class TrackerManager {
     }
 
     func getTracker(by indexPath: IndexPath) -> Tracker {
-        filteredtrackers[indexPath.section].trackers[indexPath.row]
+        filteredTrackers[indexPath.section].trackers[indexPath.row]
     }
 
     func getCategory(by indexPath: IndexPath) -> TrackerCategory {
-        filteredtrackers[indexPath.section]
+        categories[indexPath.section]
     }
 
-    func isTrackerCompleteForSelectedDay(trackerId: UUID) -> Int {
+    func isTrackerCompleteForSelectedDay(trackerId: UUID) -> Bool {
         let records = store.getRecords(by: trackerId)
-        return records.firstIndex { Calendar.current.isDate($0.date, equalTo: selectedDay, toGranularity: .day) } ?? -1
+        return records.first { Calendar.current.isDate($0.date, equalTo: selectedDay, toGranularity: .day) } != nil
     }
 
     func getTrackerCount(trackerId: UUID) -> Int {

@@ -12,15 +12,15 @@ final class CategoryModel {
     private let trackerManager = TrackerManager.shared
 
     var categories: [TrackerCategory] {
-        store.getCategories(withTrackeers: false)
+        store.getCategories(withTrackers: false)
     }
 
-    func getCurrentCateegoryName() -> String {
+    func getCurrentCategoryName() -> String {
         trackerManager.tracker.categoryName
     }
 
     func createCategory(categoryName: String) {
-        store.createСategory(with: categoryName)
+        store.createCategory(with: categoryName)
     }
 
     func changeCategory(categoryName: String?) {

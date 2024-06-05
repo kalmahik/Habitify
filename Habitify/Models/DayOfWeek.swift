@@ -40,7 +40,7 @@ enum DayOfWeek: String, CaseIterable {
         }
     }
 
-    static func scheduleToString(schedule: [DayOfWeekSchedule]) -> String {
+    static func scheduleToString(_ schedule: [DayOfWeekSchedule]) -> String {
         if schedule.filter({ $0.isEnabled }).count == 7 {
             return NSLocalizedString("scheduleEveryday", comment: "")
         }
@@ -58,7 +58,7 @@ enum DayOfWeek: String, CaseIterable {
             .joined(separator: ", ")
     }
 
-    static func stringToSchedule(scheduleString: String) -> [DayOfWeekSchedule] {
+    static func stringToSchedule(_ scheduleString: String) -> [DayOfWeekSchedule] {
         if scheduleString.isEmpty {
             return []
         }
@@ -71,6 +71,12 @@ enum DayOfWeek: String, CaseIterable {
         return scheduleString
             .components(separatedBy: ", ")
             .map { DayOfWeekSchedule(dayOfWeek: DayOfWeek(rawValue: $0) ?? .monday, isEnabled: true) }
+    }
+
+    static func stringToScheduleArray(_ scheduleString: String) -> [String] {
+        DayOfWeek.stringToSchedule(scheduleString).map {
+            String(describing: $0.dayOfWeek)
+        }
     }
 }
 

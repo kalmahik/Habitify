@@ -42,8 +42,8 @@ final class Store: NSObject, StoreProtocol {
             do {
                 try context.save()
             } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                let error = error as NSError
+                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
     }
@@ -58,7 +58,7 @@ final class Store: NSObject, StoreProtocol {
         trackerEntity.schedule = tracker.schedule
         trackerEntity.createdAt = tracker.createdAt
 
-        let categoryEntity = createСategory(with: tracker.categoryName)
+        let categoryEntity = createCategory(with: tracker.categoryName)
         if let existedTracker {
             categoryEntity.removeFromTrackers(existedTracker)
         }
@@ -71,11 +71,11 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
-    func getCategories(withTrackeers: Bool) -> [TrackerCategory] {
+    func getCategories(withTrackers: Bool) -> [TrackerCategory] {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         do {
             let categoryEntities = try context.fetch(fetchRequest)
-            if withTrackeers {
+            if withTrackers {
                 return categoryEntities.map {
                     let trackers = $0.trackers?
                         .map { Tracker(from: $0 as! TrackerCoreData) }
@@ -93,14 +93,12 @@ final class Store: NSObject, StoreProtocol {
     func makeRecord(with trackerId: UUID, at date: Date) {
         // берем все записи
         let records = getRecords(of: trackerId)
-        // проверяем если уже есть запись навыбранный день
+        // проверяем если уже есть запись на выбранный день
         let index = records.firstIndex { Calendar.current.isDate($0.date ?? Date(), equalTo: date, toGranularity: .day) } ?? -1
         // если запись есть
-        if index > 0 {
-            // то удаляем ее
+        if index >= 0 {
             context.delete(records[index])
         } else {
-            // иначе создаем
             let recordEntity = TrackerRecordCoreData(context: context)
             recordEntity.id = trackerId
             recordEntity.date = date
@@ -137,7 +135,7 @@ final class Store: NSObject, StoreProtocol {
     }
 
     // создаем категорию. Если категория уже существует - то не создаем новую
-    func createСategory(with categoryName: String) -> TrackerCategoryCoreData {
+    func createCategory(with categoryName: String) -> TrackerCategoryCoreData {
         if let existedCategory = getCategory(by: categoryName) {
             return existedCategory
         }

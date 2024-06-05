@@ -44,6 +44,7 @@ final class FilterViewController: UIViewController {
 extension FilterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         trackerManager.applyFilter(indexPath: indexPath)
+        dismiss(animated: true)
     }
 }
 

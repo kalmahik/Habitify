@@ -84,25 +84,25 @@ final class TrackersViewController: UIViewController {
 extension TrackersViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if trackerManager.filteredtrackers.isEmpty {
+        if trackerManager.filteredTrackers.isEmpty {
             collectionView.setEmptyMessage("💫", NSLocalizedString("trackersEmpty", comment: ""))
         } else {
             collectionView.restore()
         }
-        return trackerManager.filteredtrackers.count
+        return trackerManager.filteredTrackers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        trackerManager.filteredtrackers[section].trackers.count
+        trackerManager.filteredTrackers[section].trackers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
         guard let trackerCell = cell as? TrackerCell else { return UICollectionViewCell() }
         trackerCell.delegate = self
-        let tracker = trackerManager.filteredtrackers[indexPath.section].trackers[indexPath.row]
+        let tracker = trackerManager.filteredTrackers[indexPath.section].trackers[indexPath.row]
         let trackerCount = trackerManager.getTrackerCount(trackerId: tracker.id)
-        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerId: tracker.id) >= 0
+        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerId: tracker.id)
         let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
         trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted, isPinned: isPinned)
         return trackerCell
@@ -118,7 +118,7 @@ extension TrackersViewController: UICollectionViewDataSource {
             withReuseIdentifier: TrackerSectionHeader.identifier,
             for: indexPath
         ) as! TrackerSectionHeader
-        sectionTitle.setupSection(title: trackerManager.filteredtrackers[indexPath.section].title)
+        sectionTitle.setupSection(title: trackerManager.filteredTrackers[indexPath.section].title)
         return sectionTitle
     }
 }
