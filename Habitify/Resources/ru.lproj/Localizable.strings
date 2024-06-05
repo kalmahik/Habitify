@@ -39,6 +39,13 @@
 "contextActionUnpin" = "Открепить";
 "contextActionEdit" = "Редактировать";
 "contextActionDelete" = "Удалить";
+"filters" = "Фильтры";
+"categoryEmoji" = "Emoji";
+"categoryColor" = "Цвет";
 "pinnedCategory" = "Закрепленные";
-
-
+"scheduleEveryday" = "Каждый день";
+"scheduleWorkingDay" = "Будние дни";
+"filterAll" = "Все трекеры";
+"filterToday" = "Трекеры на сегодня";
+"filterFinished" = "Завершенные";
+"filterUnfinished" = "Незавершенные";

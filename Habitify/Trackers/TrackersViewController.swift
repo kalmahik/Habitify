@@ -38,8 +38,18 @@ final class TrackersViewController: UIViewController {
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.mainWhite
         collectionView.allowsMultipleSelection = false
+        collectionView.contentInset.bottom = 60
         return collectionView
     }()
+
+    private lazy var filterButton = Button(
+        title: NSLocalizedString("filters", comment: ""),
+        color: .mainBlue,
+        style: .normal,
+        height: 50
+    ) {
+        self.present(FilterViewController().wrapWithNavigationController(), animated: true)
+    }
 
     // MARK: - UIViewController
 
@@ -127,6 +137,18 @@ extension TrackersViewController: UICollectionViewDelegate {
         let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
         return trackerCell.configureContextMenu(indexPath, self, isPinned)
     }
+
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        contextMenuConfiguration configuration: UIContextMenuConfiguration,
+//        highlightPreviewForItemAt indexPath: IndexPath
+//    ) -> UITargetedPreview? {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
+//        guard let trackerCell = cell as? TrackerCell else { return nil }
+//        let parameters = UIPreviewParameters()
+//        parameters.backgroundColor = .clear
+//        return UITargetedPreview(view: trackerCell.cellBackgroundView, parameters: parameters)
+//    }
 }
 
 // MARK: - DataProviderDelegate
@@ -235,6 +257,7 @@ extension TrackersViewController {
         view.backgroundColor = UIColor.mainWhite
         view.setupView(searchBar)
         view.setupView(collectionView)
+        view.setupView(filterButton)
     }
 
     private func setupConstraints() {
@@ -242,7 +265,12 @@ extension TrackersViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
+            filterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            filterButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            filterButton.heightAnchor.constraint(equalToConstant: 50),
+            filterButton.widthAnchor.constraint(equalToConstant: 114)
         ])
     }
 }

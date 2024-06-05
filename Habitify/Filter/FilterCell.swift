@@ -1,20 +1,18 @@
 //
-//  ScheduleCell.swift
+//  FilterCell.swift
 //  Habitify
 //
 //  Created by kalmahik on 05.04.2024.
 
 import UIKit
 
-final class ScheduleCell: UITableViewCell {
+final class FilterCell: UITableViewCell {
 
     // MARK: - Constants
 
-    static let identifier = "ScheduleCell"
+    static let identifier = "FilterCell"
 
     // MARK: - Public Properties
-
-    weak var delegate: ScheduleCellDelegate?
 
     // MARK: - Initializers
 
@@ -28,16 +26,15 @@ final class ScheduleCell: UITableViewCell {
         super.init(coder: coder)
     }
 
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        checkImage.isHidden = !selected
+    }
+
     // MARK: - UIViews
 
     private lazy var titleLabel: UILabel = UILabel()
 
-    private lazy var toggle: UISwitch = {
-        let toggle = UISwitch()
-        toggle.onTintColor = .mainBlue
-        toggle.addTarget(self, action: #selector(didSwitchTapped), for: .allEvents)
-        return toggle
-    }()
+    private lazy var checkImage: UIImageView = UIImageView(image: UIImage(systemName: "checkmark"))
 
     private lazy var separator: UIView = {
         let view = UIView()
@@ -47,9 +44,8 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(schedule: DayOfWeekSchedule, isFirst: Bool, isLast: Bool) {
-        titleLabel.text = schedule.dayOfWeek.fullName
-        toggle.isOn = schedule.isEnabled
+    func setupCell(label: String, isFirst: Bool, isLast: Bool) {
+        titleLabel.text = label
         separator.isHidden = isLast
 
         clipsToBounds = true
@@ -62,20 +58,14 @@ final class ScheduleCell: UITableViewCell {
             layer.maskedCorners = []
         }
     }
-
-    // MARK: - Private Methods
-
-    @objc func didSwitchTapped(switch: UISwitch) {
-        delegate?.didTapSwitch(self)
-    }
 }
 
 // MARK: - Configure
 
-extension ScheduleCell {
+extension FilterCell {
     private func setupViews() {
         setupView(titleLabel)
-        setupView(toggle)
+        setupView(checkImage)
         setupView(separator)
         backgroundColor = .mainBackgroud
     }
@@ -83,11 +73,13 @@ extension ScheduleCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: toggle.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: checkImage.leadingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            toggle.centerYAnchor.constraint(equalTo: centerYAnchor),
+            checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            checkImage.widthAnchor.constraint(equalToConstant: 24),
+            checkImage.heightAnchor.constraint(equalToConstant: 24),
+            checkImage.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             separator.bottomAnchor.constraint(equalTo: bottomAnchor),
             separator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

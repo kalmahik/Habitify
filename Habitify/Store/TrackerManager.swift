@@ -12,6 +12,8 @@ final class TrackerManager {
 
     private(set) var selectedDay: Date = Date()
     private(set) var weekDayList: [DayOfWeekSchedule] = DayOfWeekSchedule.dayOfWeekSchedule
+    private(set) var filters: [Filter] = Filter.allCases
+    private(set) var filter: Filter = Filter.all
     private(set) var tracker: TrackerPreparation = .emptyTracker
     private let store = Store.shared
 
@@ -24,18 +26,30 @@ final class TrackerManager {
         var categories = store.getCategories(withTrackeers: true).map {
             TrackerCategory(
                 title: $0.title,
-                trackers: $0.trackers.filter {
-                    if $0.categoryName == pinnedCategoryName {
-                        pinnedTrackers.append($0)
-                        return false
+                trackers: $0.trackers
+                    .filter {
+                        if $0.categoryName == pinnedCategoryName {
+                            pinnedTrackers.append($0)
+                            return false
+                        }
+                        if $0.schedule.isEmpty { return true }
+                        let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map {
+                            String(describing: $0.dayOfWeek)
+                        }
+                        let selectedDayOfWeek = selectedDay.dayOfWeek()
+                        return schedule.contains(selectedDayOfWeek)
+                    }.filter {
+                        switch filter {
+                        case .all:
+                            return true
+                        case .today:
+                            return true
+                        case .finished:
+                            return isTrackerCompleteForSelectedDay(trackerId: $0.id) >= 0
+                        case .unfinished:
+                            return isTrackerCompleteForSelectedDay(trackerId: $0.id) == 0
+                        }
                     }
-                    if $0.schedule.isEmpty { return true }
-                    let schedule = DayOfWeek.stringToSchedule(scheduleString: $0.schedule).map {
-                        String(describing: $0.dayOfWeek)
-                    }
-                    let selectedDayOfWeek = selectedDay.dayOfWeek()
-                    return schedule.contains(selectedDayOfWeek)
-                }
             )
         }
         let pinnedCategory = TrackerCategory(title: pinnedCategoryName, trackers: pinnedTrackers)
@@ -126,6 +140,27 @@ final class TrackerManager {
         let tracker = getTracker(by: indexPath)
         store.deleteTracker(with: tracker.id)
         updateTrackersUI()
+    }
+
+    func applyFilter(indexPath: IndexPath) {
+        let filter = filters[indexPath.row]
+        self.filter = filter
+        switch filter {
+        case .all:
+            print("all")
+        case .today:
+            changeSelectedDay(selectedDay: Date())
+        case .finished:
+            print("finished")
+        case .unfinished:
+            print("unfinished")
+        }
+        updateTrackersUI()
+
+    }
+
+    func getIndexPathOfFilter() -> IndexPath {
+        IndexPath(item: filters.firstIndex { $0 == filter } ?? 0, section: 0)
     }
 
     // MARK: - Utils

@@ -19,7 +19,7 @@
 		843F2D492BCE51B0001B0A9C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D482BCE51B0001B0A9C /* CategoryCell.swift */; };
 		843F2D4D2BCF9CC6001B0A9C /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */; };
 		843F2D4F2BCFB0F1001B0A9C /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */; };
-		843F2D532BD0E6D7001B0A9C /* ScheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */; };
+		843F2D532BD0E6D7001B0A9C /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D522BD0E6D7001B0A9C /* ScheduleViewController.swift */; };
 		843F2D552BD0E776001B0A9C /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D542BD0E776001B0A9C /* ScheduleCell.swift */; };
 		843F2D582BD0F4A0001B0A9C /* DayOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D572BD0F4A0001B0A9C /* DayOfWeek.swift */; };
 		843F2D5E2BD63231001B0A9C /* CollectionFooterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F2D5D2BD63231001B0A9C /* CollectionFooterDelegate.swift */; };
@@ -49,6 +49,9 @@
 		849F53402BFDB55600BF9955 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F533F2BFDB55600BF9955 /* CategoryModel.swift */; };
 		84A4219B2BCB15B5007F3276 /* CategoryCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */; };
 		84D3A0C42C09AB5900835157 /* ActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3A0C32C09AB5900835157 /* ActionsHelper.swift */; };
+		84D3A0C72C1027E500835157 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3A0C62C1027E500835157 /* FilterViewController.swift */; };
+		84D3A0C92C1028FA00835157 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3A0C82C1028FA00835157 /* Filter.swift */; };
+		84D3A0CB2C102D5400835157 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3A0CA2C102D5400835157 /* FilterCell.swift */; };
 		F53246EB2BDEE73100D2736C /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F53246EA2BDEE73100D2736C /* .swiftlint.yml */; };
 		F53933BC2BE18EED004B1C55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F53933BE2BE18EED004B1C55 /* Localizable.strings */; };
 		F53933C22BE1953B004B1C55 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = F53933C42BE1953B004B1C55 /* Localizable.stringsdict */; };
@@ -81,7 +84,7 @@
 		843F2D482BCE51B0001B0A9C /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		843F2D4C2BCF9CC6001B0A9C /* ArrowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
 		843F2D4E2BCFB0F1001B0A9C /* UIView+Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Tap.swift"; path = "Habitify/UIView+Tap.swift"; sourceTree = SOURCE_ROOT; };
-		843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleScreen.swift; sourceTree = "<group>"; };
+		843F2D522BD0E6D7001B0A9C /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		843F2D542BD0E776001B0A9C /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		843F2D572BD0F4A0001B0A9C /* DayOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfWeek.swift; sourceTree = "<group>"; };
 		843F2D5D2BD63231001B0A9C /* CollectionFooterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionFooterDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +115,9 @@
 		849F533F2BFDB55600BF9955 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCreationViewController.swift; sourceTree = "<group>"; };
 		84D3A0C32C09AB5900835157 /* ActionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsHelper.swift; sourceTree = "<group>"; };
+		84D3A0C62C1027E500835157 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		84D3A0C82C1028FA00835157 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		84D3A0CA2C102D5400835157 /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		F53246EA2BDEE73100D2736C /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = Habitify/.swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		F53933BD2BE18EED004B1C55 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F53933BF2BE18F0C004B1C55 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -171,7 +177,7 @@
 		843F2D562BD0E818001B0A9C /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				843F2D522BD0E6D7001B0A9C /* ScheduleScreen.swift */,
+				843F2D522BD0E6D7001B0A9C /* ScheduleViewController.swift */,
 				843F2D542BD0E776001B0A9C /* ScheduleCell.swift */,
 				840E73072BDC0C4300C22AE0 /* ScheduleCellDelegate.swift */,
 			);
@@ -197,6 +203,7 @@
 		8463816F2BBFB2F2002968E5 /* Habitify */ = {
 			isa = PBXGroup;
 			children = (
+				84D3A0C52C10278B00835157 /* Filter */,
 				849F53382BF72B2600BF9955 /* Onborading */,
 				840E730D2BE8BEB400C22AE0 /* Store */,
 				F53246EA2BDEE73100D2736C /* .swiftlint.yml */,
@@ -279,6 +286,16 @@
 				84A4219A2BCB15B5007F3276 /* CategoryCreationViewController.swift */,
 			);
 			path = CategoryCreation;
+			sourceTree = "<group>";
+		};
+		84D3A0C52C10278B00835157 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				84D3A0C62C1027E500835157 /* FilterViewController.swift */,
+				84D3A0CA2C102D5400835157 /* FilterCell.swift */,
+				84D3A0C82C1028FA00835157 /* Filter.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 		F54E4A602BDE95E40098EF6B /* Resources */ = {
@@ -436,8 +453,10 @@
 				846381712BBFB2F2002968E5 /* AppDelegate.swift in Sources */,
 				843F2D492BCE51B0001B0A9C /* CategoryCell.swift in Sources */,
 				F557C1142BC1B84E004052B3 /* UIView+Extension.swift in Sources */,
+				84D3A0CB2C102D5400835157 /* FilterCell.swift in Sources */,
 				F5C0C42E2BF9F607006B9B77 /* SettingsStore.swift in Sources */,
 				F557C1122BC1B063004052B3 /* EmptyView.swift in Sources */,
+				84D3A0C92C1028FA00835157 /* Filter.swift in Sources */,
 				F557C1162BC1F47C004052B3 /* TrackerTypeModalViewController.swift in Sources */,
 				840E73082BDC0C4300C22AE0 /* ScheduleCellDelegate.swift in Sources */,
 				8463819C2BC50D0C002968E5 /* ColorCell.swift in Sources */,
@@ -450,6 +469,7 @@
 				846381982BC5056A002968E5 /* TrackerCategory.swift in Sources */,
 				849F53372BF72B1E00BF9955 /* OnboradingViewController.swift in Sources */,
 				843F2D582BD0F4A0001B0A9C /* DayOfWeek.swift in Sources */,
+				84D3A0C72C1027E500835157 /* FilterViewController.swift in Sources */,
 				843F2D552BD0E776001B0A9C /* ScheduleCell.swift in Sources */,
 				F557C1242BC3AFDA004052B3 /* TrackerCreationViewController.swift in Sources */,
 				843F2D472BCE3D46001B0A9C /* UICollectionView+Extension.swift in Sources */,
@@ -464,7 +484,7 @@
 				843F2D5E2BD63231001B0A9C /* CollectionFooterDelegate.swift in Sources */,
 				843F2D412BCC50F7001B0A9C /* TrackerCell.swift in Sources */,
 				843F2D4F2BCFB0F1001B0A9C /* UIView+Tap.swift in Sources */,
-				843F2D532BD0E6D7001B0A9C /* ScheduleScreen.swift in Sources */,
+				843F2D532BD0E6D7001B0A9C /* ScheduleViewController.swift in Sources */,
 				846622C92BC7D048002105E2 /* TextField.swift in Sources */,
 				849F533E2BFDB4DB00BF9955 /* CategoryViewModel.swift in Sources */,
 				F565B2E72BC3CA9E00A06B16 /* CollectionData.swift in Sources */,

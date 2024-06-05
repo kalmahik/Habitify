@@ -20,7 +20,7 @@ final class TrackerCell: UICollectionViewCell {
 
     // MARK: - UIViews
 
-    private lazy var cellBackgroundView = {
+    lazy var cellBackgroundView = {
         let view = UIView()
         view.layer.cornerRadius = 16
         return view

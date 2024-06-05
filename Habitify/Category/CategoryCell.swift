@@ -61,10 +61,6 @@ final class CategoryCell: UITableViewCell {
             layer.maskedCorners = []
         }
     }
-
-    func selectCell() {
-        titleLabel.backgroundColor = .gray
-    }
 }
 
 extension CategoryCell {
