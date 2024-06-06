@@ -11,22 +11,22 @@ final class EmojiCell: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "EmojiCell"
-    
+
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     override var isSelected: Bool {
         didSet {
-            emojiLabel.backgroundColor = isSelected ? .mainLigthGray : .mainWhite
+            emojiLabel.backgroundColor = isSelected ? .mainLightGray : .mainWhite
         }
     }
 
@@ -60,7 +60,7 @@ extension EmojiCell {
             emojiLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             emojiLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             emojiLabel.widthAnchor.constraint(equalToConstant: 52),
-            emojiLabel.heightAnchor.constraint(equalToConstant: 52),
+            emojiLabel.heightAnchor.constraint(equalToConstant: 52)
         ])
     }
 }

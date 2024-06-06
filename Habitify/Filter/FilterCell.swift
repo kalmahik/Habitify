@@ -38,7 +38,7 @@ final class FilterCell: UITableViewCell {
 
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .mainLigthGray
+        view.backgroundColor = .mainLightGray
         return view
     }()
 
@@ -67,7 +67,7 @@ extension FilterCell {
         setupView(titleLabel)
         setupView(checkImage)
         setupView(separator)
-        backgroundColor = .mainBackgroud
+        backgroundColor = .mainBackground
     }
 
     private func setupConstraints() {

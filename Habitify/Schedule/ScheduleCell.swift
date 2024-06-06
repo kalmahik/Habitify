@@ -41,7 +41,7 @@ final class ScheduleCell: UITableViewCell {
 
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .mainLigthGray
+        view.backgroundColor = .mainLightGray
         return view
     }()
 
@@ -77,7 +77,7 @@ extension ScheduleCell {
         setupView(titleLabel)
         setupView(toggle)
         setupView(separator)
-        backgroundColor = .mainBackgroud
+        backgroundColor = .mainBackground
     }
 
     private func setupConstraints() {

@@ -39,7 +39,7 @@ final class CollectionHeader: UICollectionViewCell {
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
         textField.placeholder = NSLocalizedString("trackerNamePlaceholder", comment: "")
-        textField.backgroundColor = .mainBackgroud
+        textField.backgroundColor = .mainBackground
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.delegate = self
@@ -53,15 +53,15 @@ final class CollectionHeader: UICollectionViewCell {
         title: NSLocalizedString("categoryButton", comment: ""),
         subtitle: trackerManager.tracker.categoryName
     ) {
-        let catetegoriesM = CategoryModel()
-        let catetegoriesVM = CategoryViewModel(for: catetegoriesM)
-        let catetegoriesVC = CategoriesViewController(viewModel: catetegoriesVM)
-        let viewController = catetegoriesVC.wrapWithNavigationController()
+        let categoriesM = CategoryModel()
+        let categoriesVM = CategoryViewModel(for: categoriesM)
+        let categoriesVC = CategoriesViewController(viewModel: categoriesVM)
+        let viewController = categoriesVC.wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
     private lazy var scheduleButton = ArrowButton(
-        title: NSLocalizedString("schduleButton", comment: ""),
+        title: NSLocalizedString("scheduleButton", comment: ""),
         subtitle: trackerManager.tracker.schedule
     ) {
         let viewController = ScheduleViewController().wrapWithNavigationController()
@@ -81,6 +81,7 @@ final class CollectionHeader: UICollectionViewCell {
         view.alignment = .center
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.backgroundColor = .mainBackground
         return view
     }()
 

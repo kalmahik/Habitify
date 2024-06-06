@@ -16,7 +16,7 @@
 "trackerNamePlaceholder" = "Введите название трекера";
 "categoryNamePlaceholder" = "Введите название трекера";
 "categoryButton" = "Категория";
-"schduleButton" = "Расписание";
+"scheduleButton" = "Расписание";
 "trackerRegularType" = "Новая привычка";
 "trackerEditionTitle" = "Редактирование привычки";
 "trackerSingleType" = "Новое нерегулярное событие";

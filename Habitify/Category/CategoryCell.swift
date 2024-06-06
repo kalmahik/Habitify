@@ -48,7 +48,7 @@ final class CategoryCell: UITableViewCell {
     func setupCell(category: TrackerCategory, isFirst: Bool, isLast: Bool) {
         titleLabel.text = category.title
         separator.isHidden = isLast
-        backgroundColor = .mainBackgroud
+        backgroundColor = .mainBackground
         clipsToBounds = true
         layer.cornerRadius = 16
         if isFirst && isLast {
@@ -68,7 +68,7 @@ extension CategoryCell {
         setupView(titleLabel)
         setupView(checkImage)
         setupView(separator)
-        backgroundColor = .mainLigthGray
+        backgroundColor = .mainLightGray
     }
 
     private func setupConstraints() {

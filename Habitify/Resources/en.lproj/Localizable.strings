@@ -16,7 +16,7 @@
 "trackerNamePlaceholder" = "Enter tracker name";
 "categoryNamePlaceholder" = "Enter tracker name";
 "categoryButton" = "Category";
-"schduleButton" = "Schedule";
+"scheduleButton" = "Schedule";
 "trackerRegularType" = "New habit";
 "trackerEditionTitle" = "Habit edition";
 "trackerSingleType" = "New single event";
