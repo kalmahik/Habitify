@@ -66,9 +66,9 @@ final class TrackerManager {
                         case .today:
                             return true
                         case .finished:
-                            return isTrackerCompleteForSelectedDay(trackerId: $0.id)
+                            return isTrackerCompletedForSelectedDay(trackerId: $0.id)
                         case .unfinished:
-                            return !isTrackerCompleteForSelectedDay(trackerId: $0.id)
+                            return !isTrackerCompletedForSelectedDay(trackerId: $0.id)
                         }
                     }
             )
@@ -165,7 +165,7 @@ final class TrackerManager {
     func applyFilter(indexPath: IndexPath) {
         filter = filters[indexPath.row]
         if filter == .today {
-            // TODO: set picker
+            resetDatePicker()
             changeSelectedDay(selectedDay: Date())
         } else {
             updateTrackersUI()
@@ -192,6 +192,11 @@ final class TrackerManager {
         NotificationCenter.default.post(name: CategoriesViewController.reloadCollection, object: self)
     }
 
+    func resetDatePicker() {
+        // а есть более удачный способ сбрасывать пикер?
+        NotificationCenter.default.post(name: TrackersViewController.resetDatePicker, object: self)
+    }
+
     func getTracker(by indexPath: IndexPath) -> Tracker {
         filteredTrackers[indexPath.section].trackers[indexPath.row]
     }
@@ -200,7 +205,7 @@ final class TrackerManager {
         categories[indexPath.section]
     }
 
-    func isTrackerCompleteForSelectedDay(trackerId: UUID) -> Bool {
+    func isTrackerCompletedForSelectedDay(trackerId: UUID) -> Bool {
         let records = store.getRecords(by: trackerId)
         return records.first { Calendar.current.isDate($0.date, equalTo: selectedDay, toGranularity: .day) } != nil
     }

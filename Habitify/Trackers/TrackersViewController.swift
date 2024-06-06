@@ -12,6 +12,7 @@ final class TrackersViewController: UIViewController {
     // MARK: - Constants
 
     static let reloadCollection = Notification.Name(rawValue: "reloadCollection")
+    static let resetDatePicker = Notification.Name(rawValue: "resetDatePicker")
 
     // MARK: - Private Properties
 
@@ -42,6 +43,15 @@ final class TrackersViewController: UIViewController {
         return collectionView
     }()
 
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        datePicker.maximumDate = Date()
+        return datePicker
+    }()
+
     private lazy var filterButton = Button(
         title: NSLocalizedString("filters", comment: ""),
         color: .mainBlue,
@@ -56,7 +66,6 @@ final class TrackersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        setupDatePicker()
         setupViews()
         setupConstraints()
         addObserver()
@@ -66,6 +75,7 @@ final class TrackersViewController: UIViewController {
 
     @objc private func addTapped() {
         present(TrackerTypeModalViewController().wrapWithNavigationController(), animated: true)
+        sendEvent(event: .click, screen: .Main, item: .addTrack)
     }
 
     private func addObserver() {
@@ -75,6 +85,14 @@ final class TrackersViewController: UIViewController {
             queue: .main
         ) {
             [weak self] _ in self?.collectionView.reloadData()
+        }
+
+        observer = NotificationCenter.default.addObserver(
+            forName: TrackersViewController.resetDatePicker,
+            object: nil,
+            queue: .main
+        ) {
+            [weak self] _ in self?.datePicker.setDate(Date(), animated: true)
         }
     }
 }
@@ -102,7 +120,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         trackerCell.delegate = self
         let tracker = trackerManager.filteredTrackers[indexPath.section].trackers[indexPath.row]
         let trackerCount = trackerManager.getTrackerCount(trackerId: tracker.id)
-        let isCompleted = trackerManager.isTrackerCompleteForSelectedDay(trackerId: tracker.id)
+        let isCompleted = trackerManager.isTrackerCompletedForSelectedDay(trackerId: tracker.id)
         let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
         trackerCell.setupCell(tracker: tracker, count: trackerCount, isCompleted: isCompleted, isPinned: isPinned)
         return trackerCell
@@ -201,6 +219,7 @@ extension TrackersViewController: TrackerCellDelegate {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let tracker = trackerManager.getTracker(by: indexPath)
         trackerManager.makeRecord(trackerId: tracker.id)
+        sendEvent(event: .click, screen: .Main, item: .track)
     }
 
     func didTapPinAction(_ indexPath: IndexPath) {
@@ -216,10 +235,12 @@ extension TrackersViewController: TrackerCellDelegate {
         trackerManager.resetCurrentTracker(tracker)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
+        sendEvent(event: .click, screen: .Main, item: .edit)
     }
 
     func didTapDeleteAction(_ indexPath: IndexPath) {
         trackerManager.deleteTracker(with: indexPath)
+        sendEvent(event: .click, screen: .Main, item: .delete)
     }
 }
 
@@ -242,14 +263,6 @@ extension TrackersViewController {
         add.tintColor = .mainBlack
         navigationItem.leftBarButtonItem = add
         navigationItem.searchController = UISearchController(searchResultsController: nil)
-    }
-
-    private func setupDatePicker() {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .compact
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-        datePicker.maximumDate = Date()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
 
