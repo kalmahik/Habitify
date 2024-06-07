@@ -184,6 +184,28 @@ final class Store: NSObject, StoreProtocol {
         }
     }
 
+    func getAllRecords() -> [TrackerRecord] {
+        let fetchRequest: NSFetchRequest<TrackerRecordCoreData> = TrackerRecordCoreData.fetchRequest()
+        do {
+            let recordEntities = try context.fetch(fetchRequest)
+            return recordEntities.map { TrackerRecord(from: $0) }
+        } catch let error as NSError {
+            print(error.userInfo)
+            return []
+        }
+    }
+
+    func getAllTrackers() -> [Tracker] {
+        let fetchRequest: NSFetchRequest<TrackerCoreData> = TrackerCoreData.fetchRequest()
+        do {
+            let recordEntities = try context.fetch(fetchRequest)
+            return recordEntities.map { Tracker(from: $0) }
+        } catch let error as NSError {
+            print(error.userInfo)
+            return []
+        }
+    }
+
     private func getCategory(by name: String) -> TrackerCategoryCoreData? {
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "title == %@", name)

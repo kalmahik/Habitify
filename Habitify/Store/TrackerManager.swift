@@ -214,12 +214,21 @@ final class TrackerManager {
         store.getRecords(by: trackerId).count
     }
 
-    func resetCurrentTracker(_ tracker: Tracker? = nil) {
+    func getTrackersCount() -> Int {
+        store.getAllTrackers().count
+    }
+
+    func getRecordsCount() -> Int {
+        store.getAllRecords().count
+    }
+
+    func resetCurrentTracker(_ tracker: Tracker? = nil, _ categoryName: String?) {
         weekDayList = DayOfWeekSchedule.dayOfWeekSchedule
         if let tracker {
             self.tracker = TrackerPreparation(from: tracker)
         } else {
             self.tracker = .emptyTracker
         }
+        changeCategory(categoryName: categoryName)
     }
 }

@@ -243,7 +243,8 @@ extension TrackersViewController: TrackerCellDelegate {
 
     func didTapEditAction(_ indexPath: IndexPath) {
         let tracker = trackerManager.getTracker(by: indexPath)
-        trackerManager.resetCurrentTracker(tracker)
+        let categoryName = trackerManager.getCategory(by: indexPath).title
+        trackerManager.resetCurrentTracker(tracker, categoryName)
         let viewController = TrackerCreationViewController().wrapWithNavigationController()
         self.present(viewController, animated: true)
         sendEvent(event: .click, screen: .Main, item: .edit)

@@ -89,7 +89,7 @@ extension TrackerCreationViewController: UICollectionViewDelegate {
         }
     }
 
-    // может лучще запретить деселект?
+    // может лучше запретить деселект?
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case CollectionSection.emoji.rawValue:
@@ -127,16 +127,7 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         case CollectionSection.header.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHeader.identifier, for: indexPath)
             guard let headerCell = cell as? CollectionHeader else { return UICollectionViewCell() }
-            let category = trackerManager.getCategory(by: indexPath)
-            // TODO: переписать это говнище
-            if let trackerId = trackerManager.tracker.id {
-                let trackerCount = trackerManager.getTrackerCount(trackerId: trackerId)
-                let format = NSLocalizedString("numberOffDays", comment: "")
-                let strikeTitle = String.localizedStringWithFormat(format, trackerCount)
-                headerCell.setupCell(strikeTitle, category.title)
-            } else {
-                headerCell.setupCell(nil, nil)
-            }
+            headerCell.setupCell()
             return headerCell
         case CollectionSection.emoji.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath)

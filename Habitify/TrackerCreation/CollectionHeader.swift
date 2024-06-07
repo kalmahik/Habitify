@@ -16,7 +16,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     private let trackerManager = TrackerManager.shared
 
-    // MARK: - Initializers
+    // MARK: - Initialisers
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,13 +93,16 @@ final class CollectionHeader: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(_ strikeTitle: String?, _ categoryName: String?) {
-        scheduleButton.updateSubtitle(subtitle: trackerManager.tracker.schedule)
-        trackerNameInput.text = trackerManager.tracker.name
-        self.strikeTitle.text = strikeTitle
-        let category = trackerManager.tracker.categoryName.isEmpty ? categoryName : trackerManager.tracker.categoryName
-        categoryButton.updateSubtitle(subtitle: category)
-        trackerManager.changeCategory(categoryName: category)
+    func setupCell() {
+        let tracker = trackerManager.tracker
+        scheduleButton.updateSubtitle(subtitle: tracker.schedule)
+        categoryButton.updateSubtitle(subtitle: tracker.categoryName)
+        trackerNameInput.text = tracker.name
+        if let trackerId = trackerManager.tracker.id {
+            let trackerCount = trackerManager.getTrackerCount(trackerId: trackerId)
+            let strikeTitleText = String.localizedStringWithFormat(NSLocalizedString("numberOffDays", comment: ""), trackerCount)
+            strikeTitle.text = strikeTitleText
+        }
     }
 }
 
