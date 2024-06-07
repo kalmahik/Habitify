@@ -59,6 +59,7 @@ final class TrackersViewController: UIViewController {
         height: 50
     ) {
         self.present(FilterViewController().wrapWithNavigationController(), animated: true)
+        sendEvent(event: .click, screen: .Main, item: .filter)
     }
 
     // MARK: - UIViewController
@@ -69,6 +70,16 @@ final class TrackersViewController: UIViewController {
         setupViews()
         setupConstraints()
         addObserver()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sendEvent(event: .open, screen: .Main, item: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sendEvent(event: .close, screen: .Main, item: nil)
     }
 
     // MARK: - Private Functions

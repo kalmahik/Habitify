@@ -21,9 +21,9 @@ enum Item: String {
 }
 
 func sendEvent(event: Event, screen: Screen, item: Item?) {
-    var params: [AnyHashable: Any] = [screen: screen.rawValue]
+    var params: [AnyHashable: Any] = ["screen": screen.rawValue]
     if let item {
-        params.updateValue(item.rawValue, forKey: "item")
+        params["item"] = item.rawValue
     }
     AppMetrica.reportEvent(name: event.rawValue, parameters: params)
 }
