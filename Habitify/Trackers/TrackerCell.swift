@@ -15,16 +15,18 @@ final class TrackerCell: UICollectionViewCell {
     // MARK: - Public Properties
 
     weak var delegate: TrackerCellDelegate?
-        
+
+    var isPinned: Bool = false
+
     // MARK: - UIViews
 
-    private lazy var cellBackgroundView: UIView = {
+    lazy var cellBackgroundView = {
         let view = UIView()
         view.layer.cornerRadius = 16
         return view
     }()
 
-    private lazy var quantityManagementView: UIView = UIView()
+    private lazy var quantityManagementView = UIView()
 
     private lazy var emojiWrapper: UIView = {
         let view = UIView()
@@ -34,14 +36,14 @@ final class TrackerCell: UICollectionViewCell {
         return view
     }()
 
-    private lazy var emoji: UILabel = {
+    private lazy var emoji = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .center
         return label
     }()
 
-    private lazy var titleLabel: UILabel = {
+    private lazy var titleLabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
@@ -49,39 +51,36 @@ final class TrackerCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var quantityLabel: UILabel = {
+    private lazy var quantityLabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
 
-    private lazy var actionButton: UIButton = {
-        let button = UIButton.systemButton(
-            with: UIImage(),
-            target: self,
-            action: #selector(didTapActionButton)
-        )
-        return button
-    }()
+    private lazy var actionButton = UIButton.systemButton(
+        with: UIImage(),
+        target: self,
+        action: #selector(didTapActionButton)
+    )
+
+    private lazy var pinImage = UIImageView(image: UIImage(named: "pin"))
 
     // MARK: - Public Methods
 
-    func setupCell(tracker: Tracker, count: Int, isCompleted: Bool) {
+    func setupCell(tracker: Tracker, count: Int, isCompleted: Bool, isPinned: Bool) {
+        self.isPinned = isPinned
         let color = UIColor(hex: tracker.color)
+        let format = NSLocalizedString("numberOffDays", comment: "")
         cellBackgroundView.backgroundColor = color
         emoji.text = tracker.emoji
+        pinImage.isHidden = !isPinned
         actionButton.tintColor = color
         actionButton.layer.opacity = isCompleted ? 0.3 : 1
         actionButton.setImage(UIImage(named: isCompleted ? "done" : "plus"), for: .normal)
         titleLabel.text = tracker.name
-        let format = NSLocalizedString("number_of_days", comment: "")
-        let message = String.localizedStringWithFormat(format, count)
-        quantityLabel.text = message
+        quantityLabel.text = .localizedStringWithFormat(format, count)
         setupViews()
         setupConstraints()
-    }
-
-    func selectCell() {
     }
 
     // MARK: - Private Methods
@@ -91,15 +90,60 @@ final class TrackerCell: UICollectionViewCell {
     }
 }
 
+extension TrackerCell {
+    // TODO: почему делегат тут нил? Пришлось пробросить его напрямую, как-то некруто
+    func configureContextMenu(
+        _ indexPath: IndexPath,
+        _ delegate: TrackerCellDelegate,
+        _ isPinned: Bool
+    ) -> UIContextMenuConfiguration {
+        let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
+            let pin = self.makeAction(NSLocalizedString("contextActionPin", comment: ""), false) { _ in
+                delegate.didTapPinAction(indexPath)
+            }
+            let unpin = self.makeAction(NSLocalizedString("contextActionUnpin", comment: ""), false) {  _ in
+                delegate.didTapUnpinAction(indexPath)
+            }
+            let edit = self.makeAction(NSLocalizedString("contextActionEdit", comment: ""), false) { _ in
+                delegate.didTapEditAction(indexPath)
+            }
+            let delete = self.makeAction(NSLocalizedString("contextActionDelete", comment: ""), true) { _ in
+                delegate.didTapDeleteAction(indexPath)
+            }
+            return UIMenu(
+                title: "",
+                image: nil,
+                identifier: nil,
+                options: UIMenu.Options.displayInline,
+                children: [isPinned ? unpin : pin, edit, delete]
+            )
+        }
+        return context
+    }
+
+    func makeAction(_ title: String, _ isDestructive: Bool, _ handler: @escaping UIActionHandler) -> UIAction {
+        UIAction(
+            title: title,
+            image: nil,
+            identifier: nil,
+            discoverabilityTitle: nil,
+            attributes: isDestructive ? .destructive : [],
+            state: .off,
+            handler: handler
+        )
+    }
+}
+
 // MARK: - Configure
 
 extension TrackerCell {
     private func setupViews() {
         contentView.setupView(cellBackgroundView)
         contentView.setupView(quantityManagementView)
-        cellBackgroundView.setupView(emojiWrapper)
         emojiWrapper.setupView(emoji)
+        cellBackgroundView.setupView(emojiWrapper)
         cellBackgroundView.setupView(titleLabel)
+        cellBackgroundView.setupView(pinImage)
         quantityManagementView.setupView(quantityLabel)
         quantityManagementView.setupView(actionButton)
     }
@@ -123,6 +167,9 @@ extension TrackerCell {
             emoji.centerXAnchor.constraint(equalTo: emojiWrapper.centerXAnchor),
             emoji.centerYAnchor.constraint(equalTo: emojiWrapper.centerYAnchor),
 
+            pinImage.topAnchor.constraint(equalTo: cellBackgroundView.topAnchor, constant: 12),
+            pinImage.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor, constant: -4),
+
             titleLabel.leadingAnchor.constraint(equalTo: cellBackgroundView.leadingAnchor, constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor, constant: -12),
             titleLabel.bottomAnchor.constraint(equalTo: cellBackgroundView.bottomAnchor, constant: -12),
@@ -133,7 +180,7 @@ extension TrackerCell {
             actionButton.topAnchor.constraint(equalTo: quantityManagementView.topAnchor, constant: 8),
             actionButton.trailingAnchor.constraint(equalTo: quantityManagementView.trailingAnchor, constant: -12),
             actionButton.widthAnchor.constraint(equalToConstant: 34),
-            actionButton.heightAnchor.constraint(equalToConstant: 34),
+            actionButton.heightAnchor.constraint(equalToConstant: 34)
         ])
     }
 }

@@ -21,12 +21,14 @@ final class PageViewController: UIViewController {
         label.textAlignment = .center
         label.text = page.name
         label.numberOfLines = Pages.allCases.count
+        label.textColor = .black
         return label
     }()
 
     private lazy var imageView: UIImageView = {
         let image = UIImageView(image: page.image)
         image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
 

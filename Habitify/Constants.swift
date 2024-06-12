@@ -29,35 +29,3 @@ let colorList = [
     "#F9D4D4FF", "#34A7FEFF", "#46E69DFF", "#35347CFF", "#FF674DFF", "#FF99CCFF",
     "#F6C48BFF", "#7994F5FF", "#832CF1FF", "#AD56DAFF", "#8D72E6FF", "#2FD058FF"
 ]
-
-let trackersMockData = [
-    TrackerCategory(
-        title: "123",
-        trackers: [
-            Tracker(
-                id: UUID(),
-                name: "Будние дни",
-                color: "#FF881EFF",
-                emoji: "🙂",
-                schedule: "Будние дни",
-                createdAt: Date()
-            ),
-            Tracker(
-                id: UUID(),
-                name: "Каждый день",
-                color: "#FD4C49FF",
-                emoji: "🙂",
-                schedule: "Каждый день",
-                createdAt: Date()
-            ),
-            Tracker(
-                id: UUID(),
-                name: "Пн, Ср, Пт",
-                color: "#007BFAFF",
-                emoji: "🙂",
-                schedule: "Пн, Ср, Пт",
-                createdAt: Date()
-            )
-        ]
-    ),
-]

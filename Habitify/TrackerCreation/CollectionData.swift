@@ -14,7 +14,7 @@ struct Section {
 
 let collectionData = [
     Section(title: "", data: [""]), // hack for the feader
-    Section(title: "Emoji", data: emojiList),
-    Section(title: "Цвет", data: colorList),
+    Section(title: NSLocalizedString("categoryEmoji", comment: ""), data: emojiList),
+    Section(title: NSLocalizedString("categoryColor", comment: ""), data: colorList),
     Section(title: "", data: [""]) // hack for the footer
 ]

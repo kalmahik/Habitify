@@ -12,28 +12,30 @@ final class CollectionFooter: UICollectionViewCell {
     // MARK: - Constants
 
     static let identifier = "CollectionFooter"
-    
+
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     // MARK: - Public Properties
 
     weak var delegate: CollectionFooterDelegate?
-    
+
+    // MARK: - Private Properties
+
+    private let trackerManager = TrackerManager.shared
+
     // MARK: - UIViews
 
     private let footerLabel = UILabel()
-
-    private let trackerManager = TrackerManager.shared
 
     private let wrapperView: UIStackView =  {
         let stack: UIStackView = UIStackView()
@@ -42,7 +44,7 @@ final class CollectionFooter: UICollectionViewCell {
         stack.spacing = 8
         return stack
     }()
-    
+
     // MARK: - Private Functions
 
     private lazy var cancelButton = Button(
@@ -52,7 +54,9 @@ final class CollectionFooter: UICollectionViewCell {
     }
 
     private lazy var creationButton = Button(
-        title: NSLocalizedString("creationButton", comment: ""), color: .mainBlack, style: .normal
+        title: NSLocalizedString(trackerManager.isEditing ? "saveButton" : "creationButton", comment: ""),
+        color: .mainBlack,
+        style: .normal
     ) {
         self.delegate?.didTapCreate()
     }

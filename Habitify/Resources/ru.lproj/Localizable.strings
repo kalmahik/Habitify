@@ -12,11 +12,13 @@
 "dateFormat" = "dd.MM.yyyy";
 "cancelButton" = "Отменить";
 "creationButton" = "Создать";
+"saveButton" = "Сохранить";
 "trackerNamePlaceholder" = "Введите название трекера";
 "categoryNamePlaceholder" = "Введите название трекера";
 "categoryButton" = "Категория";
-"schduleButton" = "Расписание";
+"scheduleButton" = "Расписание";
 "trackerRegularType" = "Новая привычка";
+"trackerEditionTitle" = "Редактирование привычки";
 "trackerSingleType" = "Новое нерегулярное событие";
 "trackerRegularTypeButton" = "Привычка";
 "trackerSingleTypeButton" = "Нерегулярное событие";
@@ -33,4 +35,18 @@
 "onboardingTitleOne" = "Отслеживайте только то, что хотите";
 "onboardingTitleTwo" = "Даже если это не литры воды и йога";
 "onboardingButton" = "Вот это технологии!";
-
+"contextActionPin" = "Закрепить";
+"contextActionUnpin" = "Открепить";
+"contextActionEdit" = "Редактировать";
+"contextActionDelete" = "Удалить";
+"filters" = "Фильтры";
+"categoryEmoji" = "Emoji";
+"categoryColor" = "Цвет";
+"pinnedCategory" = "Закрепленные";
+"scheduleEveryday" = "Каждый день";
+"scheduleWorkingDay" = "Будние дни";
+"filterAll" = "Все трекеры";
+"filterToday" = "Трекеры на сегодня";
+"filterFinished" = "Завершенные";
+"filterUnfinished" = "Незавершенные";
+"finishedTrackersStats" = "Трекеров завершено";

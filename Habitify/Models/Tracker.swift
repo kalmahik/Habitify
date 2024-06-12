@@ -14,25 +14,28 @@ struct Tracker {
     let emoji: String
     let schedule: String
     let createdAt: Date
+    let categoryName: String
 
-    init(id: UUID, name: String, color: String, emoji: String, schedule: String, createdAt: Date) {
+    init(id: UUID, name: String, color: String, emoji: String, schedule: String, createdAt: Date, categoryName: String) {
         self.id = id
         self.name = name
         self.color = color
         self.emoji = emoji
         self.schedule = schedule
         self.createdAt = createdAt
+        self.categoryName = categoryName
     }
 
     init(from tracker: TrackerPreparation) {
-        self.id = UUID()
+        self.id = tracker.id ?? UUID()
         self.name = tracker.name
         self.color = tracker.color
         self.emoji = tracker.emoji
         self.schedule = tracker.schedule
-        self.createdAt = Date()
+        self.createdAt = tracker.createdAt ?? Date()
+        self.categoryName = tracker.categoryName
     }
-    
+
     init(from tracker: TrackerCoreData) {
         self.id = tracker.id ?? UUID()
         self.name = tracker.name ?? ""
@@ -40,5 +43,6 @@ struct Tracker {
         self.emoji = tracker.emoji ?? ""
         self.schedule = tracker.schedule ?? ""
         self.createdAt = tracker.createdAt ?? Date()
+        self.categoryName = tracker.categoryName ?? ""
     }
 }

@@ -61,7 +61,7 @@ final class ArrowButton: UIControl {
         setupView(wrapper)
         setupView(image)
         addTapGesture(action)
-        backgroundColor = .mainBackgroud
+        backgroundColor = .mainBackground
     }
 
     private func setupConstraints() {

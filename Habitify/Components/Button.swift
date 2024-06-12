@@ -28,6 +28,8 @@ final class Button: UIButton {
 
     var disabledColor: UIColor = .mainGray
 
+    var height: CGFloat
+
     override var isEnabled: Bool {
         didSet {
             if isEnabled {
@@ -45,11 +47,13 @@ final class Button: UIButton {
         title: String,
         color: UIColor,
         style: ButtonStyle,
+        height: CGFloat = 60,
         action: @escaping () -> Void = {}
     ) {
         self.action = action
         self.color = color
         self.style = style
+        self.height = height
         super.init(frame: .zero)
         setTitle(title, for: .normal)
         backgroundColor = color
@@ -76,7 +80,7 @@ final class Button: UIButton {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 60)
+            heightAnchor.constraint(equalToConstant: height)
         ])
     }
 }

@@ -16,7 +16,7 @@ final class CollectionHeader: UICollectionViewCell {
 
     private let trackerManager = TrackerManager.shared
 
-    // MARK: - Initializers
+    // MARK: - Initialisers
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,10 +30,16 @@ final class CollectionHeader: UICollectionViewCell {
 
     // MARK: - UIViews
 
+    private lazy var strikeTitle = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        return label
+    }()
+
     private lazy var trackerNameInput: UITextField = {
         let textField = TextField()
         textField.placeholder = NSLocalizedString("trackerNamePlaceholder", comment: "")
-        textField.backgroundColor = .mainBackgroud
+        textField.backgroundColor = .mainBackground
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.delegate = self
@@ -45,18 +51,18 @@ final class CollectionHeader: UICollectionViewCell {
 
     private lazy var categoryButton = ArrowButton(
         title: NSLocalizedString("categoryButton", comment: ""),
-        subtitle: trackerManager.newTracker.categoryName
+        subtitle: trackerManager.tracker.categoryName
     ) {
-        let catetegoriesM = CategoryModel()
-        let catetegoriesVM = CategoryViewModel(for: catetegoriesM)
-        let catetegoriesVC = CategoriesViewController(viewModel: catetegoriesVM)
-        let viewController = catetegoriesVC.wrapWithNavigationController()
+        let categoriesM = CategoryModel()
+        let categoriesVM = CategoryViewModel(for: categoriesM)
+        let categoriesVC = CategoriesViewController(viewModel: categoriesVM)
+        let viewController = categoriesVC.wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
     }
 
     private lazy var scheduleButton = ArrowButton(
-        title: NSLocalizedString("schduleButton", comment: ""),
-        subtitle: trackerManager.newTracker.schedule
+        title: NSLocalizedString("scheduleButton", comment: ""),
+        subtitle: trackerManager.tracker.schedule
     ) {
         let viewController = ScheduleViewController().wrapWithNavigationController()
         self.parentViewController?.present(viewController, animated: true)
@@ -75,6 +81,7 @@ final class CollectionHeader: UICollectionViewCell {
         view.alignment = .center
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.backgroundColor = .mainBackground
         return view
     }()
 
@@ -87,9 +94,15 @@ final class CollectionHeader: UICollectionViewCell {
     // MARK: - Public Methods
 
     func setupCell() {
-        scheduleButton.updateSubtitle(subtitle: trackerManager.newTracker.schedule)
-        categoryButton.updateSubtitle(subtitle: trackerManager.newTracker.categoryName)
-        trackerNameInput.text = trackerManager.newTracker.name
+        let tracker = trackerManager.tracker
+        scheduleButton.updateSubtitle(subtitle: tracker.schedule)
+        categoryButton.updateSubtitle(subtitle: tracker.categoryName)
+        trackerNameInput.text = tracker.name
+        if let trackerId = trackerManager.tracker.id {
+            let trackerCount = trackerManager.getTrackerCount(trackerId: trackerId)
+            let strikeTitleText = String.localizedStringWithFormat(NSLocalizedString("numberOffDays", comment: ""), trackerCount)
+            strikeTitle.text = strikeTitleText
+        }
     }
 }
 
@@ -114,8 +127,7 @@ extension CollectionHeader: UITextFieldDelegate {
     }
 
     @objc private func textFieldDidChange(textField: UITextField) {
-        guard let length = textField.text?.count else { return }
-        trackerManager.setError(error: length < 38 ? nil : NSLocalizedString("trackerNameLengthError", comment: ""))
+        guard (textField.text?.count) != nil else { return }
     }
 }
 
@@ -123,6 +135,7 @@ extension CollectionHeader: UITextFieldDelegate {
 
 extension CollectionHeader {
     private func setupViews() {
+        contentView.setupView(strikeTitle)
         contentView.setupView(trackerNameInput)
         contentView.setupView(wrapperView)
         wrapperView.addArrangedSubview(categoryButton)
@@ -134,8 +147,11 @@ extension CollectionHeader {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            strikeTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
+            strikeTitle.topAnchor.constraint(equalTo: topAnchor),
+
             trackerNameInput.heightAnchor.constraint(equalToConstant: 75),
-            trackerNameInput.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            trackerNameInput.topAnchor.constraint(equalTo: strikeTitle.bottomAnchor, constant: 24),
             trackerNameInput.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             trackerNameInput.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 

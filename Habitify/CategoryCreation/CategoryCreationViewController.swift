@@ -16,7 +16,7 @@ final class CategoryCreationViewController: UIViewController {
     private lazy var categoryNameInput: UITextField = {
         let textField = TextField()
         textField.placeholder = NSLocalizedString("categoryNamePlaceholder", comment: "")
-        textField.backgroundColor = .mainLigthGray
+        textField.backgroundColor = .mainBackground
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.returnKeyType = UIReturnKeyType.done

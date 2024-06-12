@@ -30,7 +30,7 @@ final class CategoryViewModel {
     }
 
     func getSelectedCategoryIndexPath() -> IndexPath? {
-        let index = model.categories.firstIndex { $0.title == model.getCurrentCateegoryName() }
+        let index = model.categories.firstIndex { $0.title == model.getCurrentCategoryName() }
         guard let index else { return nil }
         return IndexPath(row: index, section: 0)
     }

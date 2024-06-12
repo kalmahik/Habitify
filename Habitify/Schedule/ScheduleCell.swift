@@ -41,13 +41,13 @@ final class ScheduleCell: UITableViewCell {
 
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .mainLigthGray
+        view.backgroundColor = .mainLightGray
         return view
     }()
 
     // MARK: - Public Methods
 
-    func setupCell(schedule: DayOfWeekSwitch, isFirst: Bool, isLast: Bool) {
+    func setupCell(schedule: DayOfWeekSchedule, isFirst: Bool, isLast: Bool) {
         titleLabel.text = schedule.dayOfWeek.fullName
         toggle.isOn = schedule.isEnabled
         separator.isHidden = isLast
@@ -74,10 +74,10 @@ final class ScheduleCell: UITableViewCell {
 
 extension ScheduleCell {
     private func setupViews() {
-        contentView.setupView(titleLabel)
-        contentView.setupView(toggle)
-        contentView.setupView(separator)
-        contentView.backgroundColor = .mainBackgroud
+        setupView(titleLabel)
+        setupView(toggle)
+        setupView(separator)
+        backgroundColor = .mainBackground
     }
 
     private func setupConstraints() {

@@ -1,5 +1,5 @@
 //
-//  OnboradingViewController.swift
+//  OnboardingViewController.swift
 //  Habitify
 //
 //  Created by kalmahik on 17.05.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OnboradingViewController: UIPageViewController {
+final class OnboardingViewController: UIPageViewController {
     var didCompleteTapped: (() -> Void)?
 
     private var pages: [Pages] = Pages.allCases
@@ -33,7 +33,7 @@ final class OnboradingViewController: UIPageViewController {
     }
 }
 
-extension OnboradingViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerBefore viewController: UIViewController

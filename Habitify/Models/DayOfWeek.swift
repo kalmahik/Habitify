@@ -8,7 +8,13 @@
 import Foundation
 
 enum DayOfWeek: String, CaseIterable {
-    case monday = "Пн", tuesday = "Вт", wednesday = "Ср", thursday = "Чт", friday = "Пт", saturday = "Сб", sunday = "Вс"
+    case monday = "Пн",
+         tuesday = "Вт",
+         wednesday = "Ср",
+         thursday = "Чт",
+         friday = "Пт",
+         saturday = "Сб",
+         sunday = "Вс"
 
     var shortName: String {
         switch self {
@@ -34,9 +40,9 @@ enum DayOfWeek: String, CaseIterable {
         }
     }
 
-    static func scheduleToString(schedule: [DayOfWeekSwitch]) -> String {
+    static func scheduleToString(_ schedule: [DayOfWeekSchedule]) -> String {
         if schedule.filter({ $0.isEnabled }).count == 7 {
-            return "Каждый день"
+            return NSLocalizedString("scheduleEveryday", comment: "")
         }
         let hasNotWeekend = schedule
             .filter { $0.isEnabled }
@@ -44,7 +50,7 @@ enum DayOfWeek: String, CaseIterable {
             .filter { $0 == DayOfWeek.saturday || $0 == DayOfWeek.sunday }
             .isEmpty
         if schedule.filter({ $0.isEnabled }).count == 5 && hasNotWeekend {
-            return "Будние дни"
+            return NSLocalizedString("scheduleWorkingDay", comment: "")
         }
         return schedule
             .filter { $0.isEnabled }
@@ -52,23 +58,31 @@ enum DayOfWeek: String, CaseIterable {
             .joined(separator: ", ")
     }
 
-    static func stringToSchedule(scheduleString: String) -> [DayOfWeekSwitch] {
+    static func stringToSchedule(_ scheduleString: String) -> [DayOfWeekSchedule] {
         if scheduleString.isEmpty {
             return []
         }
-        if scheduleString == "Каждый день" {
-            return DayOfWeek.allCases.map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
+        if scheduleString == NSLocalizedString("scheduleEveryday", comment: "") {
+            return DayOfWeek.allCases.map { DayOfWeekSchedule(dayOfWeek: $0, isEnabled: true) }
         }
-        if scheduleString == "Будние дни" {
-            return DayOfWeek.allCases[0...4].map { DayOfWeekSwitch(dayOfWeek: $0, isEnabled: true) }
+        if scheduleString == NSLocalizedString("scheduleWorkingDay", comment: "") {
+            return DayOfWeek.allCases[0...4].map { DayOfWeekSchedule(dayOfWeek: $0, isEnabled: true) }
         }
         return scheduleString
             .components(separatedBy: ", ")
-            .map { DayOfWeekSwitch(dayOfWeek: DayOfWeek(rawValue: $0) ?? .monday, isEnabled: true) }
+            .map { DayOfWeekSchedule(dayOfWeek: DayOfWeek(rawValue: $0) ?? .monday, isEnabled: true) }
+    }
+
+    static func stringToScheduleArray(_ scheduleString: String) -> [String] {
+        DayOfWeek.stringToSchedule(scheduleString).map {
+            String(describing: $0.dayOfWeek)
+        }
     }
 }
 
-struct DayOfWeekSwitch {
+struct DayOfWeekSchedule {
+    static let dayOfWeekSchedule = DayOfWeek.allCases.map { DayOfWeekSchedule(dayOfWeek: $0, isEnabled: false) }
+
     let dayOfWeek: DayOfWeek
     var isEnabled: Bool
 }

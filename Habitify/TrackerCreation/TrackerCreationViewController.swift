@@ -37,7 +37,7 @@ final class TrackerCreationViewController: UIViewController {
         )
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = UIColor.mainWhite
         collectionView.allowsMultipleSelection = true
         return collectionView
     }()
@@ -55,6 +55,7 @@ final class TrackerCreationViewController: UIViewController {
 
     @objc private func didCreateTapped() {
         trackerManager.createTracker()
+        self.presentingViewController?.dismiss(animated: true)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
 
@@ -64,11 +65,9 @@ final class TrackerCreationViewController: UIViewController {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            // no need to update the whole collection
-            self?.collectionView.reloadSections(IndexSet(arrayLiteral:
-                CollectionSection.header.rawValue,
-                CollectionSection.footer.rawValue
-            ))
+            self?.collectionView.reloadSections(
+                IndexSet(arrayLiteral: CollectionSection.header.rawValue, CollectionSection.footer.rawValue)
+            )
         }
     }
 }
@@ -90,7 +89,7 @@ extension TrackerCreationViewController: UICollectionViewDelegate {
         }
     }
 
-    // может лучще запретить деселект?
+    // может лучше запретить деселект?
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case CollectionSection.emoji.rawValue:
@@ -135,6 +134,8 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
             let emoji = emojiList[indexPath.row]
             guard let emojiCell = cell as? EmojiCell else { return UICollectionViewCell() }
             emojiCell.setupCell(emoji: emoji)
+            let isSelected = emoji == trackerManager.tracker.emoji
+            if isSelected { self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: []) }
             return emojiCell
         case CollectionSection.color.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCell.identifier, for: indexPath)
@@ -142,6 +143,8 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
             let color = UIColor(hex: colorString)
             guard let colorCell = cell as? ColorCell, let color else { return UICollectionViewCell() }
             colorCell.setupCell(color: color)
+            let isSelected = colorString == trackerManager.tracker.color
+            if isSelected { self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: []) }
             return colorCell
         case CollectionSection.footer.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFooter.identifier, for: indexPath)
@@ -152,7 +155,6 @@ extension TrackerCreationViewController: UICollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
-
     }
 
     func collectionView(
@@ -237,30 +239,28 @@ extension TrackerCreationViewController: UICollectionViewDelegateFlowLayout {
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         switch section {
-            case CollectionSection.header.rawValue:
-                return .zero
-            case CollectionSection.emoji.rawValue:
-                return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.color.rawValue:
-                return CGSize(width: collectionWidth, height: 74)
-            case CollectionSection.footer.rawValue:
-                return .zero
-            default:
-                return .zero
+        case CollectionSection.header.rawValue:
+            return .zero
+        case CollectionSection.emoji.rawValue:
+            return CGSize(width: collectionWidth, height: 74)
+        case CollectionSection.color.rawValue:
+            return CGSize(width: collectionWidth, height: 74)
+        case CollectionSection.footer.rawValue:
+            return .zero
+        default:
+            return .zero
         }
     }
 
     func calculateHeaderHeight() -> CGFloat {
-        var height: CGFloat = 75 // input
-        if trackerManager.error != nil {
-            height += 22 + 8 + 32 + 24 // error height, top inset, bottom inset
-        } else {
-            height += 24 + 24 // 2 paddings
-        }
+        var height: CGFloat = 75 + 48 // input and 2 paddings
         if trackerManager.isRegular {
             height += 150 // 2 buttons
         } else {
             height += 75 // 1 button
+        }
+        if trackerManager.isEditing {
+            height += 38 // strike title
         }
         return height
     }
@@ -281,8 +281,11 @@ extension TrackerCreationViewController {
     func setupViews() {
         view.backgroundColor = .mainWhite
         navigationItem.title =
-        NSLocalizedString(trackerManager.isRegular ? "trackerRegularType" : "trackerSingleType", comment: "")
-        view.backgroundColor = .white
+        NSLocalizedString(
+            trackerManager.isEditing ? "trackerEditionTitle" :
+                trackerManager.isRegular ? "trackerRegularType" : "trackerSingleType",
+            comment: ""
+        )
         view.setupView(collectionView)
     }
 

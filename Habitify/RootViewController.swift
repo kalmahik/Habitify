@@ -24,7 +24,7 @@ final class RootViewController: UIViewController {
         if settingsStore.isOnbordingWasShown {
             rootController = TabBarViewController()
         } else {
-            var onboardingVC = OnboradingViewController()
+            var onboardingVC = OnboardingViewController()
             onboardingVC.didCompleteTapped = switchToApp
             rootController = onboardingVC
         }

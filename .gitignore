@@ -26,3 +26,5 @@ xcuserdata/
 *.xcuserstate
 project.xcworkspace/
 xcuserdata/
+
+Pods/

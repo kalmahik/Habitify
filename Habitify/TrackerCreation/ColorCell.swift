@@ -12,6 +12,8 @@ final class ColorCell: UICollectionViewCell {
 
     static let identifier = "ColorCell"
 
+    // MARK: - Private properties
+
     // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -27,14 +29,20 @@ final class ColorCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             layer.borderWidth = 3
+            layer.cornerRadius = 8
             layer.borderColor = isSelected ?
-            colorView.backgroundColor?.withAlphaComponent(0.3).cgColor : UIColor.mainWhite.cgColor
+                colorView.backgroundColor?.withAlphaComponent(0.3).cgColor : UIColor.mainWhite.cgColor
         }
     }
 
     // MARK: - Private Properties
 
-    private lazy var colorView: UIView = UIView()
+    private lazy var colorView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
+        return view
+    }()
 
     // MARK: - Public Methods
 
@@ -48,13 +56,13 @@ final class ColorCell: UICollectionViewCell {
 extension ColorCell {
     private func setupViews() {
         contentView.setupView(colorView)
-        colorView.layer.cornerRadius = 8
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             contentView.widthAnchor.constraint(equalToConstant: 52),
             contentView.heightAnchor.constraint(equalToConstant: 52),
+
             colorView.widthAnchor.constraint(equalToConstant: 40),
             colorView.heightAnchor.constraint(equalToConstant: 40),
             colorView.centerXAnchor.constraint(equalTo: centerXAnchor),
