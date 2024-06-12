@@ -166,18 +166,6 @@ extension TrackersViewController: UICollectionViewDelegate {
         let isPinned = tracker.categoryName == NSLocalizedString("pinnedCategory", comment: "")
         return trackerCell.configureContextMenu(indexPath, self, isPinned)
     }
-
-//    func collectionView(
-//        _ collectionView: UICollectionView,
-//        contextMenuConfiguration configuration: UIContextMenuConfiguration,
-//        highlightPreviewForItemAt indexPath: IndexPath
-//    ) -> UITargetedPreview? {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath)
-//        guard let trackerCell = cell as? TrackerCell else { return nil }
-//        let parameters = UIPreviewParameters()
-//        parameters.backgroundColor = .clear
-//        return UITargetedPreview(view: trackerCell.cellBackgroundView, parameters: parameters)
-//    }
 }
 
 // MARK: - DataProviderDelegate

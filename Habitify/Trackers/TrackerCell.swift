@@ -98,16 +98,16 @@ extension TrackerCell {
         _ isPinned: Bool
     ) -> UIContextMenuConfiguration {
         let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
-            let pin = makeAction(NSLocalizedString("contextActionPin", comment: ""), false) { _ in
+            let pin = self.makeAction(NSLocalizedString("contextActionPin", comment: ""), false) { _ in
                 delegate.didTapPinAction(indexPath)
             }
-            let unpin = makeAction(NSLocalizedString("contextActionUnpin", comment: ""), false) {  _ in
+            let unpin = self.makeAction(NSLocalizedString("contextActionUnpin", comment: ""), false) {  _ in
                 delegate.didTapUnpinAction(indexPath)
             }
-            let edit = makeAction(NSLocalizedString("contextActionEdit", comment: ""), false) { _ in
+            let edit = self.makeAction(NSLocalizedString("contextActionEdit", comment: ""), false) { _ in
                 delegate.didTapEditAction(indexPath)
             }
-            let delete = makeAction(NSLocalizedString("contextActionDelete", comment: ""), true) { _ in
+            let delete = self.makeAction(NSLocalizedString("contextActionDelete", comment: ""), true) { _ in
                 delegate.didTapDeleteAction(indexPath)
             }
             return UIMenu(
@@ -119,6 +119,18 @@ extension TrackerCell {
             )
         }
         return context
+    }
+
+    func makeAction(_ title: String, _ isDestructive: Bool, _ handler: @escaping UIActionHandler) -> UIAction {
+        UIAction(
+            title: title,
+            image: nil,
+            identifier: nil,
+            discoverabilityTitle: nil,
+            attributes: isDestructive ? .destructive : [],
+            state: .off,
+            handler: handler
+        )
     }
 }
 

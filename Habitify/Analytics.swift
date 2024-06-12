@@ -17,7 +17,11 @@ enum Screen: String {
 }
 
 enum Item: String {
-    case addTrack = "add_track", track = "track", filter = "filter", edit = "edit", delete = "delete"
+    case addTrack = "add_track"
+    case track = "track"
+    case filter = "filter"
+    case edit = "edit"
+    case delete = "delete"
 }
 
 func sendEvent(event: Event, screen: Screen, item: Item?) {
